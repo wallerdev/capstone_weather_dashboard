@@ -1,0 +1,8 @@
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\CapstoneWeatherDashboard\CapstoneWeatherDashboard.Tests\bin\Debug\CapstoneWeatherDashboard.Tests.dll.config
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\CapstoneWeatherDashboard\CapstoneWeatherDashboard.Tests\bin\Debug\CapstoneWeatherDashboard.Tests.dll
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\CapstoneWeatherDashboard\CapstoneWeatherDashboard.Tests\bin\Debug\CapstoneWeatherDashboard.Tests.pdb
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\CapstoneWeatherDashboard\CapstoneWeatherDashboard.Tests\bin\Debug\CapstoneWeatherDashboard.dll
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\CapstoneWeatherDashboard\CapstoneWeatherDashboard.Tests\bin\Debug\CapstoneWeatherDashboard.pdb
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\CapstoneWeatherDashboard\CapstoneWeatherDashboard.Tests\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\CapstoneWeatherDashboard\CapstoneWeatherDashboard.Tests\obj\Debug\CapstoneWeatherDashboard.Tests.dll
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\CapstoneWeatherDashboard\CapstoneWeatherDashboard.Tests\obj\Debug\CapstoneWeatherDashboard.Tests.pdb

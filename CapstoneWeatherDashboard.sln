@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapstoneWeatherDashboard", "CapstoneWeatherDashboard\CapstoneWeatherDashboard.csproj", "{B009B3F3-3EC8-4491-A6C8-54AA1819ACBB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapstoneWeatherDashboard.Tests", "CapstoneWeatherDashboard.Tests\CapstoneWeatherDashboard.Tests.csproj", "{C6EBE244-FC18-46A4-8A2F-B1A8411ED853}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B009B3F3-3EC8-4491-A6C8-54AA1819ACBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B009B3F3-3EC8-4491-A6C8-54AA1819ACBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B009B3F3-3EC8-4491-A6C8-54AA1819ACBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B009B3F3-3EC8-4491-A6C8-54AA1819ACBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6EBE244-FC18-46A4-8A2F-B1A8411ED853}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6EBE244-FC18-46A4-8A2F-B1A8411ED853}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6EBE244-FC18-46A4-8A2F-B1A8411ED853}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6EBE244-FC18-46A4-8A2F-B1A8411ED853}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
