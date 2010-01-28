@@ -24,6 +24,30 @@
             float: right;
         }
     </style>
+    <script src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.1.min.js" type="text/javascript"></script>
+    <script>
+	$(document).ready(function(){
+	    $('#policyHolders').change(function () {
+		    if( $(this).attr('selectedIndex') != 0 )
+		    {
+			$('#address').val('12345 Fake St.');
+			$('#city').val('Nowhere');
+			$('#state').attr('selectedIndex', '1');
+		    }
+	    });
+
+	    $('.address').change(function() {
+		if( $('#policyHolders').attr('selectedIndex') != 0 )
+		{
+			$('#policyHolders').attr('selectedIndex', '0');
+		}
+	    });
+
+	    $('#go').click(function () {
+		    $('#results').show();
+	    });
+	});
+    </script>
 </head>
 <body>
     <div id="header">
@@ -37,7 +61,8 @@
         <p>
             <label>
                 Policy Holders:</label>
-            <select>
+            <select id="policyHolders">
+		<option>Select A Policy Holder</option>
                 <option>Bill</option>
                 <option>John Doe</option>
                 <option>Jane Doe</option>
@@ -50,15 +75,15 @@
             <label>
                 Address:
             </label>
-            <input id="address" type="text" />
+            <input id="address" type="text" class="address" />
             <label>
                 City:
             </label>
-            <input id="city" type="text" />
+            <input id="city" type="text" class="address" />
             <label>
                 State:
             </label>
-            <select name="State">
+            <select name="State" id="state" class="address">
                 <option value="" selected="selected">Select</option>
                 <option value="AL">Al</option>
                 <option value="AK">AK</option>
@@ -71,7 +96,7 @@
             <input id="go" type="button" value="Go" /></div>
         <div style="clear: both" />
         <p>
-            <table style="width: 100%;">
+            <table id="results" style="width: 100%; display:none;">
                 <tr>
                     <th>
                         Date
