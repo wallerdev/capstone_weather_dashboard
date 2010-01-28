@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Auto-Owners Weather</title>
+    <style type="text/css">
+        body
+        {
+            background-color: #D9D9D9;
+        }
+        #main
+        {
+            width: 490px;
+            margin: auto;
+            background-color: #EEE;
+            padding: 20px;
+        }
+        #address
+        {
+            width: 379px;
+        }
+        td
+        {
+            border: solid 1px #CCC;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <h2>
+            Auto-Owners Historical Weather Event Search</h2>
+        <p>
+            <label>
+                Address:
+            </label>
+            <input id="address" type="text" /><input id="go" type="button" value="Go" /></p>
+        <p>
+            <table style="width: 100%;">
+                <tr>
+                    <th>
+                        Date
+                    </th>
+                    <th>
+                        Event Type
+                    </th>
+                    <th>
+                        Source
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <select>
+                            <option>Last 2 years</option>
+                            <option>Last 1 year</option>
+                            <option>Last 6 months</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select>
+                            <option>All</option>
+                            <option>Snow Storm</option>
+                            <option>Flood</option>
+                            <option>Hail</option>
+                            <option>High Wind</option>
+                            <option>Hurricane</option>
+                            <option>Tornado</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select>
+                            <option>All</option>
+                            <option>NCDC</option>
+                            <option>NOAA</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        12/1/09
+                    </td>
+                    <td>
+                        Snow Storm
+                    </td>
+                    <td>
+                        NCDC
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        11/13/2008
+                    </td>
+                    <td>
+                        Snow Storm
+                    </td>
+                    <td>
+                        NCDC
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        11/13/2008
+                    </td>
+                    <td>
+                        Snow Storm
+                    </td>
+                    <td>
+                        NOAA
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        5/6/2006
+                    </td>
+                    <td>
+                        Hail
+                    </td>
+                    <td>
+                        NCDC
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        5/6/2006
+                    </td>
+                    <td>
+                        Hail
+                    </td>
+                    <td>
+                        Wunderground.com
+                    </td>
+                </tr>
+            </table>
+        </p>
+    </div>
+</body>
+</html>

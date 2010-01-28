@@ -1,0 +1,34 @@
+[info]
+codepage=65001
+readonly=true
+version=4.00
+format=2.00
+title=Blank
+refcount=1
+
+[titles]
+1040=Essenziale
+1053=Tomt
+1032=Κενό
+1031=Schlicht
+1036=Feuille blanche
+1044=Tom
+1042=백지
+1028=空白
+2052=空白
+1038=Rácsok
+1049=Канцелярия
+1046=Em branco
+1041=ブランク
+2070=Branco
+1054=ว่างเปล่า
+1025=فارغ
+3082=En blanco
+1043=Blanco
+1030=Enkelt
+1035=Tyhjä
+1029=Nevyplněné
+1045=Pustka
+1037=ריק
+1055=Boş
+
