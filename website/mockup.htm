@@ -9,31 +9,67 @@
         }
         #main
         {
-            width: 490px;
+            width: 510px;
             margin: auto;
             background-color: #EEE;
             padding: 20px;
-        }
-        #address
-        {
-            width: 379px;
         }
         td
         {
             border: solid 1px #CCC;
             margin: 0;
         }
+        #header
+        {
+            float: right;
+        }
     </style>
 </head>
 <body>
+    <div id="header">
+        <a href="#">My Preferences</a> <a href="#">Sign Out</a>
+    </div>
+    <div style="clear: both;">
+    </div>
     <div id="main">
         <h2>
             Auto-Owners Historical Weather Event Search</h2>
         <p>
             <label>
+                Policy Holders:</label>
+            <select>
+                <option>Bill</option>
+                <option>John Doe</option>
+                <option>Jane Doe</option>
+                <option>George Washington</option>
+            </select>
+        </p>
+        <p>
+            Or</p>
+        <p>
+            <label>
                 Address:
             </label>
-            <input id="address" type="text" /><input id="go" type="button" value="Go" /></p>
+            <input id="address" type="text" />
+            <label>
+                City:
+            </label>
+            <input id="city" type="text" />
+            <label>
+                State:
+            </label>
+            <select name="State">
+                <option value="" selected="selected">Select</option>
+                <option value="AL">Al</option>
+                <option value="AK">AK</option>
+                <option value="AZ">AZ</option>
+                <option value="MI">MI</option>
+                <option value="CA">CA</option>
+            </select>
+        </p>
+        <div style="float: right">
+            <input id="go" type="button" value="Go" /></div>
+        <div style="clear: both" />
         <p>
             <table style="width: 100%;">
                 <tr>
