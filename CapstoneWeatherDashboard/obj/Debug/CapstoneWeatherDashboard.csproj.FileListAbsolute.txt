@@ -3,3 +3,6 @@ C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects
 C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\CapstoneWeatherDashboard\CapstoneWeatherDashboard\obj\Debug\ResolveAssemblyReference.cache
 C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\CapstoneWeatherDashboard\CapstoneWeatherDashboard\obj\Debug\CapstoneWeatherDashboard.dll
 C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\CapstoneWeatherDashboard\CapstoneWeatherDashboard\obj\Debug\CapstoneWeatherDashboard.pdb
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\CapstoneWeatherDashboard\CapstoneWeatherDashboard\bin\WeatherStation.dll
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\CapstoneWeatherDashboard\CapstoneWeatherDashboard\bin\HtmlAgilityPack.dll
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\CapstoneWeatherDashboard\CapstoneWeatherDashboard\bin\WeatherStation.pdb

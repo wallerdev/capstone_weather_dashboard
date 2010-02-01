@@ -99,6 +99,12 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WeatherStation\WeatherStation.csproj">
+      <Project>{DB9AAFA6-33C9-4CEF-8454-EEC601BA504E}</Project>
+      <Name>WeatherStation</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
