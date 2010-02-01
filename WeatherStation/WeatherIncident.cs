@@ -9,7 +9,7 @@ namespace WeatherStation
     /// This class has no logic, it just serves as a way to transfer
     /// weather incident data
     /// </summary>
-    class WeatherIncident
+    public class WeatherIncident
     {
 
         public string Location { get; set; }

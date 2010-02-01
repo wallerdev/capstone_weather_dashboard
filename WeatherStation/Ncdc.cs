@@ -8,7 +8,7 @@ using HtmlAgilityPack;
 
 namespace WeatherStation
 {
-    class Ncdc
+    public class Ncdc
     {
         public string StateTwoLetterCode
         {

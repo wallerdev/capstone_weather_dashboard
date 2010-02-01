@@ -11,7 +11,7 @@ namespace WeatherStation
     /// Uses tinygeocoder to go from an address (full address, zip code, etc.) to 
     /// latitude and longitude necessary for NOAA requests
     /// </summary>
-    class Geocode
+    public class Geocode
     {
         private string _geocodeAddress = "http://tinygeocoder.com/create-api.php?";
         public double Latitude

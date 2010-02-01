@@ -8,7 +8,7 @@ using WeatherStation.NoaaService;
 
 namespace WeatherStation
 {
-    class Noaa
+    public class Noaa
     {
         public void GetWeatherData(Geocode location)
         {
