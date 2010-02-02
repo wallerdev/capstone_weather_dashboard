@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="496d4b8e-7584-4d59-a094-dc0e8d8fc453" name="Eddie@EDDIE-PC 2010-02-02 08:41:53" runUser="Eddie-PC\Eddie" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <TestRunConfiguration name="Local Test Run" id="e09f29cf-1aa3-4690-9a55-2c755ed976b0">
+    <Description>This is a default test run configuration for a local test run.</Description>
+    <Deployment runDeploymentRoot="C:\Users\Eddie\Documents\Visual Studio 2008\Projects\capstone_weather_dashboard\TestResults\Eddie_EDDIE-PC 2010-02-02 08_41_53">
+      <DeploymentItem filename="C:\Users\Eddie\Documents\Visual Studio 2008\Projects\capstone_weather_dashboard\WeatherStation\bin\Debug\WeatherStation.dll" />
+    </Deployment>
+    <TestTypeSpecific />
+  </TestRunConfiguration>
+  <ResultSummary outcome="Error">
+    <Counters total="1" executed="1" error="0" failed="0" timeout="0" aborted="1" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" passed="0" completed="0" inProgress="0" pending="0" />
+    <RunInfos>
+      <RunInfo computerName="EDDIE-PC" outcome="Error" timestamp="2010-02-02T08:42:17.2931893-05:00">
+        <Text>Test host process exited unexpectedly.</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+  <Times creation="2010-02-02T08:41:53.7508428-05:00" queuing="2010-02-02T08:41:59.7701871-05:00" start="2010-02-02T08:41:59.9671983-05:00" finish="2010-02-02T08:42:17.3021898-05:00" />
+  <TestDefinitions>
+    <UnitTest name="TestCountyLookup" storage="c:\users\eddie\documents\visual studio 2008\projects\capstone_weather_dashboard\weatherstation.tests\bin\debug\weatherstation.tests.dll" id="641a1298-267e-3756-66ed-f5c31624cf4d">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Users\Eddie\Documents\Visual Studio 2008\Projects\capstone_weather_dashboard\WeatherStation.Tests\bin\Debug\WeatherStation.Tests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="WeatherStation.Tests.ZipCodeLookupTest, WeatherStation.Tests" name="TestCountyLookup" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="641a1298-267e-3756-66ed-f5c31624cf4d" executionId="a38d7904-a157-414f-aab0-6c2c29830897" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="a38d7904-a157-414f-aab0-6c2c29830897" testId="641a1298-267e-3756-66ed-f5c31624cf4d" testName="TestCountyLookup" computerName="EDDIE-PC" duration="00:00:17.2719879" startTime="2010-02-02T08:42:00.0302019-05:00" endTime="2010-02-02T08:42:17.3021898-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Aborted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+  </Results>
+</TestRun>

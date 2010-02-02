@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="e39999cf-ab33-4e99-b93e-2ab527910ec3" name="Eddie@EDDIE-PC 2010-02-02 09:00:14" runUser="Eddie-PC\Eddie" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <TestRunConfiguration name="Local Test Run" id="e09f29cf-1aa3-4690-9a55-2c755ed976b0">
+    <Description>This is a default test run configuration for a local test run.</Description>
+    <Deployment runDeploymentRoot="C:\Users\Eddie\Documents\Visual Studio 2008\Projects\capstone_weather_dashboard\TestResults\Eddie_EDDIE-PC 2010-02-02 09_00_14">
+      <DeploymentItem filename="C:\Users\Eddie\Documents\Visual Studio 2008\Projects\capstone_weather_dashboard\WeatherStation\bin\Debug\WeatherStation.dll" />
+    </Deployment>
+    <TestTypeSpecific />
+  </TestRunConfiguration>
+  <ResultSummary outcome="Failed">
+    <Counters total="2" executed="2" passed="1" error="0" failed="1" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <Times creation="2010-02-02T09:00:14.0197746-05:00" queuing="2010-02-02T09:00:14.8758235-05:00" start="2010-02-02T09:00:15.0038308-05:00" finish="2010-02-02T09:00:15.9388843-05:00" />
+  <TestDefinitions>
+    <UnitTest name="TestCountyLookup" storage="c:\users\eddie\documents\visual studio 2008\projects\capstone_weather_dashboard\weatherstation.tests\bin\debug\weatherstation.tests.dll" id="641a1298-267e-3756-66ed-f5c31624cf4d">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="b7833aff-f684-46d3-9a13-529dc2d1594c" />
+      <TestMethod codeBase="C:\Users\Eddie\Documents\Visual Studio 2008\Projects\capstone_weather_dashboard\WeatherStation.Tests\bin\Debug\WeatherStation.Tests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="WeatherStation.Tests.ZipCodeLookupTest, WeatherStation.Tests" name="TestCountyLookup" />
+    </UnitTest>
+    <UnitTest name="TestStateLookup" storage="c:\users\eddie\documents\visual studio 2008\projects\capstone_weather_dashboard\weatherstation.tests\bin\debug\weatherstation.tests.dll" id="6c208022-c031-46ee-655a-7360582a9092">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="a6bddd82-ac28-46cc-8d06-8676c9b39ec1" />
+      <TestMethod codeBase="C:\Users\Eddie\Documents\Visual Studio 2008\Projects\capstone_weather_dashboard\WeatherStation.Tests\bin\Debug\WeatherStation.Tests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="WeatherStation.Tests.ZipCodeLookupTest, WeatherStation.Tests" name="TestStateLookup" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="641a1298-267e-3756-66ed-f5c31624cf4d" executionId="b7833aff-f684-46d3-9a13-529dc2d1594c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6c208022-c031-46ee-655a-7360582a9092" executionId="a6bddd82-ac28-46cc-8d06-8676c9b39ec1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="b7833aff-f684-46d3-9a13-529dc2d1594c" testId="641a1298-267e-3756-66ed-f5c31624cf4d" testName="TestCountyLookup" computerName="EDDIE-PC" duration="00:00:00.2032052" startTime="2010-02-02T09:00:15.0718347-05:00" endTime="2010-02-02T09:00:15.6578683-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="a6bddd82-ac28-46cc-8d06-8676c9b39ec1" testId="6c208022-c031-46ee-655a-7360582a9092" testName="TestStateLookup" computerName="EDDIE-PC" duration="00:00:00.2124075" startTime="2010-02-02T09:00:15.6608684-05:00" endTime="2010-02-02T09:00:15.8778808-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.AreEqual failed. Expected:&lt;MI&gt;. Actual:&lt;INGHAM&gt;. </Message>
+          <StackTrace>   at WeatherStation.Tests.ZipCodeLookupTest.TestStateLookup() in C:\Users\Eddie\Documents\Visual Studio 2008\Projects\capstone_weather_dashboard\WeatherStation.Tests\ZipCodeLookupTest.cs:line 31
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+</TestRun>

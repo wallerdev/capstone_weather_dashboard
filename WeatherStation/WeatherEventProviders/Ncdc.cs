@@ -66,10 +66,8 @@ namespace WeatherStation
 
         public IEnumerable<WeatherIncident> GetEvents(Address address, DateTime startDate, DateTime endDate)
         {
-            List<string> countyAndState = ZipCodeManager.GetCountyAndStateFromZip(address.ZipCode.ToString());
-            string county = countyAndState[1];
-
-            return GetStormEvents(address.StateTwoLetterCode, county);
+            ZipCodeLookup lookup = new ZipCodeLookup();
+            return GetStormEvents(lookup.GetState(address.ZipCode.ToString()), lookup.GetCounty(address.ZipCode.ToString()));
         }
     }
 }

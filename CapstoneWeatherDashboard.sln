@@ -7,7 +7,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapstoneWeatherDashboard.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherStation", "WeatherStation\WeatherStation.csproj", "{DB9AAFA6-33C9-4CEF-8454-EEC601BA504E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherStation.Tests", "WeatherStation.Tests\WeatherStation.Tests.csproj", "{79200718-FCC7-40E1-AD2D-D15ED658E16A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D8034BCF-6C5D-4623-8BA5-5CC7333FEE39}"
+	ProjectSection(SolutionItems) = preProject
+		CapstoneWeatherDashboard.vsmdi = CapstoneWeatherDashboard.vsmdi
+		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
+	EndProjectSection
+EndProject
 Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = CapstoneWeatherDashboard.vsmdi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -25,6 +36,10 @@ Global
 		{DB9AAFA6-33C9-4CEF-8454-EEC601BA504E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB9AAFA6-33C9-4CEF-8454-EEC601BA504E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB9AAFA6-33C9-4CEF-8454-EEC601BA504E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79200718-FCC7-40E1-AD2D-D15ED658E16A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79200718-FCC7-40E1-AD2D-D15ED658E16A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79200718-FCC7-40E1-AD2D-D15ED658E16A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79200718-FCC7-40E1-AD2D-D15ED658E16A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

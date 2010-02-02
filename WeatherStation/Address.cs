@@ -5,25 +5,25 @@
         public string StreetAddress
         {
             get;
-            set;
+            private set;
         }
 
         public string City
         {
             get;
-            set;
+            private set;
         }
 
         public string StateTwoLetterCode
         {
             get;
-            set;
+            private set;
         }
 
         public int ZipCode
         {
             get;
-            set;
+            private set;
         }
 
         public Address( string streetAddress, string city, string stateTwoLetterCode, int zipCode)
