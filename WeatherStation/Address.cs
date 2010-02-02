@@ -22,24 +22,29 @@
             private set;
         }
 
-        public int ZipCode
+        public string ZipCode
         {
             get;
             private set;
         }
 
-        public Address(string streetAddress, string city, string state, int zipCode)
+        public Address(string streetAddress, string city, State state, string zipCode)
         {
             StreetAddress = streetAddress;
             City = city;
-            State = new State(state);
+            State = state;
             ZipCode = zipCode;
+
+        }
+
+        public Address(string streetAddress, string city, string state, string zipCode)
+            : this(streetAddress, city, new State(state), zipCode)
+        {
         }
 
         public Address(string zipCode)
+            : this(string.Empty, zipCodeLookup.GetCity(zipCode), zipCodeLookup.GetState(zipCode), zipCode)
         {
-            StreetAddress = string.Empty;
-            City = zipCodeLookup.GetState(zipCode);
         }
     }
 }

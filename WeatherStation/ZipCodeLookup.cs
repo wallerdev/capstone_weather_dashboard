@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System;
-using System.Diagnostics;
 using System.Linq;
 
 namespace WeatherStation
@@ -12,11 +10,12 @@ namespace WeatherStation
     /// </summary>
     public class ZipCodeLookup
     {
-        IEnumerable<ZipCodeLookupEntry> zipCodeLookupEntries;
+        readonly IEnumerable<ZipCodeLookupEntry> _zipCodeLookupEntries;
+
         public ZipCodeLookup()
         {
-            IEnumerable<string> entries = Properties.Resources.ZipCodeTable.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-            zipCodeLookupEntries = entries.Select(entry =>
+            IEnumerable<string> entries = Properties.Resources.ZipCodeTable.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            _zipCodeLookupEntries = entries.Select(entry =>
                 new ZipCodeLookupEntry(entry.Split(',').Select(data => data.Trim('"')).ToList()));
         }
 
@@ -30,9 +29,14 @@ namespace WeatherStation
             return GetEntry(zipCode).State;
         }
 
+        public string GetCity(string zipCode)
+        {
+            return GetEntry(zipCode).City;
+        }
+
         ZipCodeLookupEntry GetEntry(string zipCode)
         {
-            return zipCodeLookupEntries.First(e => e.ZipCode == zipCode);
+            return _zipCodeLookupEntries.First(e => e.ZipCode == zipCode);
         }
     }
 }

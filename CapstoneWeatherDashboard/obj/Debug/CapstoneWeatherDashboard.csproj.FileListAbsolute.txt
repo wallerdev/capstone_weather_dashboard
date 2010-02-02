@@ -14,3 +14,11 @@ C:\Users\Eddie\Documents\Visual Studio 2008\Projects\capstone_weather_dashboard\
 C:\Users\Eddie\Documents\Visual Studio 2008\Projects\capstone_weather_dashboard\CapstoneWeatherDashboard\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\Eddie\Documents\Visual Studio 2008\Projects\capstone_weather_dashboard\CapstoneWeatherDashboard\obj\Debug\CapstoneWeatherDashboard.dll
 C:\Users\Eddie\Documents\Visual Studio 2008\Projects\capstone_weather_dashboard\CapstoneWeatherDashboard\obj\Debug\CapstoneWeatherDashboard.pdb
+C:\Users\Eddie\Projects\capstone_weather_dashboard\CapstoneWeatherDashboard\bin\CapstoneWeatherDashboard.dll
+C:\Users\Eddie\Projects\capstone_weather_dashboard\CapstoneWeatherDashboard\bin\CapstoneWeatherDashboard.pdb
+C:\Users\Eddie\Projects\capstone_weather_dashboard\CapstoneWeatherDashboard\bin\WeatherStation.dll
+C:\Users\Eddie\Projects\capstone_weather_dashboard\CapstoneWeatherDashboard\bin\HtmlAgilityPack.dll
+C:\Users\Eddie\Projects\capstone_weather_dashboard\CapstoneWeatherDashboard\bin\WeatherStation.pdb
+C:\Users\Eddie\Projects\capstone_weather_dashboard\CapstoneWeatherDashboard\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Eddie\Projects\capstone_weather_dashboard\CapstoneWeatherDashboard\obj\Debug\CapstoneWeatherDashboard.dll
+C:\Users\Eddie\Projects\capstone_weather_dashboard\CapstoneWeatherDashboard\obj\Debug\CapstoneWeatherDashboard.pdb

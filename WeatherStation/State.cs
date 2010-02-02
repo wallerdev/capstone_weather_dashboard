@@ -1,27 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Globalization;
 
 namespace WeatherStation
 {
     public class State
     {
-        string name;
-        TextInfo info = new CultureInfo("en-US", false).TextInfo;
+        readonly string _name;
+        readonly TextInfo _info = new CultureInfo("en-US", false).TextInfo;
 
         public string Name
         {
-            get { return info.ToTitleCase(name); }
+            get { return _info.ToTitleCase(_name); }
         }
 
         public string Abbreviation
         {
-            get { return stateAbbreviations[name].ToUpperInvariant(); }
+            get { return StateAbbreviations[_name].ToUpperInvariant(); }
         }
 
-        static Dictionary<string, string> stateAbbreviations = new Dictionary<string, string>()
+        static readonly Dictionary<string, string> StateAbbreviations = new Dictionary<string, string>
         {
             {"alabama", "al"},
             {"alaska", "ak"},
@@ -82,23 +81,20 @@ namespace WeatherStation
             {"west virginia", "wv"},
             {"wisconsin", "wi"},
             {"wyoming", "wy"},
-            {"armed forces africa", "ae"},
             {"armed forces americas", "aa"},
             {"armed forces canada", "ae"},
-            {"armed forces europe", "ae"},
-            {"armed forces middle east", "ae"},
             {"armed forces pacific", "ap"}
         };
 
         public State(string state)
         {
-            if (stateAbbreviations.Keys.Contains(state.ToLower()))
+            if (StateAbbreviations.Keys.Contains(state.ToLower()))
             {
-                name = state.ToLower();
+                _name = state.ToLower();
             }
-            else if (stateAbbreviations.Values.Contains(state.ToLower()))
+            else if (StateAbbreviations.Values.Contains(state.ToLower()))
             {
-                name = stateAbbreviations.First(v => v.Value == state.ToLowerInvariant()).Key;
+                _name = StateAbbreviations.First(v => v.Value == state.ToLowerInvariant()).Key;
             }
             else
             {

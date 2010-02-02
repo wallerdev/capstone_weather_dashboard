@@ -1,8 +1,4 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace WeatherStation.Tests
 {
@@ -12,23 +8,29 @@ namespace WeatherStation.Tests
     [TestClass]
     public class ZipCodeLookupTest
     {
-        ZipCodeLookup zipCodeLookup;
+        readonly ZipCodeLookup _zipCodeLookup;
 
         public ZipCodeLookupTest()
         {
-            zipCodeLookup = new ZipCodeLookup();
+            _zipCodeLookup = new ZipCodeLookup();
         }
 
         [TestMethod]
         public void TestCountyLookup()
         {
-            Assert.AreEqual("INGHAM", zipCodeLookup.GetCounty("48864"));
+            Assert.AreEqual("INGHAM", _zipCodeLookup.GetCounty("48864"));
         }
 
         [TestMethod]
         public void TestStateLookup()
         {
-            Assert.AreEqual("MI", zipCodeLookup.GetState("48864"));
+            Assert.AreEqual("MI", _zipCodeLookup.GetState("48864"));
+        }
+
+        [TestMethod]
+        public void TestCityLookup()
+        {
+            Assert.AreEqual("OKEMOS", _zipCodeLookup.GetCity("48864"));
         }
     }
 }

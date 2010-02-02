@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Net;
+﻿using System.Net;
 using System.IO;
 
 namespace WeatherStation
@@ -13,7 +9,8 @@ namespace WeatherStation
     /// </summary>
     public class Geocode
     {
-        private string _geocodeAddress = "http://tinygeocoder.com/create-api.php?";
+        private const string GeocodeAddress = "http://tinygeocoder.com/create-api.php?";
+
         public double Latitude
         {
             get;
@@ -29,18 +26,18 @@ namespace WeatherStation
         public Geocode(string address)
         {
             string requestUrl = GetGeocodeRequestUrl(address);
-            HttpWebRequest request = WebRequest.Create(requestUrl) as HttpWebRequest;
+            var request = ((HttpWebRequest)WebRequest.Create(requestUrl));
 
             using (var response = request.GetResponse())
             {
-                Stream geocodeStream = response.GetResponseStream();
+                var geocodeStream = response.GetResponseStream();
 
-                StreamReader reader = new StreamReader(geocodeStream);
-                string latitudeAndLongitudeCSV = reader.ReadToEnd();
+                var reader = new StreamReader(geocodeStream);
+                string latitudeAndLongitudeCsv = reader.ReadToEnd();
 
                 // parse the csv and get the two data points
-                string latitude = latitudeAndLongitudeCSV.Split(',')[0].Trim();
-                string longitude = latitudeAndLongitudeCSV.Split(',')[1].Trim();
+                string latitude = latitudeAndLongitudeCsv.Split(',')[0].Trim();
+                string longitude = latitudeAndLongitudeCsv.Split(',')[1].Trim();
 
                 Latitude = double.Parse(latitude);
                 Longitude = double.Parse(longitude);
@@ -48,9 +45,9 @@ namespace WeatherStation
 
         }
 
-        private string GetGeocodeRequestUrl(string address)
+        private static string GetGeocodeRequestUrl(string address)
         {
-            return string.Format("{0}q={1}", _geocodeAddress, address);
+            return string.Format("{0}q={1}", GeocodeAddress, address);
         }
     }
 }
