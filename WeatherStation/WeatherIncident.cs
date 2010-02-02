@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace WeatherStation
 {
@@ -12,14 +9,36 @@ namespace WeatherStation
     public class WeatherIncident
     {
 
-        public string Location { get; set; }
+        public string Location
+        {
+            get;
+            set;
+        }
 
-        public string EventType { get; set; }
+        public string EventType
+        {
+            get;
+            set;
+        }
 
-        public WeatherIncident(string location, string eventType)
+        public DateTime StartDate
+        {
+            get;
+            set;
+        }
+
+        public DateTime EndDate
+        {
+            get;
+            set;
+        }
+
+        public WeatherIncident(string location, string eventType, DateTime startDate, DateTime endDate)
         {
             Location = location;
             EventType = eventType;
+            StartDate = startDate;
+            EndDate = endDate;
         }
     }
 }

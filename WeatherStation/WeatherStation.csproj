@@ -55,17 +55,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Address.cs" />
     <Compile Include="Geocode.cs" />
-    <Compile Include="Ncdc.cs" />
-    <Compile Include="Noaa.cs" />
+    <Compile Include="WeatherEventProviders\IWeatherEventProvider.cs" />
+    <Compile Include="WeatherEventProviders\Ncdc.cs" />
+    <Compile Include="WeatherEventProviders\Noaa.cs" />
     <Compile Include="Service References\NoaaService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="WeatherIncident.cs" />
-    <Compile Include="WeatherUnderground.cs" />
+    <Compile Include="WeatherEventProviders\WeatherUnderground.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ZipCodeManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

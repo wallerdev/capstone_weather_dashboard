@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using WeatherStation;
 
@@ -12,11 +10,12 @@ namespace CapstoneWeatherDashboard.Controllers
     {
         public ActionResult Index()
         {
-            string zipcode = "48808";
+            // NOTE RIGHT NOW THIS WILL ONLY WORK WITH NCDC FOR PLACES IN INGHAM COUNTY
+            var address = new Address("3410 Engineering Building", "East Lansing", "MI", 48824);
 
-            var events = new Ncdc("INGHAM", "MI");
+            var events = new Ncdc();
 
-            List<WeatherIncident> response = events.GetStormEvents();
+            IEnumerable<WeatherIncident> response = events.GetEvents(address, DateTime.Now.AddDays(-360).Date, DateTime.Now);
 
             string output = string.Empty;
             foreach (var item in response)
