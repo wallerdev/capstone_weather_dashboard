@@ -2,6 +2,8 @@
 {
     public class Address
     {
+        static ZipCodeLookup zipCodeLookup = new ZipCodeLookup();
+
         public string StreetAddress
         {
             get;
@@ -14,7 +16,7 @@
             private set;
         }
 
-        public string StateTwoLetterCode
+        public State State
         {
             get;
             private set;
@@ -26,12 +28,18 @@
             private set;
         }
 
-        public Address( string streetAddress, string city, string stateTwoLetterCode, int zipCode)
+        public Address(string streetAddress, string city, string state, int zipCode)
         {
             StreetAddress = streetAddress;
             City = city;
-            StateTwoLetterCode = stateTwoLetterCode;
+            State = new State(state);
             ZipCode = zipCode;
+        }
+
+        public Address(string zipCode)
+        {
+            StreetAddress = string.Empty;
+            City = zipCodeLookup.GetState(zipCode);
         }
     }
 }
