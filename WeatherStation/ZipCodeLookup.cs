@@ -14,7 +14,7 @@ namespace WeatherStation
 
         public ZipCodeLookup()
         {
-            IEnumerable<string> entries = Properties.Resources.ZipCodeTable.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            IEnumerable<string> entries = Properties.Resources.ZipCodeTable.Split(new[] { Environment.NewLine, "\n" }, StringSplitOptions.None);
             _zipCodeLookupEntries = entries.Select(entry =>
                 new ZipCodeLookupEntry(entry.Split(',').Select(data => data.Trim('"')).ToList()));
         }
