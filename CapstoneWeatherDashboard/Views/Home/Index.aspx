@@ -10,6 +10,21 @@
         Zip Code:
     </label>
     <%= Html.TextBox("zipCode") %>
+    <br />
+    <label for="startDate">
+        Start Date:
+    </label>
+    <%= Html.TextBox("startDate") %>
+    <label for="endDate">
+        End Date:
+    </label>
+    <%= Html.TextBox("endDate") %>
     <input type="submit" />
     <% } %>
+</asp:Content>
+<asp:Content ID="extraScripts" ContentPlaceHolderID="ExtraScripts" runat="server">
+    $(document).ready(function() {
+        $("#startDate").datepicker();
+        $("#endDate").datepicker();
+    });
 </asp:Content>

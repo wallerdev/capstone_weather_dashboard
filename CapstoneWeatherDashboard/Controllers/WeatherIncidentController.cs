@@ -9,19 +9,30 @@ namespace CapstoneWeatherDashboard.Controllers
     {
         public ActionResult Index()
         {
-            string zipCode = Request.QueryString["zipCode"];
-            if(string.IsNullOrEmpty(zipCode))
-            {
-                // default to 48824 for now if empty
-                zipCode = "48824";
-            }
+            // default to 48824 for now if empty
+            string zipCode = GetQueryStringOrDefault("zipCode","48824");
+            string startDateAsString = GetQueryStringOrDefault("startDate",DateTime.Now.AddDays(-360).Date.ToShortDateString());
+            string endDateAsString = GetQueryStringOrDefault("endDate",DateTime.Now.ToShortDateString());
+
+            DateTime startDate = DateTime.Parse(startDateAsString);
+            DateTime endDate = DateTime.Parse(endDateAsString);
+
             var address = new Address(zipCode);
             var ncdc = new Ncdc();
 
-            var incidents = ncdc.GetEvents(address, DateTime.Now.AddDays(-360).Date, DateTime.Now);
+            var incidents = ncdc.GetEvents(address, startDate, endDate);
             return View(incidents.OrderBy(incident => incident.StartDate).Reverse());
 
         }
 
+        private string GetQueryStringOrDefault(string name, string defaultValue)
+        {
+            string value = Request.QueryString[name];
+            if(string.IsNullOrEmpty(value))
+            {
+                value = defaultValue;
+            }
+            return value;
+        }
     }
 }
