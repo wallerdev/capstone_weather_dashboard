@@ -6,25 +6,30 @@
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
     <% using (Html.BeginForm("Index", "WeatherIncident", FormMethod.Get))
        { %>
-    <label for="zipCode">
-        Zip Code:
-    </label>
-    <%= Html.TextBox("zipCode") %>
-    <br />
-    <label for="startDate">
-        Start Date:
-    </label>
-    <%= Html.TextBox("startDate") %>
-    <label for="endDate">
-        End Date:
-    </label>
-    <%= Html.TextBox("endDate") %>
-    <input type="submit" />
+    <p>
+        <label for="zipCode">
+            Zip Code:
+        </label>
+        <%= Html.TextBox("zipCode") %>
+    </p>
+    <p>
+        <label for="startDate">
+            Start Date:
+        </label>
+        <%= Html.TextBox("startDate") %>
+    </p>
+    <p>
+        <label for="endDate">
+            End Date:
+        </label>
+        <%= Html.TextBox("endDate") %>
+    </p>
+    <p>
+        <input type="submit" />
+    </p>
     <% } %>
 </asp:Content>
 <asp:Content ID="extraScripts" ContentPlaceHolderID="ExtraScripts" runat="server">
-    $(document).ready(function() {
-        $("#startDate").datepicker();
-        $("#endDate").datepicker();
+    $(document).ready(function() { $("#startDate").datepicker(); $("#endDate").datepicker();
     });
 </asp:Content>
