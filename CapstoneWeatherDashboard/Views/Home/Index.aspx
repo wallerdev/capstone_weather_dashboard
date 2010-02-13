@@ -7,6 +7,20 @@
     <% using (Html.BeginForm("Index", "WeatherIncident", FormMethod.Get))
        { %>
     <p>
+        <label for="address">
+            Address:
+        </label>
+        <%= Html.TextBox("address") %>
+    </p>
+    <p>
+        <label for="city">
+            City:
+        </label>
+        <%= Html.TextBox("city") %>
+        <label for="state">
+            State:
+        </label>
+        <%= Html.TextBox("state") %>
         <label for="zipCode">
             Zip Code:
         </label>
@@ -17,8 +31,6 @@
             Start Date:
         </label>
         <%= Html.TextBox("startDate") %>
-    </p>
-    <p>
         <label for="endDate">
             End Date:
         </label>
