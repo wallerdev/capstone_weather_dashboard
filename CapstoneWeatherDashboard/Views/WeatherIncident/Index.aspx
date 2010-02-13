@@ -3,6 +3,11 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
     Index
 </asp:Content>
+
+<asp:Content ID="extraScripts" ContentPlaceHolderID="ExtraScripts" runat="server">
+    $(document).ready(function() { $(".details").colorbox({iframe:true, innerWidth:"80%", innerHeight:"80%"}); });
+</asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <h2>
         Weather Incidents
@@ -34,7 +39,7 @@
                 <%= Html.Encode(item.StartDate.ToString("yyyy-MM-dd")) %>
             </td>
             <td>
-                <%= Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })%>
+                <a href="http://www.google.com" class="details">Details</a>
             </td>
         </tr>
         <% } %>
