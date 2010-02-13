@@ -4,6 +4,14 @@
     {
         static ZipCodeLookup zipCodeLookup = new ZipCodeLookup();
 
+        public string FullAddress
+        {
+            get
+            {
+                return string.Format("{0} {1}, {2} {3}", StreetAddress, City, State, ZipCode);
+            }
+        }
+
         public string StreetAddress
         {
             get;
