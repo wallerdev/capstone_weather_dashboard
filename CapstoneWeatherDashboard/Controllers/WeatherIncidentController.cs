@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using WeatherStation;
+using WeatherStation.WeatherEventProviders;
 
 namespace CapstoneWeatherDashboard.Controllers
 {
@@ -19,8 +20,14 @@ namespace CapstoneWeatherDashboard.Controllers
 
             var address = new Address(zipCode);
             var ncdc = new Ncdc();
+            var wunderground =  new WeatherUnderground();
 
-            var incidents = ncdc.GetEvents(address, startDate, endDate);
+            // get incidents from each source
+            var NCDCIncidents = ncdc.GetEvents(address, startDate, endDate);
+            var wundergroundIncidents = wunderground.GetEvents(address, startDate, endDate);
+
+            // concatenate incidents into one list
+            var incidents = NCDCIncidents.Concat(wundergroundIncidents);
             return View(incidents.OrderBy(incident => incident.StartDate).Reverse());
 
         }

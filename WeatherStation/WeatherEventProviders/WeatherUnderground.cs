@@ -6,15 +6,14 @@ using System.Net;
 using System.IO;
 using System.Xml;
 
-namespace WeatherStation
+namespace WeatherStation.WeatherEventProviders
 {
-    public class WeatherUnderground
+    public class WeatherUnderground : IWeatherEventProvider
     {
-        public string GetHistoricalData(string location)
+        public IEnumerable<WeatherIncident> GetEvents(Address address, DateTime startDate, DateTime endDate)
         {
-            string airportCode = GetClosestAirport(location);
-
-            return GetWeatherEvents(airportCode);
+            string airportCode = GetClosestAirport(address.FullAddress);
+            return GetWeatherEvents(airportCode, startDate, endDate);
         }
 
         /// <summary>
@@ -25,19 +24,67 @@ namespace WeatherStation
         /// </summary>
         /// <param name="airportCode"></param>
         /// <returns></returns>
-        private static string GetWeatherEvents(string airportCode)
+        private static IEnumerable<WeatherIncident> GetWeatherEvents(string airportCode, DateTime startDate, DateTime endDate)
         {
+            List<WeatherIncident> returnValues = new List<WeatherIncident>();
             string weatherHistoryUrl =
                 "http://www.wunderground.com/history/airport/{0}/{1}/{2}/{3}/DailyHistory.html?req_city=Bath&req_state=MI&req_statename=Michigan&format=1";
-            weatherHistoryUrl = string.Format(weatherHistoryUrl, airportCode, 2010, 1, 25);
 
-            HttpWebRequest request = WebRequest.Create(weatherHistoryUrl) as HttpWebRequest;
-            using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+            while (startDate <= endDate)
             {
-                StreamReader reader = new StreamReader(response.GetResponseStream());
+                string requestUrl = string.Format(weatherHistoryUrl, airportCode, startDate.Year, startDate.Month, startDate.Day);
 
-                return reader.ReadToEnd();
+                HttpWebRequest request = WebRequest.Create(requestUrl) as HttpWebRequest;
+                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+                {
+                    StreamReader reader = new StreamReader(response.GetResponseStream());
+
+                    List<WeatherIncident> incidents = ParseWundergroundResponse(reader.ReadToEnd(), airportCode, startDate);
+                    returnValues.AddRange(incidents);
+                }
+
+                startDate = startDate.AddDays(1);
             }
+
+            return returnValues.AsEnumerable();
+        }
+
+        private static List<WeatherIncident> ParseWundergroundResponse(string responseString, string airportCode, DateTime date)
+        {
+            var returnList = new List<WeatherIncident>();
+            foreach (string row in responseString.Replace("<br />", "").Split('\n'))
+            {
+                try
+                {
+                    var entry = new WeatherUndergroundEntry(date, row);
+                    if (entry.Precipitation > 0.5)
+                    {
+                        if (entry.Temperature >= 32.0)
+                        {
+                            returnList.Add(new WeatherIncident(airportCode, "Flood", date, date));
+                        }
+                        else
+                        {
+                            returnList.Add(new WeatherIncident(airportCode, "Snow Storm", date, date));
+                        }
+                        break;
+                    }
+                    if (entry.WindSpeed > 25)
+                    {
+                        returnList.Add(new WeatherIncident(airportCode, "HighWind", date, date));
+                        break;
+                    }
+                }
+                catch (FormatException)
+                {
+                    continue;
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    continue;
+                }
+            }
+            return returnList;
         }
 
         /// <summary>
