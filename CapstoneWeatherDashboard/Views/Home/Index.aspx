@@ -1,11 +1,16 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage" %>
 
 <asp:Content ID="indexTitle" ContentPlaceHolderID="TitleContent" runat="server">
-    Home Page
+    Auto-Owners Incident Verification System
 </asp:Content>
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
     <% using (Html.BeginForm("Index", "WeatherIncident", FormMethod.Get))
        { %>
+    <h1>Address Search</h1>
+    <p>
+        <label for="policies">Policy Holder:</label>
+        <%= Html.DropDownList("policies", (SelectList)ViewData["Policies"], "") %>
+    </p>
     <p>
         <label for="address">
             Address:
@@ -25,6 +30,16 @@
             Zip Code:
         </label>
         <%= Html.TextBox("zipCode") %>
+    </p>
+    <p>
+        <label for="latitude">
+            Latitude:
+        </label>
+        <%= Html.TextBox("latitude") %>
+        <label for="longitude">
+            Longitude:
+        </label>
+        <%= Html.TextBox("longitude") %>
     </p>
     <p>
         <label for="startDate">
