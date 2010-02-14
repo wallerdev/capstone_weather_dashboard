@@ -72,6 +72,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\colorbox.css" />
+    <Content Include="Content\images\border1.png" />
+    <Content Include="Content\images\border2.png" />
+    <Content Include="Content\images\internet_explorer\borderBottomCenter.png" />
+    <Content Include="Content\images\internet_explorer\borderBottomLeft.png" />
+    <Content Include="Content\images\internet_explorer\borderBottomRight.png" />
+    <Content Include="Content\images\internet_explorer\borderMiddleLeft.png" />
+    <Content Include="Content\images\internet_explorer\borderMiddleRight.png" />
+    <Content Include="Content\images\internet_explorer\borderTopCenter.png" />
+    <Content Include="Content\images\internet_explorer\borderTopLeft.png" />
+    <Content Include="Content\images\internet_explorer\borderTopRight.png" />
+    <Content Include="Content\images\loading.gif" />
     <Content Include="Content\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\images\ui-bg_glass_55_fbf9ee_1x400.png" />
