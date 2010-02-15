@@ -9,7 +9,8 @@
     <h1>Address Search</h1>
     <p>
         <label for="policies">Policy Holder:</label>
-        <%= Html.DropDownList("policies", (SelectList)ViewData["Policies"], "") %>
+        <%= Html.DropDownList("policy", (SelectList)ViewData["PolicyNames"], "Policy Name") %>
+        <%= Html.DropDownList("policy", (SelectList)ViewData["PolicyNumbers"], "Policy Number")%>
     </p>
     <p>
         <label for="address">

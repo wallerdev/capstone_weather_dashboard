@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using WeatherStation;
 using CapstoneWeatherDashboard.Models;
@@ -23,8 +24,13 @@ namespace CapstoneWeatherDashboard.Controllers
 
         public ActionResult Index()
         {
-            IList<Policy> policies = _repository.ListAll();
-            ViewData["Policies"] = new SelectList(policies, "Number", "Number");
+            List<Policy> policies = _repository.ListAll().ToList();
+            
+            policies.Sort((a, b) => a.Number.CompareTo(b.Number));
+            ViewData["PolicyNumbers"] = new SelectList(policies, "Number", "Number");
+
+            policies.Sort((a, b) => a.Name.CompareTo(b.Name));
+            ViewData["PolicyNames"] = new SelectList(policies, "Number", "Name");
             return View();
         }
     }

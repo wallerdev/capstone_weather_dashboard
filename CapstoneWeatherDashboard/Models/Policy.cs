@@ -26,6 +26,14 @@ namespace CapstoneWeatherDashboard.Models
             private set;
         }
 
+        public string Name
+        {
+            get
+            {
+                return string.Format("{0}, {1}", LastName, FirstName);
+            }
+        }
+
         public string Number
         {
             get;
