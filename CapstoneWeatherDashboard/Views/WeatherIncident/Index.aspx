@@ -5,7 +5,11 @@
 </asp:Content>
 
 <asp:Content ID="extraScripts" ContentPlaceHolderID="ExtraScripts" runat="server">
-    $(document).ready(function() { $(".details").colorbox({iframe:true, innerWidth:"80%", innerHeight:"80%"}); });
+    $(document).ready(function() { 
+        $(".details").colorbox({innerWidth:"50%", html: function() {
+            return $(this).prev().html();
+        }});
+      });
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -39,7 +43,18 @@
                 <%= Html.Encode(item.StartDate.ToString("yyyy-MM-dd")) %>
             </td>
             <td>
-                <a href="http://www.google.com" class="details">Details</a>
+                <div style="display: none;">
+                    <p>
+                        <strong>Location:</strong> <%= Html.Encode(item.Location) %>
+                    </p>
+                    <p>
+                        <strong>Event Type:</strong> <%= Html.Encode(item.EventType) %>
+                    </p>
+                    <p>
+                        <strong>Date:</strong> <%= Html.Encode(item.StartDate.ToString("yyyy-MM-dd")) %>
+                    </p>
+                </div>
+                <a href="#" class="details">Details</a>
             </td>
         </tr>
         <% } %>
