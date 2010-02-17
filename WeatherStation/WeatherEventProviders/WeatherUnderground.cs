@@ -1,19 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Net;
 using System.IO;
+using System.Threading;
 using System.Xml;
 
 namespace WeatherStation.WeatherEventProviders
 {
     public class WeatherUnderground : IWeatherEventProvider
     {
+        private static string _airportCode;
+        private List<WeatherIncident> _incidents = new List<WeatherIncident>();
+
         public IEnumerable<WeatherIncident> GetEvents(Address address, DateTime startDate, DateTime endDate)
         {
-            string airportCode = GetClosestAirport(address.FullAddress);
-            return GetWeatherEvents(airportCode, startDate, endDate);
+            _airportCode = GetClosestAirport(address.FullAddress);
+            ParseWeatherEvents(startDate, endDate);
+            return _incidents.AsEnumerable();
         }
 
         /// <summary>
@@ -22,36 +26,57 @@ namespace WeatherStation.WeatherEventProviders
         /// on that day from the data given.
         /// Right now this function just returns all data for a given day.
         /// </summary>
-        /// <param name="airportCode"></param>
         /// <returns></returns>
-        private static IEnumerable<WeatherIncident> GetWeatherEvents(string airportCode, DateTime startDate, DateTime endDate)
+        private void ParseWeatherEvents(DateTime startDate, DateTime endDate)
         {
-            List<WeatherIncident> returnValues = new List<WeatherIncident>();
-            string weatherHistoryUrl =
-                "http://www.wunderground.com/history/airport/{0}/{1}/{2}/{3}/DailyHistory.html?req_city=Bath&req_state=MI&req_statename=Michigan&format=1";
+            const string weatherHistoryUrl
+                            = "http://www.wunderground.com/history/airport/{0}/{1}/{2}/{3}/DailyHistory.html?req_city=Bath&req_state=MI&req_statename=Michigan&format=1";
 
-            while (startDate <= endDate)
+            // WaitHandles to wait on completion of requests.
+            var handles = new List<WaitHandle>();
+
+            DateTime currDate = startDate;
+            while (currDate <= endDate)
             {
-                string requestUrl = string.Format(weatherHistoryUrl, airportCode, startDate.Year, startDate.Month, startDate.Day);
+                string requestUrl = string.Format(weatherHistoryUrl, _airportCode, startDate.Year, startDate.Month,
+                                                  startDate.Day);
 
-                HttpWebRequest request = WebRequest.Create(requestUrl) as HttpWebRequest;
-                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
-                {
-                    StreamReader reader = new StreamReader(response.GetResponseStream());
+                // Time how long it takes to get two pages
+                handles.Add(GrabPageAsync(requestUrl, startDate));
 
-                    List<WeatherIncident> incidents = ParseWundergroundResponse(reader.ReadToEnd(), airportCode, startDate);
-                    returnValues.AddRange(incidents);
-                }
-
-                startDate = startDate.AddDays(1);
+                currDate.AddDays(1);
             }
-
-            return returnValues.AsEnumerable();
+            WaitHandle.WaitAll(handles.ToArray());
         }
 
-        private static List<WeatherIncident> ParseWundergroundResponse(string responseString, string airportCode, DateTime date)
+        private EventWaitHandle GrabPageAsync(string url, DateTime startDate)
         {
-            var returnList = new List<WeatherIncident>();
+            WebRequest request = WebRequest.Create(url);
+            ManualResetEvent handle = new ManualResetEvent(false);
+            var state = new WeatherUndergroundAsynchronousRequestUserState(startDate, handle, request);
+            IAsyncResult result = request.BeginGetResponse(myClient_OpenReadCompleted, state);
+            return handle;
+        }
+
+        private void myClient_OpenReadCompleted(IAsyncResult result)
+        {
+            try
+            {
+                var state = (WeatherUndergroundAsynchronousRequestUserState)result.AsyncState;
+                WebResponse response = state.Request.EndGetResponse(result);
+
+                var reader = new StreamReader(response.GetResponseStream());
+                ParseWundergroundResponse(reader.ReadToEnd(), "KLAN", state.StartDate);
+            }
+            finally
+            {
+                var state = (WeatherUndergroundAsynchronousRequestUserState)result.AsyncState;
+                state.EventHandle.Set();
+            }
+        }
+
+        private void ParseWundergroundResponse(string responseString, string airportCode, DateTime date)
+        {
             foreach (string row in responseString.Replace("<br />", "").Split('\n'))
             {
                 try
@@ -61,17 +86,17 @@ namespace WeatherStation.WeatherEventProviders
                     {
                         if (entry.Temperature >= 32.0)
                         {
-                            returnList.Add(new WeatherIncident(airportCode, "Flood", date, date));
+                            _incidents.Add(new WeatherIncident(airportCode, "Flood", date, date));
                         }
                         else
                         {
-                            returnList.Add(new WeatherIncident(airportCode, "Snow Storm", date, date));
+                            _incidents.Add(new WeatherIncident(airportCode, "Snow Storm", date, date));
                         }
                         break;
                     }
                     if (entry.WindSpeed > 25)
                     {
-                        returnList.Add(new WeatherIncident(airportCode, "HighWind", date, date));
+                        _incidents.Add(new WeatherIncident(airportCode, "HighWind", date, date));
                         break;
                     }
                 }
@@ -84,7 +109,6 @@ namespace WeatherStation.WeatherEventProviders
                     continue;
                 }
             }
-            return returnList;
         }
 
         /// <summary>
@@ -99,17 +123,48 @@ namespace WeatherStation.WeatherEventProviders
 
             apiUrl = string.Format("{0}{1}", apiUrl, location);
 
-            HttpWebRequest request = WebRequest.Create(apiUrl) as HttpWebRequest;
+            var request = WebRequest.Create(apiUrl) as HttpWebRequest;
             using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
             {
-                StreamReader reader = new StreamReader(response.GetResponseStream());
-                XmlDocument doc = new XmlDocument();
+                var reader = new StreamReader(response.GetResponseStream());
+                var doc = new XmlDocument();
                 doc.Load(reader);
                 XmlNode node = doc.SelectSingleNode("/location/nearby_weather_stations/airport/station/icao");
 
                 string closestAirportCode = node.FirstChild.Value;
                 return closestAirportCode;
             }
+        }
+    }
+
+    /// <summary>
+    /// Internal class used for passing state information to the asynchronous request handler function
+    /// </summary>
+    internal class WeatherUndergroundAsynchronousRequestUserState
+    {
+        internal DateTime StartDate
+        {
+            get;
+            set;
+        }
+
+        internal EventWaitHandle EventHandle
+        {
+            get;
+            set;
+        }
+
+        internal WebRequest Request
+        {
+            get;
+            set;
+        }
+
+        internal WeatherUndergroundAsynchronousRequestUserState(DateTime startDate, EventWaitHandle eventHandle, WebRequest request)
+        {
+            StartDate = startDate;
+            EventHandle = eventHandle;
+            Request = request;
         }
     }
 }
