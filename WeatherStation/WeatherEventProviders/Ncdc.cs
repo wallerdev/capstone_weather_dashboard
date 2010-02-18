@@ -50,6 +50,8 @@ namespace WeatherStation
 
             try
             {
+                string test = node.SelectSingleNode("tr/td[@headers='h1']/a").Attributes["href"].Value.Trim();
+
                 //This goes through each row and pulls out the location and event type
                 // This is fragile because we are depending on the html of the response
                 var events = (from weatherEvent in node.SelectNodes("tr")
@@ -57,11 +59,14 @@ namespace WeatherStation
                               select
                                   new WeatherIncident(
                                   weatherEvent.SelectSingleNode("td[@headers='h1']/a").InnerText.Trim(),
-                                  weatherEvent.SelectSingleNode("td[@headers='h4']").InnerText.Trim(),
+                                  WeatherIncidentType.Parse(
+                                      weatherEvent.SelectSingleNode("td[@headers='h4']").InnerText.Trim()),
                                   DateTime.Parse(
                                       weatherEvent.SelectSingleNode("td[@headers='h2']").InnerText.Trim()),
                                   DateTime.Parse(
-                                      weatherEvent.SelectSingleNode("td[@headers='h2']").InnerText.Trim()))
+                                      weatherEvent.SelectSingleNode("td[@headers='h2']").InnerText.Trim()),
+                                  new Uri(
+                                      weatherEvent.SelectSingleNode("td[@headers='h1']/a").Attributes["href"].Value.Trim()))
                              );
                 return events;
             }

@@ -37,7 +37,7 @@
                 <%= Html.Encode(item.Location) %>
             </td>
             <td>
-                <%= Html.Encode(item.EventType) %>
+                <%= Html.Encode(item.EventType.ToString()) %>
             </td>
             <td>
                 <%= Html.Encode(item.StartDate.ToString("yyyy-MM-dd")) %>
@@ -48,10 +48,13 @@
                         <strong>Location:</strong> <%= Html.Encode(item.Location) %>
                     </p>
                     <p>
-                        <strong>Event Type:</strong> <%= Html.Encode(item.EventType) %>
+                        <strong>Event Type:</strong> <%= Html.Encode(item.EventType.ToString()) %>
                     </p>
                     <p>
                         <strong>Date:</strong> <%= Html.Encode(item.StartDate.ToString("yyyy-MM-dd")) %>
+                    </p>
+                    <p>
+                        <strong>More Information:</strong> <%= string.Format("<a href='{0}' target='_blank'>{0}</a>", item.MoreInformationUrl.AbsoluteUri)  %>
                     </p>
                 </div>
                 <a href="#" class="details">Details</a>

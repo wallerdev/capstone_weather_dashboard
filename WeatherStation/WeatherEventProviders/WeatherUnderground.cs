@@ -12,6 +12,10 @@ namespace WeatherStation.WeatherEventProviders
     {
         private static string _airportCode;
         private List<WeatherIncident> _incidents = new List<WeatherIncident>();
+        private readonly string _weatherHistoryCsvUrl
+                            = "http://www.wunderground.com/history/airport/{0}/{1}/{2}/{3}/DailyHistory.html?req_city=Bath&req_state=MI&req_statename=Michigan&format=1";
+        private readonly string _weatherHistoryUrl
+                            = "http://www.wunderground.com/history/airport/{0}/{1}/{2}/{3}/DailyHistory.html?req_city=Bath&req_state=MI&req_statename=Michigan";
 
         public IEnumerable<WeatherIncident> GetEvents(Address address, DateTime startDate, DateTime endDate)
         {
@@ -29,16 +33,13 @@ namespace WeatherStation.WeatherEventProviders
         /// <returns></returns>
         private void ParseWeatherEvents(DateTime startDate, DateTime endDate)
         {
-            const string weatherHistoryUrl
-                            = "http://www.wunderground.com/history/airport/{0}/{1}/{2}/{3}/DailyHistory.html?req_city=Bath&req_state=MI&req_statename=Michigan&format=1";
-
             // WaitHandles to wait on completion of requests.
             var handles = new List<WaitHandle>();
 
             DateTime currDate = startDate;
             while (currDate <= endDate)
             {
-                string requestUrl = string.Format(weatherHistoryUrl, _airportCode, startDate.Year, startDate.Month,
+                string requestUrl = string.Format(_weatherHistoryCsvUrl, _airportCode, startDate.Year, startDate.Month,
                                                   startDate.Day);
 
                 // Time how long it takes to get two pages
@@ -77,6 +78,10 @@ namespace WeatherStation.WeatherEventProviders
 
         private void ParseWundergroundResponse(string responseString, string airportCode, DateTime date)
         {
+            string moreInfoUrlAsString = string.Format(_weatherHistoryCsvUrl, _airportCode, date.Year, date.Month,
+                                                  date.Day);
+            var moreInfoUrl = new Uri(moreInfoUrlAsString);
+
             foreach (string row in responseString.Replace("<br />", "").Split('\n'))
             {
                 try
@@ -86,17 +91,17 @@ namespace WeatherStation.WeatherEventProviders
                     {
                         if (entry.Temperature >= 32.0)
                         {
-                            _incidents.Add(new WeatherIncident(airportCode, "Flood", date, date));
+                            _incidents.Add(new WeatherIncident(airportCode, WeatherIncidentType.Type.Flood, date, date, moreInfoUrl));
                         }
                         else
                         {
-                            _incidents.Add(new WeatherIncident(airportCode, "Snow Storm", date, date));
+                            _incidents.Add(new WeatherIncident(airportCode, WeatherIncidentType.Type.WinterStorm, date, date, moreInfoUrl));
                         }
                         break;
                     }
                     if (entry.WindSpeed > 25)
                     {
-                        _incidents.Add(new WeatherIncident(airportCode, "HighWind", date, date));
+                        _incidents.Add(new WeatherIncident(airportCode, WeatherIncidentType.Type.HighWind, date, date, moreInfoUrl));
                         break;
                     }
                 }

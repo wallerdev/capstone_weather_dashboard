@@ -15,7 +15,7 @@ namespace WeatherStation
             set;
         }
 
-        public string EventType
+        public WeatherIncidentType.Type EventType
         {
             get;
             set;
@@ -33,12 +33,20 @@ namespace WeatherStation
             set;
         }
 
-        public WeatherIncident(string location, string eventType, DateTime startDate, DateTime endDate)
+        public Uri MoreInformationUrl
+        {
+            get;
+            set;
+        }
+
+        public WeatherIncident(string location, WeatherIncidentType.Type eventType
+                                , DateTime startDate, DateTime endDate, Uri moreInformationUrl)
         {
             Location = location;
             EventType = eventType;
             StartDate = startDate;
             EndDate = endDate;
+            MoreInformationUrl = moreInformationUrl;
         }
     }
 }
