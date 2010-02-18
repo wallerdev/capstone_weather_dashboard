@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WeatherStation.WeatherEventProviders
 {
-    class WeatherUndergroundEntry
+    public class WeatherUndergroundEntry
     {
         public DateTime Date
         {
@@ -80,8 +80,7 @@ namespace WeatherStation.WeatherEventProviders
         }
 
         /// <summary>
-        /// Creates a new weather underground entry. Throws a FormatException
-        /// if it is unable to parse the csvRow.
+        /// Creates a new weather underground entry.
         /// </summary>
         /// <param name="date"></param>
         /// <param name="csvRow"></param>
@@ -89,6 +88,10 @@ namespace WeatherStation.WeatherEventProviders
         public WeatherUndergroundEntry(DateTime date, string csvRow)
         {
             string[] csvElements = csvRow.Split(',');
+            if(csvElements.Length < 12)
+            {
+                throw new FormatException("Invalid Weather Underground data");
+            }
             Date = date;
             Temperature = double.Parse(csvElements[1]);
             DewPoint = double.Parse(csvElements[2]);
@@ -96,7 +99,15 @@ namespace WeatherStation.WeatherEventProviders
             SeaLevelPressure = double.Parse(csvElements[4]);
             Visibility = double.Parse(csvElements[5]);
             WindDirection = csvElements[6];
-            WindSpeed = double.Parse(csvElements[7]);
+
+            if(csvElements[7] == "Calm")
+            {
+                WindSpeed = 0.0;
+            }
+            else
+            {
+                WindSpeed = double.Parse(csvElements[7]);
+            }
 
             if (csvElements[8] == "-")
             {

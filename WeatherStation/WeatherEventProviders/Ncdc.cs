@@ -13,7 +13,7 @@ namespace WeatherStation
         private static IEnumerable<WeatherIncident> GetStormEvents(string stateTwoLetterCode, string countyInState, DateTime startDate, DateTime endDate)
         {
             // hardcoded url that we scrape the data from
-            string baseNcdcUrl = "http://www4.ncdc.noaa.gov/cgi-win/wwcgi.dll?wwevent~storms";
+            const string baseNcdcUrl = "http://www4.ncdc.noaa.gov/cgi-win/wwcgi.dll?wwevent~storms";
 
             // the post parameters for making the call
             string parameters =
@@ -48,33 +48,27 @@ namespace WeatherStation
                         "//table[@summary='This Table displays the Events Query output by state and date.']");
             }
 
-            try
+            if(node != null)
             {
-                string test = node.SelectSingleNode("tr/td[@headers='h1']/a").Attributes["href"].Value.Trim();
-
-                //This goes through each row and pulls out the location and event type
+                // This goes through each row and pulls out the location and event type
                 // This is fragile because we are depending on the html of the response
-                var events = (from weatherEvent in node.SelectNodes("tr")
-                              where weatherEvent.SelectSingleNode("td[@headers]") != null
-                              select
-                                  new WeatherIncident(
-                                  weatherEvent.SelectSingleNode("td[@headers='h1']/a").InnerText.Trim(),
-                                  WeatherIncidentType.Parse(
-                                      weatherEvent.SelectSingleNode("td[@headers='h4']").InnerText.Trim()),
-                                  DateTime.Parse(
-                                      weatherEvent.SelectSingleNode("td[@headers='h2']").InnerText.Trim()),
-                                  DateTime.Parse(
-                                      weatherEvent.SelectSingleNode("td[@headers='h2']").InnerText.Trim()),
-                                  new Uri(
-                                      weatherEvent.SelectSingleNode("td[@headers='h1']/a").Attributes["href"].Value.Trim()))
-                             );
-                return events;
+                return
+                    (from weatherEvent in node.SelectNodes("tr")
+                     where weatherEvent.SelectSingleNode("td[@headers]") != null
+                     select
+                         new WeatherIncident(
+                         weatherEvent.SelectSingleNode("td[@headers='h1']/a").InnerText.Trim(),
+                         WeatherIncidentClassifier.Classify(
+                             weatherEvent.SelectSingleNode("td[@headers='h4']").InnerText.Trim()),
+                         DateTime.Parse(
+                             weatherEvent.SelectSingleNode("td[@headers='h2']").InnerText.Trim()),
+                         DateTime.Parse(
+                             weatherEvent.SelectSingleNode("td[@headers='h2']").InnerText.Trim()),
+                         new Uri(
+                             weatherEvent.SelectSingleNode("td[@headers='h1']/a").Attributes["href"].Value.Trim()))
+                     );
             }
-            catch(NullReferenceException)
-            {
-                // no events were found, return empty list
-                return new List<WeatherIncident>().AsEnumerable(); 
-            }
+            return new WeatherIncident[0];
         }
 
         public IEnumerable<WeatherIncident> GetEvents(Address address, DateTime startDate, DateTime endDate)

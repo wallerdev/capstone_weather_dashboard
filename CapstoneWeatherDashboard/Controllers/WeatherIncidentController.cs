@@ -25,11 +25,11 @@ namespace CapstoneWeatherDashboard.Controllers
 
             // get incidents from each source
             var NCDCIncidents = ncdc.GetEvents(address, startDate, endDate);
-            // var wundergroundIncidents = wunderground.GetEvents(address, startDate, endDate);
+            var wundergroundIncidents = wunderground.GetEvents(address, startDate, endDate);
 
             // concatenate incidents into one list
-            // var incidents = NCDCIncidents.Concat(wundergroundIncidents);
-            return View(NCDCIncidents.OrderBy(incident => incident.StartDate).Reverse());
+            var incidents = NCDCIncidents.Concat(wundergroundIncidents);
+            return View(incidents.OrderBy(incident => incident.StartDate).Reverse());
 
         }
 

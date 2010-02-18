@@ -49,10 +49,7 @@ namespace CapstoneWeatherDashboard.Controllers
             {
                 throw new InvalidOperationException("Windows authentication is not supported.");
             }
-            else
-            {
-                base.Initialize(requestContext);
-            }
+            base.Initialize(requestContext);
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
