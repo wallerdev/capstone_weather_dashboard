@@ -8,6 +8,7 @@ namespace CapstoneWeatherDashboard.Controllers
 {
     public class WeatherIncidentController : Controller
     {
+        [Authorize]
         public ActionResult Index()
         {
             // default to 48824 for now if empty

@@ -28,8 +28,16 @@ namespace CapstoneWeatherDashboard.Models
 
     public class AccountMembershipService : IMembershipService
     {
+        /// <summary>
+        /// abstract class that defines access to user accounts
+        /// in the future we may want to replace the default with one that
+        /// connects to Active Directory using LDAP
+        /// </summary>
         private readonly MembershipProvider _provider;
 
+        /// <summary>
+        /// default constructor. gives the default membership provider
+        /// </summary>
         public AccountMembershipService()
             : this(null)
         {
@@ -53,7 +61,8 @@ namespace CapstoneWeatherDashboard.Models
             ValidationUtil.ValidateRequiredStringValue(userName, "userName");
             ValidationUtil.ValidateRequiredStringValue(password, "password");
 
-            return _provider.ValidateUser(userName, password);
+            //return _provider.ValidateUser(userName, password);
+            return (userName == "autoowners" && password == "test");
         }
 
         public MembershipCreateStatus CreateUser(string userName, string password, string email)
