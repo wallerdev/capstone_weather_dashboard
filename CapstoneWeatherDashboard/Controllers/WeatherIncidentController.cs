@@ -24,11 +24,17 @@ namespace CapstoneWeatherDashboard.Controllers
             var wunderground =  new WeatherUnderground();
 
             // get incidents from each source
-            var NCDCIncidents = ncdc.GetEvents(address, startDate, endDate);
-            var wundergroundIncidents = wunderground.GetEvents(address, startDate, endDate);
+            var ncdcIncidents = ncdc.GetEvents(address, startDate, endDate);
+            var incidents = ncdcIncidents;
 
-            // concatenate incidents into one list
-            var incidents = NCDCIncidents.Concat(wundergroundIncidents);
+            // Only use weather underground for periods of 7 or less days since it's slow
+            if(startDate.AddDays(7) > endDate)
+            {
+                var wundergroundIncidents = wunderground.GetEvents(address, startDate, endDate);
+                incidents.Concat(wundergroundIncidents);
+            }
+            
+
             return View(incidents.OrderBy(incident => incident.StartDate).Reverse());
 
         }
