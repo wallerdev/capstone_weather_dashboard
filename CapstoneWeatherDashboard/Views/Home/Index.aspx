@@ -3,6 +3,9 @@
 <asp:Content ID="indexTitle" ContentPlaceHolderID="TitleContent" runat="server">
     Auto-Owners Incident Verification System
 </asp:Content>
+<asp:Content ContentPlaceHolderID="HeadContent" runat="server">
+    <script src="/demo/Scripts/NewSearch.js" type="text/javascript"></script>
+</asp:Content>
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
     <h1>
         Weather Incident Verification
@@ -22,7 +25,7 @@
                         </label>
                     </td>
                     <td>
-                        <%= Html.TextBox("startDate", "", new {@class = "text"}) %>
+                        <%= Html.TextBox("startDate", "", new { @class = "text", placeholder = DateTime.Today.AddDays(-7).ToShortDateString() }) %>
                     </td>
                 </tr>
                 <tr>
@@ -32,7 +35,7 @@
                         </label>
                     </td>
                     <td>
-                        <%= Html.TextBox("endDate", "", new {@class = "text"}) %>
+                        <%= Html.TextBox("endDate", "", new { @class = "text", placeholder = DateTime.Today.ToShortDateString() })%>
                     </td>
                 </tr>
             </table>

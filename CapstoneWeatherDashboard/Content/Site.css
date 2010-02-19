@@ -82,7 +82,7 @@ form
     margin: 0 0 20px 0;
     width: 500px;
     background-color: #FFF;
-    border: 1px solid #ccc;
+    border: 1px solid #CCC;
 }
 
 fieldset
@@ -163,4 +163,9 @@ td
 #dateRange
 {
     margin-bottom: 10px;
+}
+
+.placeholder
+{
+    color: #999;
 }
