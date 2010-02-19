@@ -1,18 +1,14 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<WeatherStation.WeatherIncident>>" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-    Index
+<asp:Content ContentPlaceHolderID="TitleContent" runat="server">
+    Weather Incidents
 </asp:Content>
-
-<asp:Content ID="extraScripts" ContentPlaceHolderID="ExtraScripts" runat="server">
-    $(document).ready(function() { 
-        $(".details").colorbox({innerWidth:"50%", html: function() {
-            return $(this).prev().html();
-        }});
-      });
+<asp:Content ContentPlaceHolderID="HeadContent" runat="server">
+    <link href="Content/colorbox.css" rel="stylesheet" type="text/css" />
+    <script src="/demo/Scripts/jquery.colorbox-min.js" type="text/javascript"></script>
+    <script src="/demo/Scripts/WeatherIncident.js" type="text/javascript"></script>
 </asp:Content>
-
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ContentPlaceHolderID="MainContent" runat="server">
     <h2>
         Weather Incidents
     </h2>
@@ -45,16 +41,20 @@
             <td>
                 <div style="display: none;">
                     <p>
-                        <strong>Location:</strong> <%= Html.Encode(item.Location) %>
+                        <strong>Location:</strong>
+                        <%= Html.Encode(item.Location) %>
                     </p>
                     <p>
-                        <strong>Event Type:</strong> <%= Html.Encode(item.EventType.ToString()) %>
+                        <strong>Event Type:</strong>
+                        <%= Html.Encode(item.EventType.ToString()) %>
                     </p>
                     <p>
-                        <strong>Date:</strong> <%= Html.Encode(item.StartDate.ToString("yyyy-MM-dd")) %>
+                        <strong>Date:</strong>
+                        <%= Html.Encode(item.StartDate.ToString("yyyy-MM-dd")) %>
                     </p>
                     <p>
-                        <strong>More Information:</strong> <%= string.Format("<a href='{0}' target='_blank'>{0}</a>", item.MoreInformationUrl.AbsoluteUri)  %>
+                        <strong>More Information:</strong>
+                        <%= string.Format("<a href='{0}' target='_blank'>{0}</a>", item.MoreInformationUrl.AbsoluteUri)  %>
                     </p>
                 </div>
                 <a href="#" class="details">Details</a>
@@ -62,9 +62,10 @@
         </tr>
         <% } %>
     </table>
-    
-    
-    <script src="http://maps.google.com/maps?file=api&amp;v=2.x&amp;key=ABQIAAAAam0nwuIjjXo0_gZGpAyU2hRCy4l6b2RPYQNXTJn1LO8P79-4LxTFJKh9yf0ov08TsXwL824gW69e8w" type="text/javascript"></script>
+
+    <script src="http://maps.google.com/maps?file=api&amp;v=2.x&amp;key=ABQIAAAAam0nwuIjjXo0_gZGpAyU2hRCy4l6b2RPYQNXTJn1LO8P79-4LxTFJKh9yf0ov08TsXwL824gW69e8w"
+        type="text/javascript"></script>
+
     <script type="text/javascript">
         var geocoder = null;
         geocoder = new GClientGeocoder();
@@ -89,9 +90,9 @@
         }
     </script>
 
-     <script type="text/javascript" 
-        src="http://www.google.com/jsapi?key=ABQIAAAAam0nwuIjjXo0_gZGpAyU2hRCy4l6b2RPYQNXTJn1LO8P79-4LxTFJKh9yf0ov08TsXwL824gW69e8w"></script>
-     <script type="text/javascript">
+    <script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAam0nwuIjjXo0_gZGpAyU2hRCy4l6b2RPYQNXTJn1LO8P79-4LxTFJKh9yf0ov08TsXwL824gW69e8w"></script>
+
+    <script type="text/javascript">
     
       google.load("maps", "2");
       // Call this function when the page has been loaded
@@ -110,8 +111,8 @@
 
     <form id="form1" runat="server">
     <div>
-        <div id="map" style="width: 400px; height: 400px"></div>
+        <div id="map" style="width: 400px; height: 400px">
+        </div>
     </div>
     </form>
-    
 </asp:Content>

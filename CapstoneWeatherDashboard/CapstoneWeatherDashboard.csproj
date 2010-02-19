@@ -105,6 +105,7 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\jquery.colorbox-min.js" />
     <Content Include="Scripts\jquery.colorbox.js" />
+    <Content Include="Scripts\WeatherIncident.js" />
     <Content Include="Views\WeatherIncident\Index.aspx" />
     <Content Include="Web.config" />
     <Content Include="Content\Site.css" />
