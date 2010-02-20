@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using CapstoneWeatherDashboard.Models;
 using WeatherStation;
+using WeatherStation.Geocode;
 using WeatherStation.WeatherEventProviders;
 
 namespace CapstoneWeatherDashboard.Controllers
