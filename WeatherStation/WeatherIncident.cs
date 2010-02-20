@@ -50,6 +50,11 @@ namespace WeatherStation
             private set;
         }
 
+        public string StartDateString
+        {
+            get { return StartDate.ToString("yyyy-MM-dd");  }
+        }
+
         public DateTime EndDate
         {
             get;

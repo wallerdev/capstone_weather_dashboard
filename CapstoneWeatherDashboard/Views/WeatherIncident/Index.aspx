@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage" %>
-<%@ Import Namespace="WeatherStation"%>
 
+<%@ Import Namespace="WeatherStation" %>
 <asp:Content ContentPlaceHolderID="TitleContent" runat="server">
     Weather Incidents
 </asp:Content>
@@ -13,8 +13,50 @@
     <script src="/demo/Scripts/WeatherIncident.js" type="text/javascript"></script>
 
     <script type="text/javascript">
+        var urls = [];
+        var allIncidents = [];
+        
+        function displayIncidents(incidents) {
+            for(var i in incidents) {
+                allIncidents.push(incidents[i]);
+            }
+            
+            allIncidents = allIncidents.sort(function(a, b) {
+                if(a.StartDateString < b.StartDateString) {
+                    return -1;
+                } else if(a.StartDateString > b.StartDateString) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
+            
+            html = '';
+            
+            for(var i in allIncidents) {
+                html += '<div class="result ' + allIncidents[i].EventTypeString + '">' + 
+                            '<p class="distance">' + i + ' miles away</p>' +
+                            '<p class="date">' + allIncidents[i].StartDateString + '</p>' +
+                            '<p class="eventType">' + allIncidents[i].EventTypeInWords + '</p>' +
+                            '<div class="additionalInfo">' + 
+                                '<p>' + 
+                                    '<label>Source:</label>' +
+                                    '<a href="' + allIncidents[i].MoreInformationUrl + '">' +
+                                        allIncidents[i].MoreInformationUrl +
+                                    '</a>' +
+                                '</p>' +
+                            '</div>' +
+                        '</div>'
+            }
+            
+            $("#results").html(html);
+        
+            if(urls.length > 0) {
+                $.getJSON(urls.shift(), displayIncidents);
+            }
+        }
+        
         $(function() {
-            var urls = [];
 
             // NCDC Weather Incidents
 
@@ -30,10 +72,9 @@
                 urls.push('<%= Url.Action("Index", "WeatherUndergroundWeatherIncident", new { date = d.ToShortDateString(), airportCode = ViewData["airportCode"] }) %>');
             <%}%>
 
-            for(var i in urls) {
-                // $.get(urls[i])
+            if(urls.length > 0) {
+                $.getJSON(urls.shift(), displayIncidents);
             }
-            $.get('');
         });
     </script>
 
@@ -42,4 +83,6 @@
     <h2>
         Weather Incidents
     </h2>
+    <div id="results">
+    </div>
 </asp:Content>

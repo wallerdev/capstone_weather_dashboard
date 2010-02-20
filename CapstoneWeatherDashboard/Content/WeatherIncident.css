@@ -24,6 +24,25 @@ tr
     margin-top: 10px;
 }
 
+.distance, .date, .eventType
+{
+    font-weight: bold;
+}   
+
+.distance
+{
+    float: right;
+}
+
+.date
+{
+    float: left;
+}
+
+.eventType
+{
+    text-align: center;
+}
 
 .DenseFog
 {

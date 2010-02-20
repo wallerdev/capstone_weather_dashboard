@@ -15,7 +15,7 @@ namespace CapstoneWeatherDashboard.Controllers
             DateTime date = DateTime.Parse(Request.QueryString["date"]);
 
             var weatherUnderground = new WeatherUnderground();
-            return Json(weatherUnderground.GetEvents(airportCode, date));
+            return Json(weatherUnderground.GetEvents(airportCode, date), JsonRequestBehavior.AllowGet);
         }
 
     }
