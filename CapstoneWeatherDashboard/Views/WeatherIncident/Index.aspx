@@ -10,6 +10,11 @@
 
     <script src="/demo/Scripts/jquery.colorbox-min.js" type="text/javascript"></script>
 
+    <script src="http://maps.google.com/maps?file=api&amp;v=2.x&amp;key=ABQIAAAAam0nwuIjjXo0_gZGpAyU2hRCy4l6b2RPYQNXTJn1LO8P79-4LxTFJKh9yf0ov08TsXwL824gW69e8w"
+        type="text/javascript"></script>
+
+    <script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAam0nwuIjjXo0_gZGpAyU2hRCy4l6b2RPYQNXTJn1LO8P79-4LxTFJKh9yf0ov08TsXwL824gW69e8w"></script>
+
     <script src="/demo/Scripts/WeatherIncident.js" type="text/javascript"></script>
 
     <script type="text/javascript">
@@ -47,6 +52,11 @@
                                 '</p>' +
                             '</div>' +
                         '</div>'
+                        /* 
+            <div>
+                <label>Map:</label>
+                <div class="map" title="Eagle, MI" style="height:500px; width:500px"></div>
+            </div> */
             }
             
             $("#results").html(html);
@@ -76,13 +86,12 @@
                 $.getJSON(urls.shift(), displayIncidents);
             }
         });
+        
+        var homeAddress = '<%= ViewData["homeAddress"] %>';
     </script>
 
-</asp:Content>
-<asp:Content ContentPlaceHolderID="MainContent" runat="server">
-    <h2>
-        Weather Incidents
-    </h2>
-    <div id="results">
-    </div>
+    <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
+        <div id="results">
+        </div>
+    </asp:Content>
 </asp:Content>

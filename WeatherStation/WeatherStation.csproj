@@ -56,7 +56,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Address.cs" />
-    <Compile Include="Geocode.cs" />
+    <Compile Include="Geocode\GoogleGeocoder.cs" />
+    <Compile Include="Geocode\GoogleGeocodeResponse.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -64,7 +65,6 @@
     </Compile>
     <Compile Include="State.cs" />
     <Compile Include="WeatherEventProviders\Ncdc.cs" />
-    <Compile Include="WeatherEventProviders\Noaa.cs" />
     <Compile Include="Service References\NoaaService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using CapstoneWeatherDashboard.Models;
 using WeatherStation;
 
 namespace CapstoneWeatherDashboard.Controllers
@@ -26,7 +27,7 @@ namespace CapstoneWeatherDashboard.Controllers
                 throw new NotImplementedException();
             }
 
-            if(address == null)
+            if (address == null)
             {
                 // TODO: change to some asp.net mvc validation system
                 throw new ArgumentException("Invalid Search");

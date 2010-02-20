@@ -74,6 +74,7 @@
     <Compile Include="Models\IPolicyRepository.cs" />
     <Compile Include="Models\Policy.cs" />
     <Compile Include="Models\PolicyRepository.cs" />
+    <Compile Include="Models\WeatherIncidentModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
