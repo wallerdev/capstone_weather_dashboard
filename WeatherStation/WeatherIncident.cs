@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace WeatherStation
 {
@@ -8,35 +9,52 @@ namespace WeatherStation
     /// </summary>
     public class WeatherIncident
     {
-
         public string Location
         {
             get;
-            set;
+            private set;
         }
 
         public WeatherIncidentType EventType
         {
             get;
-            set;
+            private set;
+        }
+
+        public string EventTypeInWords
+        {
+            get
+            {
+                return new Dictionary<WeatherIncidentType, string>
+                           {
+                               {WeatherIncidentType.DenseFog, "Dense Fog"},
+                               {WeatherIncidentType.ExtremeCold, "Extreme Cold"},
+                               {WeatherIncidentType.Flood, "Flood"},
+                               {WeatherIncidentType.Hail, "Hail"},
+                               {WeatherIncidentType.HighWind, "High Wind"},
+                               {WeatherIncidentType.IceStorm, "Ice Storm"},
+                               {WeatherIncidentType.Tornado, "Tornado"},
+                               {WeatherIncidentType.WinterStorm, "Winter Storm"}
+                           }[EventType];
+            }
         }
 
         public DateTime StartDate
         {
             get;
-            set;
+            private set;
         }
 
         public DateTime EndDate
         {
             get;
-            set;
+            private set;
         }
 
         public Uri MoreInformationUrl
         {
             get;
-            set;
+            private set;
         }
 
         public WeatherIncident(string location, WeatherIncidentType eventType

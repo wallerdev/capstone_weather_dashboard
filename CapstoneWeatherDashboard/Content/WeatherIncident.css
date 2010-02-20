@@ -1,0 +1,18 @@
+﻿td 
+{
+    background-color: #FFF;
+    padding: 5px;
+}
+
+tr
+{
+    border: 1px solid red;
+}
+
+.result 
+{
+    background-color: #FFF;
+    border: 1px solid #CCC;
+    padding: 10px;
+    margin: 10px 0;
+}

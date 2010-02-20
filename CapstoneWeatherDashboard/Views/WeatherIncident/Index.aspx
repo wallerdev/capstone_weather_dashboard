@@ -5,27 +5,24 @@
 </asp:Content>
 <asp:Content ContentPlaceHolderID="HeadContent" runat="server">
     <link href="Content/colorbox.css" rel="stylesheet" type="text/css" />
+    <link href="Content/WeatherIncident.css" rel="stylesheet" type="text/css" />
+
     <script src="/demo/Scripts/jquery.colorbox-min.js" type="text/javascript"></script>
+
     <script src="/demo/Scripts/WeatherIncident.js" type="text/javascript"></script>
+
 </asp:Content>
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
     <h2>
         Weather Incidents
     </h2>
-    <table>
-        <tr>
-            <th>
-                Location
-            </th>
-            <th>
-                Event Type
-            </th>
-            <th>
-                Date
-            </th>
-            <th>
-            </th>
-        </tr>
+    <% foreach (var item in Model)
+       { %>
+    <div class="result">
+        <p><%= Html.Encode(item.Location) %>, <%= Html.Encode(item.EventTypeInWords) %>, <%= Html.Encode(item.StartDate.ToString("yyyy-MM-dd")) %> </p>
+    </div>
+    <% } %>
+    <table id="results">
         <% foreach (var item in Model)
            { %>
         <tr>
@@ -33,7 +30,7 @@
                 <%= Html.Encode(item.Location) %>
             </td>
             <td>
-                <%= Html.Encode(item.EventType.ToString()) %>
+                <%= Html.Encode(item.EventTypeInWords) %>
             </td>
             <td>
                 <%= Html.Encode(item.StartDate.ToString("yyyy-MM-dd")) %>
@@ -73,8 +70,8 @@
         var marker;
         var lat;
         var lon;
-        
-//        document.write(address);
+
+        //        document.write(address);
         geocoder.getLocations(address, Set);
 
         function Set(response) {
@@ -85,7 +82,7 @@
                           place.Point.coordinates[0]);
             lat = place.Point.coordinates[1];
             lon = place.Point.coordinates[0];
-//            document.write(point);
+            //            document.write(point);
 
         }
     </script>
@@ -93,20 +90,20 @@
     <script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAam0nwuIjjXo0_gZGpAyU2hRCy4l6b2RPYQNXTJn1LO8P79-4LxTFJKh9yf0ov08TsXwL824gW69e8w"></script>
 
     <script type="text/javascript">
-    
-      google.load("maps", "2");
-      // Call this function when the page has been loaded
-      function initialize() {
-        var map = new google.maps.Map2(document.getElementById("map"))
-        var point3 = new GLatLng(lat, lon);
-        var marker = new GMarker(point3);
-        map.setCenter(point3, 11);
 
-        map.addOverlay(marker);
-        
-        map.addControl(new GLargeMapControl());
-      }
-      google.setOnLoadCallback(initialize); 
+        google.load("maps", "2");
+        // Call this function when the page has been loaded
+        function initialize() {
+            var map = new google.maps.Map2(document.getElementById("map"))
+            var point3 = new GLatLng(lat, lon);
+            var marker = new GMarker(point3);
+            map.setCenter(point3, 11);
+
+            map.addOverlay(marker);
+
+            map.addControl(new GLargeMapControl());
+        }
+        google.setOnLoadCallback(initialize); 
     </script>
 
     <form id="form1" runat="server">

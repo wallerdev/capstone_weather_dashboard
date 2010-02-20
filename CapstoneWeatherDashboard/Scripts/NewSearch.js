@@ -1,5 +1,4 @@
 ﻿$(document).ready(function() {
-    $("input[placeholder]").each(function() {
-        $(this).placeholder();
-    });
+    $("input[placeholder]").placeholder();
+    $("form").corner();
 });
