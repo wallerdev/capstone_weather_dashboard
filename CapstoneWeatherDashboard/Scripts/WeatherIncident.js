@@ -1,13 +1,84 @@
 ﻿google.load("maps", "2");
 
-$(document).ready(function() {
-    $(".details").colorbox({ innerWidth: "50%", html: function() {
-        return $(this).prev().html();
+var urls = [];
+var allIncidents = [];
+
+function displayIncidents(incidents) {
+    for (var i in incidents) {
+        allIncidents.push(incidents[i]);
     }
+
+    allIncidents = allIncidents.sort(function(a, b) {
+        if (a.StartDateString < b.StartDateString) {
+            return -1;
+        } else if (a.StartDateString > b.StartDateString) {
+            return 1;
+        } else {
+            return 0;
+        }
     });
-    $(".result").click(function() {
+
+    html = '';
+
+    for (var i in allIncidents) {
+        html += '<div class="result ' + allIncidents[i].EventTypeString + '">' +
+                            '<p class="distance">' + i + ' miles away</p>' +
+                            '<p class="date">' + allIncidents[i].StartDateString + '</p>' +
+                            '<p class="eventType">' + allIncidents[i].EventTypeInWords + '</p>' +
+                            '<div class="additionalInfo">' +
+                                '<p>' +
+                                    '<label>Source:</label>' +
+                                    '<a href="' + allIncidents[i].MoreInformationUrl + '">' +
+                                        allIncidents[i].MoreInformationUrl +
+                                    '</a>' +
+                                '</p>' +
+                                '<div>' +
+                                    '<label>Map:</label>' +
+                                    '<div class="map" title="Eagle, MI"></div>' +
+                                '</div>' + 
+                            '</div>' +
+                        '</div>'
+        /* 
+        <div>
+        <label>Map:</label>
+        <div class="map" title="Eagle, MI" style="height:500px; width:500px"></div>
+        </div> */
+    }
+
+    $('#results').html(html);
+
+    $('.result').click(function() {
         $(this).find(".additionalInfo").slideToggle();
+
+        // setup google map
+        $(this).find('.map').each(function() {
+            var geocoderEach = new GClientGeocoder();
+            var address = $(this).attr("title");
+
+            var mapDiv = $(this)[0];
+
+            geocoderEach.getLatLng(address, function(point) {
+                if (!point) {
+                    //alert(address + " not found");
+                } else {
+                    var map = new google.maps.Map2(mapDiv);
+                    map.setCenter(point, 10);
+                    var marker = new GMarker(point);
+                    map.addOverlay(marker);
+                    map.addOverlay(homeMarker);
+                    marker.openInfoWindowHtml(address);
+                    map.addControl(new GLargeMapControl());
+                }
+            });
+        });
     });
+
+    if (urls.length > 0) {
+        $.getJSON(urls.shift(), displayIncidents);
+    }
+}
+
+$(document).ready(function() {
 
     var geocoder = new GClientGeocoder();
 
@@ -21,28 +92,5 @@ $(document).ready(function() {
             place.Point.coordinates[0]);
 
         homeMarker = new GMarker(homePoint);
-    });
-
-
-    $(".map").each(function() {
-        var geocoderEach = new GClientGeocoder();
-        var address = $(this).attr("title");
-
-        var mapDiv = $(this)[0];
-
-        geocoderEach.getLatLng(address, function(point) {
-            if (!point) {
-                //alert(address + " not found");
-            }
-            else {
-                var map = new google.maps.Map2(mapDiv);
-                map.setCenter(point, 10);
-                var marker = new GMarker(point);
-                map.addOverlay(marker);
-                map.addOverlay(homeMarker);
-                marker.openInfoWindowHtml(address);
-                map.addControl(new GLargeMapControl());
-            }
-        });
     });
 });

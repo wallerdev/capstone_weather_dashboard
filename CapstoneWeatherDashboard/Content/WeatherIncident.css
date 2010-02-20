@@ -20,7 +20,7 @@ tr
 
 .additionalInfo
 {
-    /*display: none;*/
+    display: none;
     margin-top: 10px;
 }
 
@@ -42,6 +42,12 @@ tr
 .eventType
 {
     text-align: center;
+}
+
+.map 
+{
+    width: 100%;
+    height: 500px;
 }
 
 .DenseFog
