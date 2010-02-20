@@ -26,7 +26,7 @@
                         </label>
                     </td>
                     <td>
-                        <%= Html.TextBox("startDate", "", new { @class = "text", placeholder = DateTime.Today.AddDays(-7).ToShortDateString() }) %>
+                        <%= Html.TextBox("startDate", "", new { @class = "text placeholder", placeholder = DateTime.Today.AddDays(-7).ToShortDateString() }) %>
                     </td>
                 </tr>
                 <tr>
@@ -36,7 +36,7 @@
                         </label>
                     </td>
                     <td>
-                        <%= Html.TextBox("endDate", "", new { @class = "text", placeholder = DateTime.Today.ToShortDateString() })%>
+                        <%= Html.TextBox("endDate", "", new { @class = "text placeholder", placeholder = DateTime.Today.ToShortDateString() })%>
                     </td>
                 </tr>
             </table>
