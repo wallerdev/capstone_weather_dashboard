@@ -1,4 +1,4 @@
-﻿td 
+﻿td
 {
     background-color: #FFF;
     padding: 5px;
@@ -9,10 +9,45 @@ tr
     border: 1px solid red;
 }
 
-.result 
+.result
 {
     background-color: #FFF;
     border: 1px solid #CCC;
     padding: 10px;
     margin: 10px 0;
+}
+
+
+.DenseFog
+{
+    background-color: #AAA;
+}
+
+.ExtremeCold
+{
+    background-color: #3C93FF;
+}
+.Flood
+{
+    background-color: #006BC8;
+}
+.Hail
+{
+    background-color: #EBEBEB;
+}
+.HighWind
+{
+    background-color: #DDD;
+}
+.IceStorm
+{
+    background-color: #5BA4F0;
+}
+.Tornado
+{
+    background-color: #999;
+}
+.WinterStorm
+{
+    background-color: #6CDBFF;
 }

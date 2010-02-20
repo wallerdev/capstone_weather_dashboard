@@ -18,7 +18,7 @@
     </h2>
     <% foreach (var item in Model)
        { %>
-    <div class="result">
+    <div class="result <%= Html.Encode(item.EventType) %>">
         <p><%= Html.Encode(item.Location) %>, <%= Html.Encode(item.EventTypeInWords) %>, <%= Html.Encode(item.StartDate.ToString("yyyy-MM-dd")) %> </p>
     </div>
     <% } %>
