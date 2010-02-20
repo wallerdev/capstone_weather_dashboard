@@ -4,8 +4,8 @@
     Weather Incidents
 </asp:Content>
 <asp:Content ContentPlaceHolderID="HeadContent" runat="server">
-    <link href="Content/colorbox.css" rel="stylesheet" type="text/css" />
-    <link href="Content/WeatherIncident.css" rel="stylesheet" type="text/css" />
+    <link href="/demo/Content/colorbox.css" rel="stylesheet" type="text/css" />
+    <link href="/demo/Content/WeatherIncident.css" rel="stylesheet" type="text/css" />
 
     <script src="/demo/Scripts/jquery.colorbox-min.js" type="text/javascript"></script>
 

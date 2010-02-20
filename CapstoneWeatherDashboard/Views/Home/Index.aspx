@@ -4,7 +4,7 @@
     Auto-Owners Incident Verification System
 </asp:Content>
 <asp:Content ContentPlaceHolderID="HeadContent" runat="server">
-    <link href="Content/NewSearch.css" rel="stylesheet" type="text/javascript" />
+    <link href="/demo/Content/NewSearch.css" rel="stylesheet" type="text/javascript" />
     <script src="/demo/Scripts/NewSearch.js" type="text/javascript"></script>
 </asp:Content>
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
