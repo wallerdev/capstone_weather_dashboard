@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using CapstoneWeatherDashboard.Models;
 using WeatherStation;
 using WeatherStation.WeatherEventProviders;
 
@@ -33,9 +34,10 @@ namespace CapstoneWeatherDashboard.Controllers
                 var wundergroundIncidents = wunderground.GetEvents(address, startDate, endDate);
                 incidents.Concat(wundergroundIncidents);
             }
-            
 
-            return View(incidents.OrderBy(incident => incident.StartDate));
+            var model = new WeatherIncidentModel(zipCode, incidents.OrderBy(incident => incident.StartDate));
+
+            return View(model);
 
         }
 
