@@ -6,11 +6,11 @@ using System.Net;
 using System.IO;
 using HtmlAgilityPack;
 
-namespace WeatherStation
+namespace WeatherStation.WeatherEventProviders
 {
-    public class Ncdc : IWeatherEventProvider
+    public class Ncdc
     {
-        private static IEnumerable<WeatherIncident> GetStormEvents(string stateTwoLetterCode, string countyInState, DateTime startDate, DateTime endDate)
+        public IEnumerable<WeatherIncident> GetEvents(State state, string county, DateTime startDate, DateTime endDate)
         {
             // hardcoded url that we scrape the data from
             const string baseNcdcUrl = "http://www4.ncdc.noaa.gov/cgi-win/wwcgi.dll?wwevent~storms";
@@ -18,7 +18,7 @@ namespace WeatherStation
             // the post parameters for making the call
             string parameters =
                 string.Format("bdate={0}%2F{1}%2F{2}&edate={3}%2F{4}%2F{5}&STATE={6}&County={7}&ETYPE=*All&fscale=*All&hamt=&wspd=&injuries=&deaths=&pdamage=&cdamage=&Send=List+Storms"
-                                , startDate.Month, startDate.Day, startDate.Year, endDate.Month, endDate.Day, endDate.Year, stateTwoLetterCode, countyInState);
+                              , startDate.Month, startDate.Day, startDate.Year, endDate.Month, endDate.Day, endDate.Year, state.Abbreviation, county);
             byte[] postData = Encoding.ASCII.GetBytes(parameters);
 
             // make a POST request to the url with the parameters given
@@ -48,7 +48,7 @@ namespace WeatherStation
                         "//table[@summary='This Table displays the Events Query output by state and date.']");
             }
 
-            if(node != null)
+            if (node != null)
             {
                 // This goes through each row and pulls out the location and event type
                 // This is fragile because we are depending on the html of the response
@@ -66,15 +66,9 @@ namespace WeatherStation
                              weatherEvent.SelectSingleNode("td[@headers='h2']").InnerText.Trim()),
                          new Uri(
                              weatherEvent.SelectSingleNode("td[@headers='h1']/a").Attributes["href"].Value.Trim()))
-                     );
+                    );
             }
             return new WeatherIncident[0];
-        }
-
-        public IEnumerable<WeatherIncident> GetEvents(Address address, DateTime startDate, DateTime endDate)
-        {
-            ZipCodeLookup lookup = new ZipCodeLookup();
-            return GetStormEvents(lookup.GetState(address.ZipCode.ToString()), lookup.GetCounty(address.ZipCode.ToString()), startDate, endDate);
         }
     }
 }

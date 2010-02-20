@@ -6,7 +6,7 @@ using System.IO;
 using System.Xml.Linq;
 using WeatherStation.NoaaService;
 
-namespace WeatherStation
+namespace WeatherStation.WeatherEventProviders
 {
     public class Noaa
     {
@@ -16,7 +16,7 @@ namespace WeatherStation
             var proxy = new ndfdXMLPortTypeClient();
             // get response data
             string data = proxy.NDFDgenByDay((decimal)location.Latitude, (decimal)location.Longitude, DateTime.Now.AddDays(-3).Date, "3",
-                               formatType.Item24hourly);
+                                             formatType.Item24hourly);
 
             StringReader reader = new StringReader(data);
             XDocument xmlDoc = XDocument.Load(reader);

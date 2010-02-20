@@ -21,6 +21,11 @@ namespace WeatherStation
             private set;
         }
 
+        public string EventTypeString
+        {
+            get { return EventType.ToString(); }
+        }
+
         public string EventTypeInWords
         {
             get

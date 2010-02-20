@@ -22,7 +22,6 @@ namespace CapstoneWeatherDashboard.Controllers
             _repository = repository;
         }
 
-        [Authorize]
         public ActionResult Index()
         {
             List<Policy> policies = _repository.ListAll().ToList();

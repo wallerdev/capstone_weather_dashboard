@@ -8,7 +8,7 @@ using System.Xml.XPath;
 
 namespace WeatherStation.WeatherEventProviders
 {
-    public class WeatherUnderground : IWeatherEventProvider
+    public class WeatherUnderground
     {
         private const string WeatherHistoryCsvUrl =
             "http://www.wunderground.com/history/airport/{0}/{1}/{2}/{3}/DailyHistory.html?format=1";
@@ -16,7 +16,7 @@ namespace WeatherStation.WeatherEventProviders
         private const string WeatherHistoryUrl =
             "http://www.wunderground.com/history/airport/{0}/{1}/{2}/{3}/DailyHistory.html";
 
-        private readonly WebClient _webClient = new WebClient();
+        private static readonly WebClient WebClient = new WebClient();
 
         #region IWeatherEventProvider Members
 
@@ -27,20 +27,13 @@ namespace WeatherStation.WeatherEventProviders
         /// Right now this function just returns all data for a given day.
         /// </summary>
         /// <returns>Weather Incidents for the location</returns>
-        public IEnumerable<WeatherIncident> GetEvents(Address address, DateTime startDate, DateTime endDate)
+        public IEnumerable<WeatherIncident> GetEvents(string airportCode, DateTime date)
         {
-            string airportCode = GetClosestAirport(address.FullAddress);
-            var incidents = new List<WeatherIncident>();
+            string requestUrl = string.Format(WeatherHistoryCsvUrl, airportCode, date.Year, date.Month,
+                                              date.Day);
+            string response = WebClient.DownloadString(requestUrl);
 
-            for (DateTime current = startDate; current <= endDate; current = current.AddDays(1))
-            {
-                string requestUrl = string.Format(WeatherHistoryCsvUrl, airportCode, startDate.Year, startDate.Month,
-                                                  startDate.Day);
-                string response = _webClient.DownloadString(requestUrl);
-                incidents.AddRange(ParseWundergroundResponse(airportCode, response, startDate));
-            }
-
-            return incidents;
+            return ParseWundergroundResponse(airportCode, response, date);
         }
 
         #endregion
@@ -54,7 +47,7 @@ namespace WeatherStation.WeatherEventProviders
             responseString =
                 Regex.Replace(responseString, "<!--.*?-->", string.Empty, RegexOptions.Singleline).Replace("<br />", "");
 
-            IEnumerable<string> rows = responseString.Split(new[] {'\n'}, StringSplitOptions.RemoveEmptyEntries);
+            IEnumerable<string> rows = responseString.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
             rows = rows.Skip(1); // Skip header row
 
 
@@ -73,22 +66,6 @@ namespace WeatherStation.WeatherEventProviders
                 }
             }
             return incidents;
-        }
-
-        /// <summary>
-        /// Wunderground historical data is based on airports. This function is provided to get the closest airport
-        /// to a location using WunderGround's API.
-        /// </summary>
-        /// <param name="location"></param>
-        /// <returns></returns>
-        private string GetClosestAirport(string location)
-        {
-            string apiUrl = string.Format("http://api.wunderground.com/auto/wui/geo/GeoLookupXML/index.xml?query={0}",
-                                          location);
-            string xml = _webClient.DownloadString(apiUrl);
-            var document = XDocument.Parse(xml);
-            var element = document.XPathSelectElement("/location/nearby_weather_stations/airport/station/icao");
-            return element.Value;
         }
     }
 }

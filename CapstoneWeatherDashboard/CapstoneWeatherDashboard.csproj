@@ -63,8 +63,10 @@
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\NcdcWeatherIncidentController.cs" />
     <Compile Include="Controllers\PolicyController.cs" />
     <Compile Include="Controllers\WeatherIncidentController.cs" />
+    <Compile Include="Controllers\WeatherUndergroundWeatherIncidentController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

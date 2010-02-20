@@ -63,7 +63,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="State.cs" />
-    <Compile Include="WeatherEventProviders\IWeatherEventProvider.cs" />
     <Compile Include="WeatherEventProviders\Ncdc.cs" />
     <Compile Include="WeatherEventProviders\Noaa.cs" />
     <Compile Include="Service References\NoaaService\Reference.cs">

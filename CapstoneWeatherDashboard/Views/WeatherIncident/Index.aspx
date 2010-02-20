@@ -1,4 +1,5 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<WeatherStation.WeatherIncident>>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage" %>
+<%@ Import Namespace="WeatherStation"%>
 
 <asp:Content ContentPlaceHolderID="TitleContent" runat="server">
     Weather Incidents
@@ -11,37 +12,34 @@
 
     <script src="/demo/Scripts/WeatherIncident.js" type="text/javascript"></script>
 
+    <script type="text/javascript">
+        $(function() {
+            var urls = [];
+
+            // NCDC Weather Incidents
+
+            urls.push('<%= Url.Action("Index", "NcdcWeatherIncident", new { state = ViewData["state"], county = ViewData["county"], startDate = ((DateTime)ViewData["startDate"]).ToShortDateString(), endDate = ((DateTime)ViewData["endDate"]).ToShortDateString() }) %>');
+
+            // Weather Underground Incidents
+
+            
+
+            <% for(DateTime d = (DateTime)ViewData["startDate"]; d <= (DateTime)ViewData["endDate"]; d = d.AddDays(1))
+              {%>
+                
+                urls.push('<%= Url.Action("Index", "WeatherUndergroundWeatherIncident", new { date = d.ToShortDateString(), airportCode = ViewData["airportCode"] }) %>');
+            <%}%>
+
+            for(var i in urls) {
+                // $.get(urls[i])
+            }
+            $.get('');
+        });
+    </script>
+
 </asp:Content>
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
     <h2>
         Weather Incidents
     </h2>
-    <% foreach (var item in Model)
-       { %>
-    <div class="result <%= Html.Encode(item.EventType) %>">
-        <p style="float: right;">
-            <strong>2 miles away</strong>
-        </p>
-        <p style="float: left;">
-            <strong>
-                <%= Html.Encode(item.StartDate.ToString("yyyy-MM-dd")) %>
-            </strong>
-        </p>
-        <p style="text-align: center">
-            <strong>
-                <%= Html.Encode(item.EventTypeInWords) %>
-            </strong>
-        </p>
-        <div class="additionalInfo">
-            <p>
-                <label>
-                    Source:
-                </label>
-                <a href="<%= item.MoreInformationUrl %>">
-                    <%= item.MoreInformationUrl %>
-                </a>
-            </p>
-        </div>
-    </div>
-    <% } %>
 </asp:Content>
