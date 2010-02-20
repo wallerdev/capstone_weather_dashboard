@@ -27,11 +27,21 @@
                 <%= Html.Encode(item.StartDate.ToString("yyyy-MM-dd")) %>
             </strong>
         </p>
-        <p style="text-align:center">
+        <p style="text-align: center">
             <strong>
                 <%= Html.Encode(item.EventTypeInWords) %>
             </strong>
         </p>
+        <div class="additionalInfo">
+            <p>
+                <label>
+                    Source:
+                </label>
+                <a href="<%= item.MoreInformationUrl %>">
+                    <%= item.MoreInformationUrl %>
+                </a>
+            </p>
+        </div>
     </div>
     <% } %>
 </asp:Content>
