@@ -91,7 +91,7 @@
                 </tr>
             </table>
             <p>
-                <input type="submit" value="Search Address" class="submit" />
+                <input type="submit" value="Search Address" class="submit" name="addressSearch" disabled="disabled" />
             </p>
         </fieldset>
         <fieldset id="geocodeSearch">
@@ -119,7 +119,7 @@
                 </tr>
             </table>
             <p>
-                <input type="submit" value="Search Geocode" class="submit">
+                <input type="submit" value="Search Geocode" class="submit" name="geocodeSearch" disabled="disabled" />
             </p>
         </fieldset>
         <fieldset id="policySearch">
@@ -137,7 +137,7 @@
                 </tr>
             </table>
             <p>
-                <input type="submit" value="Search Policy" class="submit" />
+                <input type="submit" value="Search Policy" class="submit" name="policySearch" disabled="disabled" />
             </p>
         </fieldset>
     </div>
