@@ -33,21 +33,24 @@ tr
 }
 .Hail
 {
-    background-color: #EBEBEB;
+    background-color: #DDD;
 }
 .HighWind
 {
-    background-color: #DDD;
+    background-color: #EBEBEB;
 }
 .IceStorm
 {
-    background-color: #5BA4F0;
+    background-color: rgb(138, 185, 255);
+    border-color: rgb(108, 167, 255);
 }
 .Tornado
 {
-    background-color: #999;
+    background-color: #AAA;
+    border-color: #888
 }
 .WinterStorm
 {
-    background-color: #6CDBFF;
+    background-color: rgb(196, 224, 253);
+    border-color: rgb(154, 203, 253);
 }

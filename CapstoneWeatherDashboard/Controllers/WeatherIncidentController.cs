@@ -35,7 +35,7 @@ namespace CapstoneWeatherDashboard.Controllers
             }
             
 
-            return View(incidents.OrderBy(incident => incident.StartDate).Reverse());
+            return View(incidents.OrderBy(incident => incident.StartDate));
 
         }
 
