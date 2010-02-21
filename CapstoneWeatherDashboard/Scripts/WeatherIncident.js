@@ -6,6 +6,25 @@ var totalUrls = 0;
 
 function displayIncidents(incidents) {
     for (var i in incidents) {
+        incidents[i].newRow = true;
+        incidents[i].order = allIncidents.length;
+        incidents[i].html = $('<div id="result' + i + '" class="result ' + incidents[i].EventTypeString + '" style="display: none">' +
+                                '<p class="distance">' + i + ' miles away</p>' +
+                                '<p class="date">' + incidents[i].StartDateString + '</p>' +
+                                '<p class="eventType">' + incidents[i].EventTypeInWords + '</p>' +
+                                '<div class="additionalInfo">' +
+                                    '<p>' +
+                                        '<label>Source:</label>' +
+                                        '<a href="' + incidents[i].MoreInformationUrl + '">' +
+                                            incidents[i].MoreInformationUrl +
+                                        '</a>' +
+                                    '</p>' +
+                                    '<div>' +
+                                        '<label>Map:</label>' +
+                                        '<div class="map" title="Eagle, MI"></div>' +
+                                    '</div>' + 
+                                '</div>' +
+                            '</div>');
         allIncidents.push(incidents[i]);
     }
 
@@ -15,60 +34,48 @@ function displayIncidents(incidents) {
         } else if (a.StartDateString > b.StartDateString) {
             return 1;
         } else {
-            return 0;
+            // prevent fields with the same date from getting rearranged
+            return a.order - b.order;
         }
     });
 
-    html = '';
+    $('#results').html();
 
     for (var i in allIncidents) {
-        html += '<div class="result ' + allIncidents[i].EventTypeString + '">' +
-                            '<p class="distance">' + i + ' miles away</p>' +
-                            '<p class="date">' + allIncidents[i].StartDateString + '</p>' +
-                            '<p class="eventType">' + allIncidents[i].EventTypeInWords + '</p>' +
-                            '<div class="additionalInfo">' +
-                                '<p>' +
-                                    '<label>Source:</label>' +
-                                    '<a href="' + allIncidents[i].MoreInformationUrl + '">' +
-                                        allIncidents[i].MoreInformationUrl +
-                                    '</a>' +
-                                '</p>' +
-                                '<div>' +
-                                    '<label>Map:</label>' +
-                                    '<div class="map" title="Eagle, MI"></div>' +
-                                '</div>' + 
-                            '</div>' +
-                        '</div>'
+        $('#results').append(allIncidents[i].html); 
     }
 
-    $('#results').html(html);
+    for (var i in allIncidents) {
+        if (allIncidents[i].newRow) {
+            allIncidents[i].html.fadeIn();
+            allIncidents[i].newRow = false;
+            allIncidents[i].html.click(function() {
+                $(this).find(".additionalInfo").slideToggle();
 
-    $('.result').click(function() {
-        $(this).find(".additionalInfo").slideToggle();
+                // setup google map
+                $(this).find('.map').each(function() {
+                    var geocoderEach = new GClientGeocoder();
+                    var address = $(this).attr("title");
 
-        // setup google map
-        $(this).find('.map').each(function() {
-            var geocoderEach = new GClientGeocoder();
-            var address = $(this).attr("title");
+                    var mapDiv = $(this)[0];
 
-            var mapDiv = $(this)[0];
-
-            geocoderEach.getLatLng(address, function(point) {
-                if (!point) {
-                    //alert(address + " not found");
-                } else {
-                    var map = new google.maps.Map2(mapDiv);
-                    map.setCenter(point, 10);
-                    var marker = new GMarker(point);
-                    map.addOverlay(marker);
-                    map.addOverlay(homeMarker);
-                    marker.openInfoWindowHtml(address);
-                    map.addControl(new GLargeMapControl());
-                }
+                    geocoderEach.getLatLng(address, function(point) {
+                        if (!point) {
+                            //alert(address + " not found");
+                        } else {
+                            var map = new google.maps.Map2(mapDiv);
+                            map.setCenter(point, 10);
+                            var marker = new GMarker(point);
+                            map.addOverlay(marker);
+                            map.addOverlay(homeMarker);
+                            marker.openInfoWindowHtml(address);
+                            map.addControl(new GLargeMapControl());
+                        }
+                    });
+                });
             });
-        });
-    });
-
+        }
+    }
 
     if (urls.length > 0) {
         $.getJSON(urls.shift(), displayIncidents);
