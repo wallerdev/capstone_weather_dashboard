@@ -25,7 +25,8 @@ namespace WeatherStation.Tests
         public void TestNotAvailableHumidity()
         {
             Assert.AreEqual(
-                new WeatherUndergroundEntry(DateTime.Now, "5:53 PM,89.1,-9999,N/A,29.97,10.0,WSW,17.3,21.9,N/A,,Mostly Cloudy").Humidity, null);
+                new WeatherUndergroundEntry(DateTime.Now, "5:53 PM,89.1,-9999,N/A,29.97,10.0,WSW,17.3,21.9,N/A,,Mostly Cloudy").
+                    Humidity, null);
         }
     }
 }

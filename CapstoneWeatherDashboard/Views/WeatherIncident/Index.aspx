@@ -43,10 +43,10 @@
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
     <div id="progress">
         <p>
-            <img src="/demo/Content/images/ajax-loader.gif" />
+            <img src="/demo/Content/images/ajax-loader.gif" alt="Loading..." />
         </p>
         <p id="percent">
-        </div>
+        </p>
     </div>
     <div id="results">
     </div>

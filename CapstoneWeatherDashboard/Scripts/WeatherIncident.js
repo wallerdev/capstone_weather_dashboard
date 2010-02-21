@@ -9,9 +9,11 @@ function displayIncidents(incidents) {
         incidents[i].newRow = true;
         incidents[i].order = allIncidents.length;
         incidents[i].html = $('<div id="result' + i + '" class="result ' + incidents[i].EventTypeString + '" style="display: none">' +
-                                '<p class="distance">' + i + ' miles away</p>' +
-                                '<p class="date">' + incidents[i].StartDateString + '</p>' +
-                                '<p class="eventType">' + incidents[i].EventTypeInWords + '</p>' +
+                                '<div class="topInfo">' + 
+                                    '<p class="distance">' + i + ' miles away</p>' +
+                                    '<p class="date">' + incidents[i].StartDateString + '</p>' +
+                                    '<p class="eventType">' + incidents[i].EventTypeInWords + '</p>' +
+                                '</div>' +
                                 '<div class="additionalInfo">' +
                                     '<p>' +
                                         '<label>Source:</label>' +
@@ -24,7 +26,7 @@ function displayIncidents(incidents) {
                                         '<div class="map" title="Eagle, MI"></div>' +
                                     '</div>' + 
                                 '</div>' +
-                            '</div>');
+                                '</div>');
         allIncidents.push(incidents[i]);
     }
 
@@ -49,11 +51,12 @@ function displayIncidents(incidents) {
         if (allIncidents[i].newRow) {
             allIncidents[i].html.fadeIn(1000);
             allIncidents[i].newRow = false;
-            allIncidents[i].html.click(function() {
-                $(this).find(".additionalInfo").slideToggle();
+            allIncidents[i].html.find('.topInfo').click(function() {
+            var additionalInfo = $(this).next(".additionalInfo");
+                additionalInfo.slideToggle();
 
                 // setup google map
-                $(this).find('.map').each(function() {
+                additionalInfo.find('.map').each(function() {
                     var geocoderEach = new GClientGeocoder();
                     var address = $(this).attr("title");
 
