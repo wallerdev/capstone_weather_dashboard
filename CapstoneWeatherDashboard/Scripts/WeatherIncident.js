@@ -47,7 +47,7 @@ function displayIncidents(incidents) {
 
     for (var i in allIncidents) {
         if (allIncidents[i].newRow) {
-            allIncidents[i].html.fadeIn('slow');
+            allIncidents[i].html.fadeIn(1000);
             allIncidents[i].newRow = false;
             allIncidents[i].html.click(function() {
                 $(this).find(".additionalInfo").slideToggle();
