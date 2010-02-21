@@ -18,18 +18,19 @@
     <script src="/demo/Scripts/WeatherIncident.js" type="text/javascript"></script>
 
     <script type="text/javascript">
+        // NCDC Weather Incidents
+
+        urls.push('<%= Url.Action("Index", "NcdcWeatherIncident", new { state = ViewData["state"], county = ViewData["county"], startDate = ((DateTime)ViewData["startDate"]).ToShortDateString(), endDate = ((DateTime)ViewData["endDate"]).ToShortDateString() }) %>');
+
+        // Weather Underground Incidents
+        <% for(DateTime d = (DateTime)ViewData["startDate"]; d <= (DateTime)ViewData["endDate"]; d = d.AddDays(1))
+          {%>
+            urls.push('<%= Url.Action("Index", "WeatherUndergroundWeatherIncident", new { date = d.ToShortDateString(), airportCode = ViewData["airportCode"] }) %>');
+        <%}%>
+
+        totalUrls = urls.length;
+
         $(function() {
-
-            // NCDC Weather Incidents
-
-            urls.push('<%= Url.Action("Index", "NcdcWeatherIncident", new { state = ViewData["state"], county = ViewData["county"], startDate = ((DateTime)ViewData["startDate"]).ToShortDateString(), endDate = ((DateTime)ViewData["endDate"]).ToShortDateString() }) %>');
-
-            // Weather Underground Incidents
-            <% for(DateTime d = (DateTime)ViewData["startDate"]; d <= (DateTime)ViewData["endDate"]; d = d.AddDays(1))
-              {%>
-                urls.push('<%= Url.Action("Index", "WeatherUndergroundWeatherIncident", new { date = d.ToShortDateString(), airportCode = ViewData["airportCode"] }) %>');
-            <%}%>
-
             if(urls.length > 0) {
                 $.getJSON(urls.shift(), displayIncidents);
             }
@@ -40,6 +41,13 @@
 
 </asp:Content>
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
+    <div id="progress">
+        <p>
+            <img src="/demo/Content/images/ajax-loader.gif" />
+        </p>
+        <p id="percent">
+        </div>
+    </div>
     <div id="results">
     </div>
 </asp:Content>

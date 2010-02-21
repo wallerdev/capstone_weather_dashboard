@@ -50,6 +50,17 @@ tr
     height: 500px;
 }
 
+#progress 
+{
+    text-align: center;
+    font-weight: bold;
+}
+
+#percent
+{
+    margin-top: 5px;
+}
+
 .DenseFog
 {
     background-color: #AAA;

@@ -2,6 +2,7 @@
 
 var urls = [];
 var allIncidents = [];
+var totalUrls = 0;
 
 function displayIncidents(incidents) {
     for (var i in incidents) {
@@ -38,11 +39,6 @@ function displayIncidents(incidents) {
                                 '</div>' + 
                             '</div>' +
                         '</div>'
-        /* 
-        <div>
-        <label>Map:</label>
-        <div class="map" title="Eagle, MI" style="height:500px; width:500px"></div>
-        </div> */
     }
 
     $('#results').html(html);
@@ -73,9 +69,14 @@ function displayIncidents(incidents) {
         });
     });
 
+
     if (urls.length > 0) {
         $.getJSON(urls.shift(), displayIncidents);
+        $("#percent").html(Math.round((100.0 * (totalUrls - urls.length - 1) / totalUrls)) + '%');
+    } else {
+        $("#progress").hide();
     }
+    
 }
 
 $(document).ready(function() {
