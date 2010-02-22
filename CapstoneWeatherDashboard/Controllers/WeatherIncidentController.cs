@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
-using CapstoneWeatherDashboard.Models;
 using WeatherStation;
+using WeatherStation.Geocode;
 
 namespace CapstoneWeatherDashboard.Controllers
 {
@@ -15,12 +13,27 @@ namespace CapstoneWeatherDashboard.Controllers
 
             if (!string.IsNullOrEmpty(Request.QueryString["addressSearch"]))
             {
-                address = new Address(Request.QueryString["address"], Request.QueryString["city"],
-                Request.QueryString["state"], Request.QueryString["zip"]);
+                string cityFromQueryString = Request.QueryString["city"];
+                string stateFromQueryString = Request.QueryString["state"];
+                string zipFromQueryString = Request.QueryString["zipCode"];
+                if( string.IsNullOrEmpty(cityFromQueryString) || string.IsNullOrEmpty(stateFromQueryString))
+                {
+                    address = new Address(zipFromQueryString);
+                }
+                else
+                {
+                    address = new Address(Request.QueryString["address"], cityFromQueryString,
+                    stateFromQueryString, Request.QueryString["zip"]);    
+                }
             }
             if (!string.IsNullOrEmpty(Request.QueryString["geocodeSearch"]))
             {
-                throw new NotImplementedException();
+                double latitude = double.Parse( Request.QueryString["latitude"]);
+                double longitude = double.Parse( Request.QueryString["longitude"]);
+
+                GoogleGeocodeResponse response = GoogleGeocoder.ReverseGeocode(latitude, longitude);
+
+                address = new Address(response.Address, response.City, response.State, response.ZipCode);
             }
             if (!string.IsNullOrEmpty(Request.QueryString["policyNumberSearch"]))
             {
