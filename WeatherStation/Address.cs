@@ -37,24 +37,14 @@ namespace WeatherStation
 
         public string ZipCode
         {
-            get
-            {
-                // TODO: Make this dynamic
-                return "48823";
-            }
-            set
-            {
-                
-            }
+            get;
+            private set;
         }
 
         public string County
         {
-            get
-            {
-                // TODO: Make this dynamic
-                return "Ingham";
-            }
+            get;
+            private set;
         }
 
         public Address(string streetAddress, string city, State state, string zipCode)
@@ -64,6 +54,7 @@ namespace WeatherStation
             State = state;
             ZipCode = zipCode;
 
+            County = zipCodeLookup.GetCounty(zipCode);
         }
 
         public Address(string streetAddress, string city, string state, string zipCode)

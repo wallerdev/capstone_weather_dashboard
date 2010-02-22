@@ -8,7 +8,7 @@ namespace WeatherStation
     static class WeatherIncidentClassifier
     {
         private static readonly IEnumerable<string> FloodList = new[] { "flood", "flood/flash flood", "urban flooding", "flash flood" };
-        private static readonly IEnumerable<string> WindList = new[] { "highwind", "tstm wind", "thunderstorm winds", "thunderstorm wind", "high wind", "thunderstorm wind g50" };
+        private static readonly IEnumerable<string> WindList = new[] { "highwind", "tstm wind", "thunderstorm winds", "thunderstorm wind", "high wind", "thunderstorm wind g50", "strong wind" };
         private static readonly IEnumerable<string> HailList = new[] { "hail" };
         private static readonly IEnumerable<string> TornadoList = new[] { "tornado", "tornado winds", "funnel cloud" };
         private static readonly IEnumerable<string> WinterStormList = new[] { "lake effect snow", "heavy lake snow", "heavy snow/freezing rain", "freezing rain", "winter storm",
@@ -16,6 +16,7 @@ namespace WeatherStation
         private static readonly IEnumerable<string> ColdList = new[] { "cold wave" };
         private static readonly IEnumerable<string> IceStormList = new[] { "ice storm" };
         private static readonly IEnumerable<string> FogList = new[] { "dense fog", "fog" };
+        private static readonly IEnumerable<string> TropicalStormList = new[] { "tropical storm" };
 
 
         /// <summary>
@@ -35,7 +36,8 @@ namespace WeatherStation
                 {WinterStormList, WeatherIncidentType.WinterStorm},
                 {ColdList, WeatherIncidentType.ExtremeCold},
                 {IceStormList, WeatherIncidentType.IceStorm},
-                {FogList, WeatherIncidentType.DenseFog}
+                {FogList, WeatherIncidentType.DenseFog},
+                {TropicalStormList, WeatherIncidentType.TropicalStorm}
             };
 
             foreach (var lookup in listLookup)

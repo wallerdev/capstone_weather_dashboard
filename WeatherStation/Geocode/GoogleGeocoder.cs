@@ -59,43 +59,43 @@ namespace WeatherStation.Geocode
             var countryNameCode = placemark.SelectSingleNode("AddressDetails/Country/CountryNameCode");
             if (countryNameCode != null)
             {
-                response.CountryNameCode = countryNameCode.Value;
+                response.CountryNameCode = countryNameCode.InnerText;
             }
 
             var countryName = placemark.SelectSingleNode("AddressDetails/Country/CountryName");
-            if (countryNameCode != null)
+            if (countryName != null)
             {
-                response.CountryName = countryName.Value;
+                response.CountryName = countryName.InnerText;
             }
 
             var state = placemark.SelectSingleNode("AddressDetails/Country/AdministrativeArea/AdministrativeAreaName");
             if (state != null)
             {
-                response.State = state.Value;
+                response.State = state.InnerText;
             }
 
             var county = placemark.SelectSingleNode("AddressDetails/Country/AdministrativeArea/SubAdministrativeArea/SubAdministrativeAreaName");
             if (county != null)
             {
-                response.County = county.Value;
+                response.County = county.InnerText;
             }
 
             var city = placemark.SelectSingleNode("AddressDetails/Country/AdministrativeArea/SubAdministrativeArea/Locality/LocalityName");
             if (city != null)
             {
-                response.City = city.Value;
+                response.City = city.InnerText;
             }
 
             var address = placemark.SelectSingleNode("AddressDetails/Country/AdministrativeArea/SubAdministrativeArea/Locality/Thoroughfare/ThoroughfareName");
             if (address != null)
             {
-                response.Address = address.Value;
+                response.Address = address.InnerText;
             }
 
-            var zipCode = placemark.SelectSingleNode("AddressDetails/Country/AdministrativeArea/SubAdministrativeArea/Locality/PostalCode/PostalCodeNumber");
+            var zipCode = placemark.SelectSingleNode("//PostalCodeNumber");
             if(zipCode != null)
             {
-                response.ZipCode = zipCode.Value;
+                response.ZipCode = zipCode.InnerText;
             }
 
             var coordinates = placemark.SelectSingleNode("Point/coordinates");

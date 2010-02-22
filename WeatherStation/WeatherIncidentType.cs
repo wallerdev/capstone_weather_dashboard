@@ -9,6 +9,7 @@
         IceStorm,
         Tornado,
         ExtremeCold,
-        DenseFog
+        DenseFog,
+        TropicalStorm
     }
 }
