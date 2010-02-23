@@ -1,6 +1,8 @@
 ﻿using System.Net;
 using System.Xml.Linq;
 using System.Xml.XPath;
+using WeatherStation.Geocode;
+using System;
 
 namespace WeatherStation
 {
@@ -13,7 +15,24 @@ namespace WeatherStation
         {
             get
             {
-                return string.Format("{0} {1}, {2} {3}", StreetAddress, City, State.Abbreviation, ZipCode);
+                string address = "";
+                if (!string.IsNullOrEmpty(StreetAddress))
+                {
+                    address += StreetAddress + ", ";
+                }
+                if (!string.IsNullOrEmpty(City))
+                {
+                    address += City + ", ";
+                }
+                if (State != null)
+                {
+                    address += State.Abbreviation + ", ";
+                }
+                if (!string.IsNullOrEmpty(ZipCode))
+                {
+                    address += ZipCode;
+                }
+                return address;
             }
         }
 
@@ -47,19 +66,40 @@ namespace WeatherStation
             private set;
         }
 
-        public Address(string streetAddress, string city, State state, string zipCode)
+        public double Latitude
         {
-            StreetAddress = streetAddress;
-            City = city;
-            State = state;
-            ZipCode = zipCode;
+            get;
+            private set;
+        }
 
-            County = zipCodeLookup.GetCounty(zipCode);
+        public double Longitude
+        {
+            get;
+            private set;
         }
 
         public Address(string streetAddress, string city, string state, string zipCode)
-            : this(streetAddress, city, new State(state), zipCode)
         {
+            StreetAddress = streetAddress;
+            City = city;
+            try
+            {
+                State = new State(state);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                // TODO: probably should use a different exception here or do a conditional check
+            }
+            ZipCode = zipCode;
+
+            var response = GoogleGeocoder.Geocode(FullAddress);
+            StreetAddress = response.Address;
+            City = response.City;
+            State = new State(response.State);
+            ZipCode = response.ZipCode;
+            County = response.County;
+            Latitude = response.Latitude;
+            Longitude = response.Longitude;
         }
 
         public Address(string zipCode)

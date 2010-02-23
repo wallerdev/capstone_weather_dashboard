@@ -13,18 +13,8 @@ namespace CapstoneWeatherDashboard.Controllers
 
             if (!string.IsNullOrEmpty(Request.QueryString["addressSearch"]))
             {
-                string cityFromQueryString = Request.QueryString["city"];
-                string stateFromQueryString = Request.QueryString["state"];
-                string zipFromQueryString = Request.QueryString["zipCode"];
-                if( string.IsNullOrEmpty(cityFromQueryString) || string.IsNullOrEmpty(stateFromQueryString))
-                {
-                    address = new Address(zipFromQueryString);
-                }
-                else
-                {
-                    address = new Address(Request.QueryString["address"], cityFromQueryString,
-                    stateFromQueryString, Request.QueryString["zip"]);    
-                }
+                address = new Address(Request.QueryString["address"], Request.QueryString["city"],
+                    Request.QueryString["state"], Request.QueryString["zipCode"]);
             }
             if (!string.IsNullOrEmpty(Request.QueryString["geocodeSearch"]))
             {
