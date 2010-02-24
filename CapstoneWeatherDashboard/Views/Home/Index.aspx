@@ -13,7 +13,6 @@
             $('#policyHolderName').autocomplete('<%= Url.Action("Index","PolicyHolderNames") %>',
                                     {
                                         cacheLength: 10,
-                                        delay: 10,
                                         matchCase: false,
                                         matchContains: true,
                                         minChars: 3,
