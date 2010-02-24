@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InsurancePolicyRepository", "PolicyHolderRepository\InsurancePolicyRepository.csproj", "{C52546DA-D1CF-40D9-8201-5EA352DA8A1B}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = CapstoneWeatherDashboard.vsmdi
@@ -40,6 +42,10 @@ Global
 		{79200718-FCC7-40E1-AD2D-D15ED658E16A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79200718-FCC7-40E1-AD2D-D15ED658E16A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79200718-FCC7-40E1-AD2D-D15ED658E16A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C52546DA-D1CF-40D9-8201-5EA352DA8A1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C52546DA-D1CF-40D9-8201-5EA352DA8A1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C52546DA-D1CF-40D9-8201-5EA352DA8A1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C52546DA-D1CF-40D9-8201-5EA352DA8A1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

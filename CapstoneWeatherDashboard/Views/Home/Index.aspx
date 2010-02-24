@@ -5,7 +5,21 @@
 </asp:Content>
 <asp:Content ContentPlaceHolderID="HeadContent" runat="server">
     <link href="/demo/Content/NewSearch.css" rel="stylesheet" type="text/javascript" />
+    <link href="/demo/Content/jquery.autocomplete.css" rel="stylesheet" type="text/css" />
+    <script src="/demo/Scripts/jquery.autocomplete.min.js" type="text/javascript"></script>
     <script src="/demo/Scripts/NewSearch.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#policyHolderName').autocomplete('<%= Url.Action("Index","PolicyHolderNames") %>',
+                                    {
+                                        cacheLength: 10,
+                                        matchCase: false,
+                                        matchContains: true,
+                                        minChars: 3,
+                                        scroll: false
+                                    });
+        });
+    </script>
 </asp:Content>
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
     <h1>
@@ -133,6 +147,16 @@
                     </td>
                     <td>
                         <%= Html.TextBox("policyNumber", "", new {@class = "text"}) %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="policyHolderName">
+                            Policy Holder Name
+                        </label>
+                    </td>
+                    <td>
+                        <%= Html.TextBox("policyHolderName", "", new { @class = "text" })%>
                     </td>
                 </tr>
             </table>
