@@ -61,8 +61,8 @@ function displayIncidents(incidents) {
                     var address = $(this).attr("title");
 
                     var mapDiv = $(this)[0];
-
-                    geocoderEach.getLatLng(address, function(point) {
+                    
+                    geocoderEach.getLatLng(homeAddress, function(point) {
                         if (!point) {
                             //alert(address + " not found");
                         } else {
@@ -70,8 +70,7 @@ function displayIncidents(incidents) {
                             map.setCenter(point, 10);
                             var marker = new GMarker(point);
                             map.addOverlay(marker);
-                            map.addOverlay(homeMarker);
-                            marker.openInfoWindowHtml(address);
+                            marker.openInfoWindowHtml(homeAddress);
                             map.addControl(new GLargeMapControl());
                         }
                     });
