@@ -65,6 +65,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NcdcWeatherIncidentController.cs" />
     <Compile Include="Controllers\PolicyController.cs" />
+    <Compile Include="Controllers\PolicyHolderNamesController.cs" />
     <Compile Include="Controllers\WeatherIncidentController.cs" />
     <Compile Include="Controllers\WeatherUndergroundWeatherIncidentController.cs" />
     <Compile Include="Global.asax.cs">
@@ -88,9 +89,11 @@
     <Content Include="Content\images\internet_explorer\borderTopCenter.png" />
     <Content Include="Content\images\internet_explorer\borderTopLeft.png" />
     <Content Include="Content\images\internet_explorer\borderTopRight.png" />
+    <Content Include="Content\jquery.autocomplete.css" />
     <Content Include="Content\NewSearch.css" />
     <Content Include="Content\WeatherIncident.css" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\jquery.autocomplete.min.js" />
     <Content Include="Scripts\jquery.colorbox-min.js" />
     <Content Include="Scripts\jquery.colorbox.js" />
     <Content Include="Scripts\NewSearch.js" />
@@ -119,6 +122,10 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PolicyHolderRepository\InsurancePolicyRepository.csproj">
+      <Project>{C52546DA-D1CF-40D9-8201-5EA352DA8A1B}</Project>
+      <Name>InsurancePolicyRepository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WeatherStation\WeatherStation.csproj">
       <Project>{DB9AAFA6-33C9-4CEF-8454-EEC601BA504E}</Project>
       <Name>WeatherStation</Name>
