@@ -69,9 +69,28 @@
             </table>
         </fieldset>
     </div>
+    <div id="filter">
+        <h2>
+            2. Filter Event Types (optional)
+        </h2>
+        <fieldset>
+            <table>
+                <tr>
+                    <td>
+                        <label for="eventType">
+                            Event Type to Search For
+                        </label>
+                    </td>
+                    <td>
+                        <%=Html.DropDownList("incidentTypes", (IEnumerable<SelectListItem>)ViewData["IncidentTypes"], "All") %>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
     <div id="search">
         <h2>
-            2. Search
+            3. Search
         </h2>
         <fieldset id="addressSearch">
             <legend>by address</legend>

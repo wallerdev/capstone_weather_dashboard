@@ -10,7 +10,7 @@ namespace WeatherStation.WeatherEventProviders
 {
     public class Ncdc
     {
-        public IEnumerable<WeatherIncident> GetEvents(State state, string county, DateTime startDate, DateTime endDate)
+        public IEnumerable<WeatherIncident> GetEvents(State state, string county, DateTime startDate, DateTime endDate, WeatherIncidentType? filter)
         {
             // hardcoded url that we scrape the data from
             const string baseNcdcUrl = "http://www4.ncdc.noaa.gov/cgi-win/wwcgi.dll?wwevent~storms";
@@ -52,7 +52,7 @@ namespace WeatherStation.WeatherEventProviders
             {
                 // This goes through each row and pulls out the location and event type
                 // This is fragile because we are depending on the html of the response
-                return
+                var returnValues =
                     (from weatherEvent in node.SelectNodes("tr")
                      where weatherEvent.SelectSingleNode("td[@headers]") != null
                      select
@@ -67,6 +67,15 @@ namespace WeatherStation.WeatherEventProviders
                          new Uri(
                              weatherEvent.SelectSingleNode("td[@headers='h1']/a").Attributes["href"].Value.Trim()))
                     );
+
+                if(filter != null)
+                {
+                    returnValues = 
+                        (from weatherEvent in returnValues
+                         where weatherEvent.EventType == filter
+                         select weatherEvent);
+                }
+                return returnValues;
             }
             return new WeatherIncident[0];
         }

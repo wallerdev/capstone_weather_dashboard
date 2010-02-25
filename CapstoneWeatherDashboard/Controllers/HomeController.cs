@@ -31,6 +31,11 @@ namespace CapstoneWeatherDashboard.Controllers
 
             policies.Sort((a, b) => a.Name.CompareTo(b.Name));
             ViewData["PolicyNames"] = new SelectList(policies, "Number", "Name");
+
+            var incidentTypes = Enum.GetNames(typeof (WeatherIncidentType));
+
+            ViewData["IncidentTypes"] = new SelectList(incidentTypes);
+
             return View();
         }
     }

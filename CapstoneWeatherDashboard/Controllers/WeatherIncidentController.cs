@@ -51,6 +51,7 @@ namespace CapstoneWeatherDashboard.Controllers
             ViewData["county"] = county;
             ViewData["startDate"] = startDate;
             ViewData["endDate"] = endDate;
+            ViewData["incidentFilter"] = Request.QueryString["incidentTypes"];
 
             return View();
         }
