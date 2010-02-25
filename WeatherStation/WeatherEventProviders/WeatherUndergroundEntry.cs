@@ -25,7 +25,7 @@ namespace WeatherStation.WeatherEventProviders
             set;
         }
 
-        public double Humidity
+        public double? Humidity
         {
             get;
             set;
@@ -95,7 +95,15 @@ namespace WeatherStation.WeatherEventProviders
             Date = date;
             Temperature = double.Parse(csvElements[1]);
             DewPoint = double.Parse(csvElements[2]);
-            Humidity = double.Parse(csvElements[3]);
+            if (csvElements[3] == "N/A")
+            {
+                Humidity = null;
+            }
+            else
+            {
+                Humidity = double.Parse(csvElements[3]);
+            }
+            
             SeaLevelPressure = double.Parse(csvElements[4]);
             Visibility = double.Parse(csvElements[5]);
             WindDirection = csvElements[6];

@@ -36,7 +36,10 @@
             }
         });
         
+        var latitude = <%= ViewData["latitude"] %>;
+        var longitude = <%= ViewData["longitude"] %>;
         var homeAddress = '<%= ViewData["homeAddress"] %>';
+        
     </script>
 
 </asp:Content>

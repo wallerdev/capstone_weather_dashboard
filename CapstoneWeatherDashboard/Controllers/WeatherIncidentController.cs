@@ -43,6 +43,9 @@ namespace CapstoneWeatherDashboard.Controllers
             string state = address.State.Abbreviation;
             string county = address.County;
 
+            ViewData["homeAddress"] = address.FullAddress;
+            ViewData["latitude"] = address.Latitude;
+            ViewData["longitude"] = address.Longitude;
             ViewData["airportCode"] = closestAirportCode;
             ViewData["state"] = state;
             ViewData["county"] = county;
