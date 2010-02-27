@@ -19,14 +19,8 @@ namespace CapstoneWeatherDashboard.Controllers
                 var policyProvider = new MockPolicyProvider();
                 List<PolicyInfo> matchedPolicies = policyProvider.GetPoliciesThatMatchNameFragment(partialName);
 
-                var returnString = new StringBuilder();
-                foreach (var policyHolder in matchedPolicies)
-                {
-                    returnString.AppendLine(policyHolder.PolicyHolderName);
-                }
 
-
-                return Content(returnString.ToString());
+                return Json(matchedPolicies,JsonRequestBehavior.AllowGet);
             }
             else
             {

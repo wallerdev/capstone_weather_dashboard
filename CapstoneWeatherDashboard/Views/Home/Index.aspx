@@ -10,14 +10,27 @@
     <script src="/demo/Scripts/NewSearch.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#policyHolderName').autocomplete('<%= Url.Action("Index","PolicyHolderNames") %>',
-                                    {
-                                        cacheLength: 10,
-                                        matchCase: false,
-                                        matchContains: true,
-                                        minChars: 3,
-                                        scroll: false
-                                    });
+            $('#policyHolderName').autocomplete('<%= Url.Action("Index","PolicyHolderNames") %>', {
+                cacheLength: 10,
+                minChars: 3,
+                matchCase: false,
+                matchContains: true,
+                scroll: false,
+                dataType: 'json',
+                parse: function(data) {
+                    var rows = new Array();
+                    for (var i = 0; i < data.length; i++) {
+                        rows[i] = { data: data[i], value: data[i].PolicyHolderName, result: data[i].PolicyHolderName };
+                    }
+                    return rows;
+                },
+                formatItem: function(row, i, n) {
+                    return row.PolicyHolderName + ' - ' + row.PolicyNumber;
+                },
+                max: 50
+            }).result(function(event, item) {
+                $('#policyNumber').val(item.PolicyNumber);
+            });
         });
     </script>
 </asp:Content>
@@ -56,9 +69,28 @@
             </table>
         </fieldset>
     </div>
+    <div id="filter">
+        <h2>
+            2. Filter Event Types (optional)
+        </h2>
+        <fieldset>
+            <table>
+                <tr>
+                    <td>
+                        <label for="eventType">
+                            Event Type to Search For
+                        </label>
+                    </td>
+                    <td>
+                        <%=Html.DropDownList("incidentTypes", (IEnumerable<SelectListItem>)ViewData["IncidentTypes"], "All") %>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
     <div id="search">
         <h2>
-            2. Search
+            3. Search
         </h2>
         <fieldset id="addressSearch">
             <legend>by address</legend>
