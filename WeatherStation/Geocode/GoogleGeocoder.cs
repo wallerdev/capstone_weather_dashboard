@@ -1,109 +1,73 @@
 ﻿using System;
 using System.Net;
+using System.Linq;
 using System.Xml;
+using System.Xml.Linq;
+using System.Xml.XPath;
+using System.Collections.Generic;
 
 namespace WeatherStation.Geocode
 {
     /// <summary>
-    /// Uses tinygeocoder to go from an address (full address, zip code, etc.) to 
-    /// latitude and longitude necessary for NOAA requests
+    /// Uses Google to go from an address (full address, zip code, etc.) to 
+    /// latitude and longitude
     /// </summary>
     public class GoogleGeocoder
     {
         private const string ApiKey = "ABQIAAAAam0nwuIjjXo0_gZGpAyU2hRCy4l6b2RPYQNXTJn1LO8P79-4LxTFJKh9yf0ov08TsXwL824gW69e8w";
         private const string GeocodeAddress = "http://maps.google.com/maps/geo?q={0}&output=xml&sensor=false&key={1}";
+        private WebClient _client = new WebClient();
 
-        public static GoogleGeocodeResponse Geocode(string address)
+        public GoogleGeocodeResponse Geocode(Address address)
         {
-            address = Uri.EscapeDataString(address);
-            string requestUrl = GetGeocodeRequestUrl(address);
-            var request = ((HttpWebRequest)WebRequest.Create(requestUrl));
-
-            using (var response = request.GetResponse())
+            string searchAddress = address.FullAddress;
+            if (string.IsNullOrEmpty(address.StreetAddress) && !string.IsNullOrEmpty(address.ZipCode))
             {
-                var geocodeStream = response.GetResponseStream();
-                using(var reader = new XmlTextReader(geocodeStream))
-                {
-                    reader.Namespaces = false;
-                    var doc = new XmlDocument();
-                    doc.Load(reader);
-                    return ParseGoogleGeocoderResponse(doc);
-                }
+                searchAddress = address.ZipCode;
             }
+            string escapedAddress = Uri.EscapeDataString(searchAddress);
+            string requestUrl = GetGeocodeRequestUrl(escapedAddress);
+            string response = _client.DownloadString(GetGeocodeRequestUrl(escapedAddress));
+            return ParseGoogleGeocoderResponse(XDocument.Parse(response));
         }
 
-        public static GoogleGeocodeResponse ReverseGeocode(double latitude, double longitude)
+        public GoogleGeocodeResponse ReverseGeocode(double latitude, double longitude)
         {
             string requestUrl = GetReverseGeocodeRequestUrl(latitude, longitude);
-            var request = ((HttpWebRequest)WebRequest.Create(requestUrl));
-
-            using (var response = request.GetResponse())
-            {
-                var geocodeStream = response.GetResponseStream();
-                using (var reader = new XmlTextReader(geocodeStream))
-                {
-                    reader.Namespaces = false;
-                    var doc = new XmlDocument();
-                    doc.Load(reader);
-                    return ParseGoogleGeocoderResponse(doc);
-                }
-            }
+            string response = _client.DownloadString(requestUrl);
+            return ParseGoogleGeocoderResponse(XDocument.Parse(response));
         }
 
-        private static GoogleGeocodeResponse ParseGoogleGeocoderResponse(XmlDocument doc)
+        private static GoogleGeocodeResponse ParseGoogleGeocoderResponse(XDocument doc)
         {
-            var placemark = doc.SelectSingleNode("//Placemark");
-
+            XNamespace earthNamespace = "http://earth.google.com/kml/2.0";
+            XNamespace addressNamespace = "urn:oasis:names:tc:ciq:xsdschema:xAL:2.0";
             var response = new GoogleGeocodeResponse();
-
-            var countryNameCode = placemark.SelectSingleNode("AddressDetails/Country/CountryNameCode");
-            if (countryNameCode != null)
+            var geocodeSetter = new Dictionary<string, Action<string>>()
             {
-                response.CountryNameCode = countryNameCode.InnerText;
+                {"CountryNameCode", value => response.CountryNameCode = value},
+                {"CountryName", value => response.CountryName = value},
+                {"AdministrativeAreaName", value => response.State = value},
+                {"SubAdministrativeAreaName", value => response.County = value},
+                {"LocalityName", value => response.City = value},
+                {"ThoroughfareName", value => response.Address = value},
+                {"PostalCodeNumber", value => response.ZipCode = value}
+            };
+
+            var placemark = doc.Descendants(earthNamespace + "Placemark").First();
+
+            foreach (var pair in geocodeSetter)
+            {
+                var element = placemark.Descendants(addressNamespace + pair.Key).SingleOrDefault();
+                if (element != null)
+                {
+                    pair.Value(element.Value);
+                }
             }
 
-            var countryName = placemark.SelectSingleNode("AddressDetails/Country/CountryName");
-            if (countryName != null)
-            {
-                response.CountryName = countryName.InnerText;
-            }
-
-            var state = placemark.SelectSingleNode("AddressDetails/Country/AdministrativeArea/AdministrativeAreaName");
-            if (state != null)
-            {
-                response.State = state.InnerText;
-            }
-
-            var county = placemark.SelectSingleNode("AddressDetails/Country/AdministrativeArea/SubAdministrativeArea/SubAdministrativeAreaName");
-            if (county != null)
-            {
-                response.County = county.InnerText;
-            }
-
-            var city = placemark.SelectSingleNode("AddressDetails/Country/AdministrativeArea/SubAdministrativeArea/Locality/LocalityName");
-            if (city != null)
-            {
-                response.City = city.InnerText;
-            }
-
-            var address = placemark.SelectSingleNode("AddressDetails/Country/AdministrativeArea/SubAdministrativeArea/Locality/Thoroughfare/ThoroughfareName");
-            if (address != null)
-            {
-                response.Address = address.InnerText;
-            }
-
-            var zipCode = placemark.SelectSingleNode("//PostalCodeNumber");
-            if(zipCode != null)
-            {
-                response.ZipCode = zipCode.InnerText;
-            }
-
-            var coordinates = placemark.SelectSingleNode("Point/coordinates");
-            if (coordinates != null)
-            {
-                response.Latitude = double.Parse(coordinates.InnerText.Split(',')[0]);
-                response.Longitude = double.Parse(coordinates.InnerText.Split(',')[1]);
-            }
+            var latitudeAndLongitude = placemark.Descendants(earthNamespace + "LatLonBox").Single();
+            response.Latitude = double.Parse(latitudeAndLongitude.Attribute("north").Value);
+            response.Longitude = double.Parse(latitudeAndLongitude.Attribute("east").Value);
 
             return response;
         }

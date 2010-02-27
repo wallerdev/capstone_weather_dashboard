@@ -8,8 +8,8 @@ namespace WeatherStation
 {
     public class Address
     {
-        static ZipCodeLookup zipCodeLookup = new ZipCodeLookup();
         private WebClient _webClient = new WebClient();
+        private GoogleGeocoder _geocoder = new GoogleGeocoder();
 
         public string FullAddress
         {
@@ -18,15 +18,15 @@ namespace WeatherStation
                 string address = "";
                 if (!string.IsNullOrEmpty(StreetAddress))
                 {
-                    address += StreetAddress + ", ";
+                    address += StreetAddress + " ";
                 }
                 if (!string.IsNullOrEmpty(City))
                 {
-                    address += City + ", ";
+                    address += City + " ";
                 }
                 if (State != null)
                 {
-                    address += State.Abbreviation + ", ";
+                    address += State.Abbreviation + " ";
                 }
                 if (!string.IsNullOrEmpty(ZipCode))
                 {
@@ -82,17 +82,13 @@ namespace WeatherStation
         {
             StreetAddress = streetAddress;
             City = city;
-            try
+            if (!string.IsNullOrEmpty(state))
             {
                 State = new State(state);
             }
-            catch (ArgumentOutOfRangeException)
-            {
-                // TODO: probably should use a different exception here or do a conditional check
-            }
             ZipCode = zipCode;
 
-            var response = GoogleGeocoder.Geocode(FullAddress);
+            var response = _geocoder.Geocode(this);
             StreetAddress = response.Address;
             City = response.City;
             State = new State(response.State);
@@ -100,11 +96,6 @@ namespace WeatherStation
             County = response.County;
             Latitude = response.Latitude;
             Longitude = response.Longitude;
-        }
-
-        public Address(string zipCode)
-            : this(string.Empty, zipCodeLookup.GetCity(zipCode), zipCodeLookup.GetState(zipCode), zipCode)
-        {
         }
 
         /// <summary>

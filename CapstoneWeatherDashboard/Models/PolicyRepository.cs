@@ -11,7 +11,7 @@ namespace CapstoneWeatherDashboard.Models
         {
             return new Policy[] 
             {
-                new Policy("Edward", "Waller", "903284023", new WeatherStation.Address("48864"))
+                // new Policy("Edward", "Waller", "903284023", new WeatherStation.Address("48864"))
             };
         }
     }

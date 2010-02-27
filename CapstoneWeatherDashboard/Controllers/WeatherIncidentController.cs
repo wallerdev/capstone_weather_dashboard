@@ -21,7 +21,7 @@ namespace CapstoneWeatherDashboard.Controllers
                 double latitude = double.Parse( Request.QueryString["latitude"]);
                 double longitude = double.Parse( Request.QueryString["longitude"]);
 
-                GoogleGeocodeResponse response = GoogleGeocoder.ReverseGeocode(latitude, longitude);
+                GoogleGeocodeResponse response = new GoogleGeocoder().ReverseGeocode(latitude, longitude);
 
                 address = new Address(response.Address, response.City, response.State, response.ZipCode);
             }

@@ -20,8 +20,8 @@ namespace InsurancePolicyRepository
         {
             return new List<PolicyInfo>
                        {
-                           new PolicyInfo("Abraham Lincoln", "123456", new Address("48823")),
-                           new PolicyInfo("George Washington", "654321", new Address("98027"))
+                           // new PolicyInfo("Abraham Lincoln", "123456", new Address("48823")),
+                           // new PolicyInfo("George Washington", "654321", new Address("98027"))
                        };
         }
     }
