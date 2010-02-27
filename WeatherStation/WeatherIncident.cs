@@ -4,8 +4,7 @@ using System.Collections.Generic;
 namespace WeatherStation
 {
     /// <summary>
-    /// This class has no logic, it just serves as a way to transfer
-    /// weather incident data
+    /// This class represents a specific weather incident.
     /// </summary>
     public class WeatherIncident
     {

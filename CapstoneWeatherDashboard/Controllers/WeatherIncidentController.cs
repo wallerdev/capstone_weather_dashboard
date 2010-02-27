@@ -18,8 +18,8 @@ namespace CapstoneWeatherDashboard.Controllers
             }
             if (!string.IsNullOrEmpty(Request.QueryString["geocodeSearch"]))
             {
-                double latitude = double.Parse( Request.QueryString["latitude"]);
-                double longitude = double.Parse( Request.QueryString["longitude"]);
+                double latitude = double.Parse(Request.QueryString["latitude"]);
+                double longitude = double.Parse(Request.QueryString["longitude"]);
 
                 GoogleGeocodeResponse response = new GoogleGeocoder().ReverseGeocode(latitude, longitude);
 
