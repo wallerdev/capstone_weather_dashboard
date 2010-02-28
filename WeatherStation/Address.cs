@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Xml.Linq;
 using System.Xml.XPath;
@@ -9,8 +10,9 @@ namespace WeatherStation
 {
     public class Address
     {
-        private static WebClient _webClient = new WebClient();
-        private static GoogleGeocoder _geocoder = new GoogleGeocoder();
+        private static readonly WebClient _webClient = new WebClient();
+        private static readonly GoogleGeocoder _geocoder = new GoogleGeocoder();
+        private static ZoneLookup _zoneLookup = new ZoneLookup();
 
         public string FullAddress
         {
@@ -87,10 +89,8 @@ namespace WeatherStation
         public Address(string streetAddress, string city, string state, string zipCode, string county)
             : this(streetAddress, city, state, zipCode, county, 0.0, 0.0)
         {
-            
         }
 
-            
         public Address(string streetAddress, string city, string state, string zipCode, string county, double latitude, double longitude)
         {
             StreetAddress = streetAddress;
@@ -107,11 +107,21 @@ namespace WeatherStation
 
         public static IEnumerable<Address> Search(string searchAddress)
         {
-            List<Address> addresses = new List<Address>();
+            var addresses = new List<Address>();
 
-            var response = _geocoder.Search(searchAddress);
-            var address = new Address(response.Address, response.City, response.State, response.ZipCode, response.County, response.Latitude, response.Longitude);
-            addresses.Add(address);
+            if(_zoneLookup.IsZone(searchAddress))
+            {
+                foreach(var zip in _zoneLookup.GetZipCodes(searchAddress))
+                {
+                    addresses.AddRange(Search(zip));
+                }
+            }
+            else
+            {
+                var response = _geocoder.Search(searchAddress);
+                var address = new Address(response.Address, response.City, response.State, response.ZipCode, response.County, response.Latitude, response.Longitude);
+                addresses.Add(address);
+            }
 
             return addresses;
         }

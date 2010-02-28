@@ -2957,9 +2957,24 @@ namespace WeatherStation
 
         #endregion
 
-        public IEnumerable<string> GetZipCodes(string zone)
+        public IEnumerable<string> GetZipCodes(string zones)
         {
-            return zoneZips[zone];
+            var zoneList = zones.Split(new[] { " - " }, StringSplitOptions.None);
+            var firstZone = zoneList.First();
+            List<string> zips = new List<string>();
+            zips.AddRange(zoneZips[firstZone]);
+            var prefix = firstZone.Substring(0, 3);
+            foreach (var zone in zoneList.Skip(1))
+            {
+                zips.AddRange(zoneZips[prefix + zone]);
+            }
+            return zips;
+        }
+
+        public bool IsZone(string zone)
+        {
+            var zoneList = zone.Split(new[] { " - " }, StringSplitOptions.None);
+            return zoneZips.ContainsKey(zoneList.FirstOrDefault());
         }
     }
 }

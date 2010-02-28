@@ -58,6 +58,12 @@ namespace WeatherStation.Geocode
                 {"PostalCodeNumber", value => response.ZipCode = value}
             };
 
+            var code = doc.Descendants(earthNamespace + "code").Single().Value;
+            if(code != "200")
+            {
+                throw new InvalidOperationException("Google failed to geocode request: code " + code);
+            }
+
             var placemark = doc.Descendants(earthNamespace + "Placemark").First();
 
             foreach (var pair in geocodeSetter)

@@ -101,5 +101,25 @@ namespace WeatherStation
                 throw new ArgumentOutOfRangeException(state, "Unknown State");
             }
         }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof (State)) return false;
+            return Equals((State) obj);
+        }
+
+        public bool Equals(State other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Equals(other._name, _name);
+        }
+
+        public override int GetHashCode()
+        {
+            return _name.GetHashCode();
+        }
     }
 }
