@@ -76,6 +76,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WeatherIncidentClassifier.cs" />
     <Compile Include="WeatherIncidentType.cs" />
+    <Compile Include="ZipCodeLookup.cs" />
+    <Compile Include="ZipCodeLookupEntry.cs" />
     <Compile Include="ZoneLookup.cs" />
   </ItemGroup>
   <ItemGroup>
