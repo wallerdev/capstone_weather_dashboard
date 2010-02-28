@@ -8,7 +8,7 @@ namespace WeatherStation
     /// </summary>
     public class WeatherIncident
     {
-        public string Location
+        public IEnumerable<Address> Locations
         {
             get;
             private set;
@@ -43,21 +43,15 @@ namespace WeatherStation
             }
         }
 
-        public DateTime StartDate
+        public DateTime Date
         {
             get;
             private set;
         }
 
-        public string StartDateString
+        public string DateString
         {
-            get { return StartDate.ToString("yyyy-MM-dd");  }
-        }
-
-        public DateTime EndDate
-        {
-            get;
-            private set;
+            get { return Date.ToString("yyyy-MM-dd");  }
         }
 
         public Uri MoreInformationUrl
@@ -66,13 +60,12 @@ namespace WeatherStation
             private set;
         }
 
-        public WeatherIncident(string location, WeatherIncidentType eventType
-                                , DateTime startDate, DateTime endDate, Uri moreInformationUrl)
+        public WeatherIncident(IEnumerable<Address> locations, WeatherIncidentType eventType
+                                , DateTime date, Uri moreInformationUrl)
         {
-            Location = location;
+            Locations = locations;
             EventType = eventType;
-            StartDate = startDate;
-            EndDate = endDate;
+            Date = date;
             MoreInformationUrl = moreInformationUrl;
         }
     }

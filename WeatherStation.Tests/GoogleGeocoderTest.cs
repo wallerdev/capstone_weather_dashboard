@@ -41,6 +41,18 @@ namespace WeatherStation.Tests
         }
 
         [TestMethod]
+        public void TestSearch()
+        {
+            var result = _geocoder.Search("48823");
+            Assert.AreEqual("48823", result.ZipCode);
+            Assert.AreEqual("East Lansing", result.City);
+            Assert.AreEqual("Ingham", result.County);
+            Assert.AreEqual("MI", result.State);
+            Assert.AreEqual("US", result.CountryNameCode);
+            Assert.AreEqual("USA", result.CountryName);
+        }
+
+        [TestMethod]
         public void TestReverseGeocode()
         {
             var result = _geocoder.ReverseGeocode(42.7369792, -84.4838654);

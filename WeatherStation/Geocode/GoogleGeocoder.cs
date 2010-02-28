@@ -25,8 +25,12 @@ namespace WeatherStation.Geocode
             {
                 searchAddress = address.ZipCode;
             }
-            string escapedAddress = Uri.EscapeDataString(searchAddress);
-            string requestUrl = GetGeocodeRequestUrl(escapedAddress);
+            return Search(searchAddress);
+        }
+
+        public GoogleGeocodeResponse Search(string address)
+        {
+            string escapedAddress = Uri.EscapeDataString(address);
             string response = _client.DownloadString(GetGeocodeRequestUrl(escapedAddress));
             return ParseGoogleGeocoderResponse(XDocument.Parse(response));
         }

@@ -57,8 +57,8 @@ namespace WeatherStation.WeatherEventProviders
                 var entry = new WeatherUndergroundEntry(date, row);
                 try
                 {
-                    incidents.Add(new WeatherIncident(airportCode, WeatherIncidentClassifier.Classify(entry), date,
-                                                      date, moreInfoUrl));
+                    //incidents.Add(new WeatherIncident(airportCode, WeatherIncidentClassifier.Classify(entry), date,
+                    //                                  date, moreInfoUrl));
                 }
                 catch (ArgumentException)
                 {

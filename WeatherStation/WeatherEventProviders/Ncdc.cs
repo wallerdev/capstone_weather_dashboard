@@ -52,16 +52,18 @@ namespace WeatherStation.WeatherEventProviders
             {
                 // This goes through each row and pulls out the location and event type
                 // This is fragile because we are depending on the html of the response
+
+                Address address = null;
+                //weatherEvent.SelectSingleNode("td[@headers='h1']/a").InnerText.Trim()
+
                 var returnValues =
                     (from weatherEvent in node.SelectNodes("tr")
                      where weatherEvent.SelectSingleNode("td[@headers]") != null
                      select
                          new WeatherIncident(
-                         weatherEvent.SelectSingleNode("td[@headers='h1']/a").InnerText.Trim(),
+                         new[] { address },
                          WeatherIncidentClassifier.Classify(
                              weatherEvent.SelectSingleNode("td[@headers='h4']").InnerText.Trim()),
-                         DateTime.Parse(
-                             weatherEvent.SelectSingleNode("td[@headers='h2']").InnerText.Trim()),
                          DateTime.Parse(
                              weatherEvent.SelectSingleNode("td[@headers='h2']").InnerText.Trim()),
                          new Uri(

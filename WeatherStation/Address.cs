@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using WeatherStation.Geocode;
@@ -8,8 +9,8 @@ namespace WeatherStation
 {
     public class Address
     {
-        private WebClient _webClient = new WebClient();
-        private GoogleGeocoder _geocoder = new GoogleGeocoder();
+        private static WebClient _webClient = new WebClient();
+        private static GoogleGeocoder _geocoder = new GoogleGeocoder();
 
         public string FullAddress
         {
@@ -79,6 +80,18 @@ namespace WeatherStation
         }
 
         public Address(string streetAddress, string city, string state, string zipCode)
+            : this(streetAddress, city, state, zipCode, null, 0.0, 0.0)
+        {
+        }
+
+        public Address(string streetAddress, string city, string state, string zipCode, string county)
+            : this(streetAddress, city, state, zipCode, county, 0.0, 0.0)
+        {
+            
+        }
+
+            
+        public Address(string streetAddress, string city, string state, string zipCode, string county, double latitude, double longitude)
         {
             StreetAddress = streetAddress;
             City = city;
@@ -87,15 +100,20 @@ namespace WeatherStation
                 State = new State(state);
             }
             ZipCode = zipCode;
+            County = county;
+            Latitude = latitude;
+            Longitude = longitude;
+        }
 
-            var response = _geocoder.Geocode(this);
-            StreetAddress = response.Address;
-            City = response.City;
-            State = new State(response.State);
-            ZipCode = response.ZipCode;
-            County = response.County;
-            Latitude = response.Latitude;
-            Longitude = response.Longitude;
+        public static IEnumerable<Address> Search(string searchAddress)
+        {
+            List<Address> addresses = new List<Address>();
+
+            var response = _geocoder.Search(searchAddress);
+            var address = new Address(response.Address, response.City, response.State, response.ZipCode, response.County, response.Latitude, response.Longitude);
+            addresses.Add(address);
+
+            return addresses;
         }
 
         /// <summary>
