@@ -110,17 +110,25 @@ namespace WeatherStation
         {
             var addresses = new List<Address>();
 
-            if(_zoneLookup.IsZone(searchAddress))
+            if (_zoneLookup.IsZone(searchAddress))
             {
-                foreach(var zip in _zoneLookup.GetZipCodes(searchAddress))
+                foreach (var zip in _zoneLookup.GetZipCodes(searchAddress))
                 {
                     addresses.Add(FromZipCode(zip));
                 }
             }
+            else if (_zipCodeLookup.IsZipCode(searchAddress))
+            {
+                addresses.Add(_zipCodeLookup.GetAddress(searchAddress));
+            }
+            else if(_zipCodeLookup.IsCityAndState(searchAddress))
+            {
+                addresses.Add(_zipCodeLookup.GetAddressFromCityAndState(searchAddress));
+            }
             else
             {
                 var response = _geocoder.Search(searchAddress);
-                if(response != null)
+                if (response != null)
                 {
                     var address = new Address(response.Address, response.City, response.State, response.ZipCode, response.County, response.Latitude, response.Longitude);
                     addresses.Add(address);

@@ -28,6 +28,21 @@ namespace WeatherStation
         {
             return _addressLookup[zipCode];
         }
+
+        internal bool IsZipCode(string searchAddress)
+        {
+            return _addressLookup.ContainsKey(searchAddress);
+        }
+
+        internal bool IsCityAndState(string searchAddress)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal Address GetAddressFromCityAndState(string searchAddress)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 
