@@ -10,6 +10,7 @@
         Tornado,
         ExtremeCold,
         DenseFog,
-        TropicalStorm
+        TropicalStorm,
+        Lightning
     }
 }

@@ -17,6 +17,7 @@ namespace WeatherStation
         private static readonly IEnumerable<string> IceStormList = new[] { "ice storm" };
         private static readonly IEnumerable<string> FogList = new[] { "dense fog", "fog" };
         private static readonly IEnumerable<string> TropicalStormList = new[] { "tropical storm" };
+        private static readonly IEnumerable<string> LightningList = new[] {"lightning"};
 
 
         /// <summary>
@@ -37,7 +38,8 @@ namespace WeatherStation
                 {ColdList, WeatherIncidentType.ExtremeCold},
                 {IceStormList, WeatherIncidentType.IceStorm},
                 {FogList, WeatherIncidentType.DenseFog},
-                {TropicalStormList, WeatherIncidentType.TropicalStorm}
+                {TropicalStormList, WeatherIncidentType.TropicalStorm},
+                {LightningList, WeatherIncidentType.Lightning}
             };
 
             foreach (var lookup in listLookup)
