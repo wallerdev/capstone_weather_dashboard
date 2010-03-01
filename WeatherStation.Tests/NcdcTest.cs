@@ -29,8 +29,9 @@ namespace WeatherStation.Tests
             Assert.AreEqual("Lansing", location.City);
             Assert.AreEqual("Ingham", location.County);
             Assert.AreEqual(new State("MI"), location.State);
-            Assert.AreEqual(42.7980673, location.Latitude);
-            Assert.AreEqual(-84.4274753, location.Longitude);
+            double accuracy = 0.25;
+            Assert.IsTrue(Math.Abs(42.7980673 - location.Latitude) < accuracy);
+            Assert.IsTrue(Math.Abs(-84.4274753 - location.Longitude) < accuracy);
         }
 
         [TestMethod]
@@ -69,17 +70,11 @@ namespace WeatherStation.Tests
         {
             var date = new DateTime(2009, 1, 1);
             var events = _ncdc.GetEvents(new State("MI"), "Ingham", date, date.AddYears(1), null);
-            Assert.AreEqual(1, events.Count());
-            var e = events.Single();
-            Assert.AreEqual(date, e.Date);
-            Assert.AreEqual(WeatherIncidentType.HighWind, e.EventType);
-            var location = e.Locations.Single();
-            Assert.IsNull(location.StreetAddress);
-            Assert.AreEqual("North Leslie", location.City);
-            Assert.AreEqual("Ingham", location.County);
-            Assert.AreEqual(new State("MI"), location.State);
-            Assert.AreEqual(42.4888206, location.Latitude);
-            Assert.AreEqual(-84.4281308, location.Longitude);
+            Assert.AreEqual(10, events.Count());
+            var e = events.First();
+            Assert.AreEqual(new DateTime(2009, 1, 9), e.Date);
+            Assert.AreEqual(WeatherIncidentType.WinterStorm, e.EventType);
+            Assert.AreEqual(55, e.Locations.Count());
         }
     }
 }

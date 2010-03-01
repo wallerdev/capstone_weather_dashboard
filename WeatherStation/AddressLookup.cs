@@ -18,7 +18,7 @@ namespace WeatherStation
 
         public AddressLookup()
         {
-            IEnumerable<string> entries = Properties.Resources.ZipCodeTable.Split(new[] { "\r\n" }, StringSplitOptions.None);
+            IEnumerable<string> entries = Properties.Resources.ZipCodeTable.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
             foreach (var entry in entries)
             {
                 var parts = entry.Split(',').Select(part => part.Trim('"')).ToList();
@@ -41,7 +41,23 @@ namespace WeatherStation
 
         public bool IsCityAndState(string searchAddress)
         {
-            return cityCommaState.IsMatch(searchAddress) || citySpaceState.IsMatch(searchAddress);
+            if (cityCommaState.IsMatch(searchAddress) || citySpaceState.IsMatch(searchAddress))
+            {
+                Match match;
+                if ((match = cityCommaState.Match(searchAddress)).Success || (match = citySpaceState.Match(searchAddress)).Success)
+                {
+                    var pair = new KeyValuePair<string, State>(match.Groups[1].Value, new State(match.Groups[2].Value));
+                    return _cityStateLookup.ContainsKey(pair);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public Address GetAddressFromCityAndState(string searchAddress)
@@ -52,7 +68,7 @@ namespace WeatherStation
                 var pair = new KeyValuePair<string, State>(match.Groups[1].Value, new State(match.Groups[2].Value));
                 return _cityStateLookup[pair];
             }
-            throw new NotImplementedException();
+            throw new ArgumentException("Unknown city and state", "searchAddress");
         }
     }
 }

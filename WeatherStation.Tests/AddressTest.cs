@@ -15,15 +15,17 @@ namespace WeatherStation.Tests
         [TestMethod]
         public void TestAddressSearch()
         {
-            var addresses = Address.Search("North Leslie MI");
+            var addresses = Address.Search("Lansing MI");
             Assert.AreEqual(1, addresses.Count());
             var address = addresses.Single();
             Assert.IsNull(address.StreetAddress);
-            Assert.AreEqual("North Leslie", address.City);
+            Assert.AreEqual("Lansing", address.City);
             Assert.AreEqual("Ingham", address.County);
             Assert.AreEqual(new State("MI"), address.State);
-            Assert.AreEqual(42.4888206, address.Latitude);
-            Assert.AreEqual(-84.4281308, address.Longitude);
+
+            double accuracy = 0.25;
+            Assert.IsTrue(Math.Abs(42.7980673 - address.Latitude) < accuracy);
+            Assert.IsTrue(Math.Abs(-84.4274753 - address.Longitude) < accuracy);
         }
     }
 }

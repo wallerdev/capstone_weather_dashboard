@@ -10,6 +10,8 @@ namespace WeatherStation.WeatherEventProviders
 {
     public class Ncdc
     {
+        private static ZoneLookup _zoneLookup = new ZoneLookup();
+
         public IEnumerable<WeatherIncident> GetEvents(State state, string county, DateTime startDate, DateTime endDate, WeatherIncidentType? filter)
         {
             // hardcoded url that we scrape the data from
@@ -56,9 +58,10 @@ namespace WeatherStation.WeatherEventProviders
                 var returnValues =
                     (from weatherEvent in node.SelectNodes("tr")
                      where weatherEvent.SelectSingleNode("td[@headers]") != null
+                     let location = weatherEvent.SelectSingleNode("td[@headers='h1']/a").InnerText.Trim()
                      select
                          new WeatherIncident(
-                         Address.Search(weatherEvent.SelectSingleNode("td[@headers='h1']/a").InnerText.Trim()),
+                         Address.Search(_zoneLookup.IsZone(location) ? location : location + ", " + state.Abbreviation),
                          WeatherIncidentClassifier.Classify(
                              weatherEvent.SelectSingleNode("td[@headers='h4']").InnerText.Trim()),
                          DateTime.Parse(

@@ -108,6 +108,11 @@ namespace WeatherStation
 
         public static IEnumerable<Address> Search(string searchAddress)
         {
+            return Search(searchAddress, false);
+        }
+
+        public static IEnumerable<Address> Search(string searchAddress, bool geocode)
+        {
             var addresses = new List<Address>();
 
             if (_zoneLookup.IsZone(searchAddress))
@@ -125,7 +130,7 @@ namespace WeatherStation
             {
                 addresses.Add(_addressLookup.GetAddressFromCityAndState(searchAddress));
             }
-            else
+            else if (geocode)
             {
                 var response = _geocoder.Search(searchAddress);
                 if (response != null)
@@ -133,6 +138,10 @@ namespace WeatherStation
                     var address = new Address(response.Address, response.City, response.State, response.ZipCode, response.County, response.Latitude, response.Longitude);
                     addresses.Add(address);
                 }
+            }
+            else
+            {
+                addresses.Add(new SearchAddress(searchAddress));
             }
 
             return addresses;
