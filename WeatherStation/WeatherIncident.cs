@@ -38,7 +38,8 @@ namespace WeatherStation
                                {WeatherIncidentType.HighWind, "High Wind"},
                                {WeatherIncidentType.IceStorm, "Ice Storm"},
                                {WeatherIncidentType.Tornado, "Tornado"},
-                               {WeatherIncidentType.WinterStorm, "Winter Storm"}
+                               {WeatherIncidentType.WinterStorm, "Winter Storm"},
+                               {WeatherIncidentType.Lightning, "Lightning"}
                            }[EventType];
             }
         }
