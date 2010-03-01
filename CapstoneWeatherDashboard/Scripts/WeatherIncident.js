@@ -24,7 +24,7 @@ function displayIncidents(incidents) {
                                     '</p>' +
                                     '<div>' +
                                         '<label>Map:</label>' +
-                                        '<div class="map" title="Eagle, MI"></div>' +
+                                        '<div class="map"></div>' +
                                     '</div>' +
                                 '</div>' +
                                 '</div>');
