@@ -30,6 +30,10 @@
                 max: 50
             }).result(function(event, item) {
                 $('#policyNumber').val(item.PolicyNumber);
+                $('#PolicyStreetAddress').val(item.PolicyHomeAddress.StreetAddress);
+                $('#PolicyCity').val(item.PolicyHomeAddress.City);
+                $('#PolicyState').val(item.PolicyHomeAddress.State.Name);
+                $('#PolicyZipCode').val(item.PolicyHomeAddress.ZipCode);
             });
         });
     </script>
@@ -192,6 +196,12 @@
                     </td>
                 </tr>
             </table>
+            <span>
+                <%= Html.Hidden("PolicyStreetAddress") %>
+                <%= Html.Hidden("PolicyCity")%>
+                <%= Html.Hidden("PolicyState")%>
+                <%= Html.Hidden("PolicyZipCode")%>
+            </span>
             <p>
                 <input type="submit" value="Search Policy" class="submit" name="policySearch" disabled="disabled" />
             </p>

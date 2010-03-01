@@ -11,13 +11,14 @@ namespace CapstoneWeatherDashboard.Controllers
         //
         // GET: /PolicyHolderNames/
 
+        private readonly IPolicyProvider _insurancePolicyProvider = new MockPolicyProvider();
+
         public ActionResult Index()
         {
             if (!string.IsNullOrEmpty(Request.QueryString["q"]))
             {
                 string partialName = Request.QueryString["q"];
-                var policyProvider = new MockPolicyProvider();
-                List<PolicyInfo> matchedPolicies = policyProvider.GetPoliciesThatMatchNameFragment(partialName);
+                List<PolicyInfo> matchedPolicies = _insurancePolicyProvider.GetPoliciesThatMatchNameFragment(partialName);
 
 
                 return Json(matchedPolicies,JsonRequestBehavior.AllowGet);

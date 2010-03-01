@@ -2,8 +2,9 @@
 
 namespace InsurancePolicyRepository
 {
-    interface IPolicyProvider
+    public interface IPolicyProvider
     {
         List<PolicyInfo> GetPoliciesThatMatchNameFragment(string nameFragment);
+        PolicyInfo GetPolicyThatMatchesNameOrNumber(string policyNumber, string policyHolderName);
     }
 }
