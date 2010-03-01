@@ -13,6 +13,8 @@ namespace WeatherStation
     {
         private readonly Dictionary<string, Address> _zipCodeLookup = new Dictionary<string, Address>();
         private readonly Dictionary<KeyValuePair<string, State>, Address> _cityStateLookup = new Dictionary<KeyValuePair<string, State>, Address>();
+        Regex cityCommaState = new Regex("\\s*(.+),\\s*(.+)\\s*");
+        Regex citySpaceState = new Regex("\\s*(.+)\\s+(\\w{2})\\s*"); // Only supports two letter state codes for now
 
         public AddressLookup()
         {
@@ -39,18 +41,13 @@ namespace WeatherStation
 
         public bool IsCityAndState(string searchAddress)
         {
-            Match match;
-            if((match = Regex.Match(searchAddress, ".*?,\\s*.*")) != null)
-            {
-                
-            }
-            return _cityStateLookup.ContainsKey(new KeyValuePair<string, State>("ABC", new State("MI")));
+            return cityCommaState.IsMatch(searchAddress) || citySpaceState.IsMatch(searchAddress);
         }
 
         public Address GetAddressFromCityAndState(string searchAddress)
         {
             Match match;
-            if ((match = Regex.Match(searchAddress, "(.+),\\s*(.+)")) != null)
+            if ((match = cityCommaState.Match(searchAddress)).Success || (match = citySpaceState.Match(searchAddress)).Success)
             {
                 var pair = new KeyValuePair<string, State>(match.Groups[1].Value, new State(match.Groups[2].Value));
                 return _cityStateLookup[pair];
