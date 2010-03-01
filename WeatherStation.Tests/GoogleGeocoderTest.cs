@@ -23,9 +23,10 @@ namespace WeatherStation.Tests
         [TestMethod]
         public void TestLatitudeAndLongitude()
         {
+            double accuracy = 0.25;
             var result = _geocoder.Geocode(new Address(null, null, null, "48823"));
-            Assert.IsTrue(42.7369792 - result.Latitude < double.Epsilon);
-            Assert.IsTrue(-84.4838654 - result.Longitude < double.Epsilon);
+            Assert.IsTrue(Math.Abs(42.7369792 - result.Latitude) < accuracy);
+            Assert.IsTrue(Math.Abs(-84.4838654 - result.Longitude) < accuracy);
         }
 
         [TestMethod]
