@@ -13,6 +13,7 @@ namespace WeatherStation
         private static readonly WebClient _webClient = new WebClient();
         private static readonly GoogleGeocoder _geocoder = new GoogleGeocoder();
         private static ZoneLookup _zoneLookup = new ZoneLookup();
+        private static ZipCodeLookup _zipCodeLookup = new ZipCodeLookup();
 
         public string FullAddress
         {
@@ -119,8 +120,11 @@ namespace WeatherStation
             else
             {
                 var response = _geocoder.Search(searchAddress);
-                var address = new Address(response.Address, response.City, response.State, response.ZipCode, response.County, response.Latitude, response.Longitude);
-                addresses.Add(address);
+                if(response != null)
+                {
+                    var address = new Address(response.Address, response.City, response.State, response.ZipCode, response.County, response.Latitude, response.Longitude);
+                    addresses.Add(address);
+                }
             }
 
             return addresses;
@@ -128,7 +132,7 @@ namespace WeatherStation
 
         public static Address FromZipCode(string zipCode)
         {
-            return null;
+            return _zipCodeLookup.GetAddress(zipCode);
         }
 
         /// <summary>

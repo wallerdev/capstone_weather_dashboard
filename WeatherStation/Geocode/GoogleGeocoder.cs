@@ -15,7 +15,9 @@ namespace WeatherStation.Geocode
     public class GoogleGeocoder
     {
         private const string ApiKey = "ABQIAAAAam0nwuIjjXo0_gZGpAyU2hRCy4l6b2RPYQNXTJn1LO8P79-4LxTFJKh9yf0ov08TsXwL824gW69e8w";
-        private const string GeocodeAddress = "http://maps.google.com/maps/geo?q={0}&output=xml&sensor=false&key={1}";
+        private const string GeocodeAddress = "http://maps.google.com/maps/geo?q={0}&output=xml&sensor=false&gl=us&key={1}";
+        private const string Success = "200";
+        private const string NoLocationFound = "602";
         private WebClient _client = new WebClient();
 
         public GoogleGeocodeResponse Geocode(Address address)
@@ -59,8 +61,12 @@ namespace WeatherStation.Geocode
             };
 
             var code = doc.Descendants(earthNamespace + "code").Single().Value;
-            if(code != "200")
+            if(code != Success)
             {
+                if(code == NoLocationFound)
+                {
+                    return null;
+                }
                 throw new InvalidOperationException("Google failed to geocode request: code " + code);
             }
 

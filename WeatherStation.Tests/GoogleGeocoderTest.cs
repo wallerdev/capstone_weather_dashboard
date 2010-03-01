@@ -64,5 +64,12 @@ namespace WeatherStation.Tests
             Assert.AreEqual("US", result.CountryNameCode);
             Assert.AreEqual("USA", result.CountryName);
         }
+
+        [TestMethod]
+        public void TestInvalidAddressSearch()
+        {
+            var result = _geocoder.Search("THISISNOTAREALPLACETHATGOOGLESHOULDEVERFIND");
+            Assert.IsNull(result);
+        }
     }
 }

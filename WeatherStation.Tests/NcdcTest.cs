@@ -57,12 +57,11 @@ namespace WeatherStation.Tests
                                      "48930", "48933", "48937", "48950", "48956", "48980", "49251", "49264", "49285"
                                  };
 
-            var allZips = miz051Zips.Concat(miz059Zips).Concat(miz067Zips);
-
-            foreach(var location in e.Locations)
-            {
-                Assert.IsTrue(allZips.Contains(location.ZipCode));
-            }
+            var allZips = miz051Zips.Concat(miz059Zips).Concat(miz067Zips).ToList();
+            var locatedZipCodes = e.Locations.Select(l => l.ZipCode).ToList();
+            allZips.Sort();
+            locatedZipCodes.Sort();
+            Assert.IsTrue(allZips.SequenceEqual(locatedZipCodes));
         }
 
         [TestMethod]
