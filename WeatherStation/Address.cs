@@ -113,7 +113,7 @@ namespace WeatherStation
             {
                 foreach(var zip in _zoneLookup.GetZipCodes(searchAddress))
                 {
-                    addresses.AddRange(Search(zip));
+                    addresses.Add(FromZipCode(zip));
                 }
             }
             else
@@ -124,6 +124,11 @@ namespace WeatherStation
             }
 
             return addresses;
+        }
+
+        public static Address FromZipCode(string zipCode)
+        {
+            return null;
         }
 
         /// <summary>

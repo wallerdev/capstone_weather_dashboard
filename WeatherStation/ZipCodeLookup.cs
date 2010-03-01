@@ -10,33 +10,23 @@ namespace WeatherStation
     /// </summary>
     public class ZipCodeLookup
     {
-        readonly IEnumerable<ZipCodeLookupEntry> _zipCodeLookupEntries;
+        readonly Dictionary<string, Address> _addressLookup = new Dictionary<string, Address>();
 
         public ZipCodeLookup()
         {
-            IEnumerable<string> entries = Properties.Resources.ZipCodeTable.Split(new[] { Environment.NewLine, "\n" }, StringSplitOptions.None);
-            _zipCodeLookupEntries = entries.Select(entry =>
-                new ZipCodeLookupEntry(entry.Split(',').Select(data => data.Trim('"')).ToList()));
+            IEnumerable<string> entries = Properties.Resources.ZipCodeTable.Split(new[] { "\n" }, StringSplitOptions.None);
+            foreach (var entry in entries)
+            {
+                var parts = entry.Split(',').Select(part => part.Trim('"')).ToList();
+                var address = new Address(null, parts[3], parts[4], parts[0], parts[5], double.Parse(parts[1]),
+                                          double.Parse(parts[2]));
+                _addressLookup[address.ZipCode] = address;
+            }
         }
 
-        public string GetCounty(string zipCode)
+        public Address GetAddress(string zipCode)
         {
-            return GetEntry(zipCode).County;
-        }
-
-        public string GetState(string zipCode)
-        {
-            return GetEntry(zipCode).State;
-        }
-
-        public string GetCity(string zipCode)
-        {
-            return GetEntry(zipCode).City;
-        }
-
-        ZipCodeLookupEntry GetEntry(string zipCode)
-        {
-            return _zipCodeLookupEntries.First(e => e.ZipCode == zipCode);
+            return _addressLookup[zipCode];
         }
     }
 }
