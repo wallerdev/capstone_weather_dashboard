@@ -15,6 +15,7 @@ namespace CapstoneWeatherDashboard.Controllers
             {
                 address = new Address(Request.QueryString["address"], Request.QueryString["city"],
                     Request.QueryString["state"], Request.QueryString["zipCode"]);
+                address.Geocode();
             }
             if (!string.IsNullOrEmpty(Request.QueryString["geocodeSearch"]))
             {

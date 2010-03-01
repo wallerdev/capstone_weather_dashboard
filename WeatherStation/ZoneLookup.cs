@@ -2966,7 +2966,20 @@ namespace WeatherStation
             var prefix = firstZone.Substring(0, 3);
             foreach (var zone in zoneList.Skip(1))
             {
-                zips.AddRange(zoneZips[prefix + zone]);
+                if (zone.Contains(">"))
+                {
+                    var zoneRange = zone.Split('>');
+                    var zoneBegin = int.Parse(zoneRange[0]);
+                    var zoneEnd = int.Parse(zoneRange[1]);
+                    for(int i = zoneBegin; i < zoneEnd; i++)
+                    {
+                        zips.AddRange(zoneZips[prefix + i.ToString().PadLeft(3, '0')]);
+                    }
+                }
+                else
+                {
+                    zips.AddRange(zoneZips[prefix + zone]);
+                }
             }
             return zips;
         }

@@ -167,5 +167,32 @@ namespace WeatherStation
             var element = document.XPathSelectElement("/location/nearby_weather_stations/airport/station/icao");
             return element.Value;
         }
+
+        public void Geocode()
+        {
+            var response = _geocoder.Geocode(this);
+            if(!string.IsNullOrEmpty(response.Address))
+            {
+                StreetAddress = response.Address;
+            }
+            if(!string.IsNullOrEmpty(response.City))
+            {
+                City = response.City;
+            }
+            if (!string.IsNullOrEmpty(response.County))
+            {
+                County = response.County;
+            }
+            if (!string.IsNullOrEmpty(response.State))
+            {
+                State = new State(response.State);
+            }
+            if (!string.IsNullOrEmpty(response.ZipCode))
+            {
+                ZipCode = response.ZipCode;
+            }
+            Latitude = response.Latitude;
+            Longitude = response.Longitude;
+        }
     }
 }
