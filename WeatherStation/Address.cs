@@ -13,7 +13,7 @@ namespace WeatherStation
         private static readonly WebClient _webClient = new WebClient();
         private static readonly GoogleGeocoder _geocoder = new GoogleGeocoder();
         private static ZoneLookup _zoneLookup = new ZoneLookup();
-        private static ZipCodeLookup _zipCodeLookup = new ZipCodeLookup();
+        private static AddressLookup _addressLookup = new AddressLookup();
 
         public string FullAddress
         {
@@ -117,13 +117,13 @@ namespace WeatherStation
                     addresses.Add(FromZipCode(zip));
                 }
             }
-            else if (_zipCodeLookup.IsZipCode(searchAddress))
+            else if (_addressLookup.IsZipCode(searchAddress))
             {
-                addresses.Add(_zipCodeLookup.GetAddress(searchAddress));
+                addresses.Add(_addressLookup.GetAddressFromZipCode(searchAddress));
             }
-            else if(_zipCodeLookup.IsCityAndState(searchAddress))
+            else if(_addressLookup.IsCityAndState(searchAddress))
             {
-                addresses.Add(_zipCodeLookup.GetAddressFromCityAndState(searchAddress));
+                addresses.Add(_addressLookup.GetAddressFromCityAndState(searchAddress));
             }
             else
             {
@@ -140,7 +140,7 @@ namespace WeatherStation
 
         public static Address FromZipCode(string zipCode)
         {
-            return _zipCodeLookup.GetAddress(zipCode);
+            return _addressLookup.GetAddressFromZipCode(zipCode);
         }
 
         /// <summary>

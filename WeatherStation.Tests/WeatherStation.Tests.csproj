@@ -43,7 +43,7 @@
     <Compile Include="NcdcTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WeatherUndergroundEntryTest.cs" />
-    <Compile Include="ZipCodeLookupTest.cs" />
+    <Compile Include="AddressLookupTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WeatherStation\WeatherStation.csproj">
