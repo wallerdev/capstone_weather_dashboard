@@ -29,7 +29,7 @@ namespace CapstoneWeatherDashboard.Controllers
                 Request.QueryString["county"],
                 DateTime.Parse(Request.QueryString["startDate"]),
                 DateTime.Parse(Request.QueryString["endDate"]), filter);
-            
+
             return Json(ncdcIncidents, JsonRequestBehavior.AllowGet);
         }
     }

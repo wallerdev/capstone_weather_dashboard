@@ -3,15 +3,16 @@
 var urls = [];
 var allIncidents = [];
 var totalUrls = 0;
+var geocoder = new GClientGeocoder();
 
 function displayIncidents(incidents) {
     for (var i in incidents) {
         incidents[i].newRow = true;
         incidents[i].order = allIncidents.length;
         incidents[i].html = $('<div id="result' + i + '" class="result ' + incidents[i].EventTypeString + '" style="display: none">' +
-                                '<div class="topInfo">' + 
+                                '<div class="topInfo">' +
                                     '<p class="distance">' + i + ' miles away</p>' +
-                                    '<p class="date">' + incidents[i].StartDateString + '</p>' +
+                                    '<p class="date">' + incidents[i].DateString + '</p>' +
                                     '<p class="eventType">' + incidents[i].EventTypeInWords + '</p>' +
                                 '</div>' +
                                 '<div class="additionalInfo">' +
@@ -24,7 +25,7 @@ function displayIncidents(incidents) {
                                     '<div>' +
                                         '<label>Map:</label>' +
                                         '<div class="map" title="Eagle, MI"></div>' +
-                                    '</div>' + 
+                                    '</div>' +
                                 '</div>' +
                                 '</div>');
         allIncidents.push(incidents[i]);
@@ -44,39 +45,54 @@ function displayIncidents(incidents) {
     $('#results').html();
 
     for (var i in allIncidents) {
-        $('#results').append(allIncidents[i].html); 
+        $('#results').append(allIncidents[i].html);
     }
 
     for (var i in allIncidents) {
-        if (allIncidents[i].newRow) {
-            allIncidents[i].html.fadeIn(1000);
-            allIncidents[i].newRow = false;
-            allIncidents[i].html.find('.topInfo').click(function() {
-            var additionalInfo = $(this).next(".additionalInfo");
-                additionalInfo.slideToggle();
+        var closure = function(incident) {
+            if (incident.newRow) {
+                incident.html.fadeIn(1000);
+                incident.newRow = false;
+                incident.html.find('.topInfo').click(function() {
+                    var additionalInfo = $(this).next(".additionalInfo");
+                    additionalInfo.slideToggle();
 
-                // setup google map
-                additionalInfo.find('.map').each(function() {
-                    var geocoderEach = new GClientGeocoder();
-                    var address = $(this).attr("title");
+                    // setup google map
+                    additionalInfo.find('.map').each(function() {
+                        var searchLocation = new GLatLng(latitude, longitude);
+                        var mapDiv = $(this);
+                        var map = new google.maps.Map2(mapDiv[0]);
+                        map.setCenter(searchLocation, 9);
+                        map.addControl(new GLargeMapControl());
 
-                    var mapDiv = $(this)[0];
-                    
-                    geocoderEach.getLatLng(homeAddress, function(point) {
-                        if (!point) {
-                            //alert(address + " not found");
-                        } else {
-                            var map = new google.maps.Map2(mapDiv);
-                            map.setCenter(point, 10);
-                            var marker = new GMarker(point);
-                            map.addOverlay(marker);
-                            marker.openInfoWindowHtml(homeAddress);
-                            map.addControl(new GLargeMapControl());
+                        var marker = new GMarker(searchLocation);
+                        map.addOverlay(marker);
+                        marker.openInfoWindowHtml(homeAddress);
+
+                        for (var j in incident.Locations) {
+                            var location = incident.Locations[j];
+                            var incidentMarker;
+                            if (location.Latitude == 0 && location.Longitude == 0) {
+
+                                geocoder.getLatLng(location.FullAddress, function(point) {
+                                    if (!point) {
+                                        alert(location.FullAddress + " not found");
+                                    } else {
+                                        var incidentMarker = new GMarker(point);
+                                        map.addOverlay(incidentMarker);
+                                    }
+                                });
+                            } else {
+                                var incidentMarker = new GMarker(new GLatLng(location.Latitude, location.Longitude));
+                                map.addOverlay(incidentMarker);
+                            }
                         }
                     });
                 });
-            });
-        }
+            }
+        };
+        closure(allIncidents[i]);
+
     }
 
     if (urls.length > 0) {
@@ -85,7 +101,7 @@ function displayIncidents(incidents) {
     } else {
         $("#progress").hide();
     }
-    
+
 }
 
 $(document).ready(function() {
