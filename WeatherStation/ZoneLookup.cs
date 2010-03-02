@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WeatherStation
 {
-    class ZoneLookup
+    public class ZoneLookup
     {
         #region Zone To Zip Codes Dictionary
 
@@ -2960,18 +2960,18 @@ namespace WeatherStation
         public IEnumerable<string> GetZipCodes(string zones)
         {
             var zoneList = zones.Split(new[] { " - " }, StringSplitOptions.None);
-            var firstZone = zoneList.First();
+            var prefix = zoneList[0].Substring(0, 3);
+            zoneList[0] = zoneList[0].Remove(0, 3);
+
             List<string> zips = new List<string>();
-            zips.AddRange(zoneZips[firstZone]);
-            var prefix = firstZone.Substring(0, 3);
-            foreach (var zone in zoneList.Skip(1))
+            foreach (var zone in zoneList)
             {
                 if (zone.Contains(">"))
                 {
                     var zoneRange = zone.Split('>');
                     var zoneBegin = int.Parse(zoneRange[0]);
                     var zoneEnd = int.Parse(zoneRange[1]);
-                    for(int i = zoneBegin; i < zoneEnd; i++)
+                    for(int i = zoneBegin; i <= zoneEnd; i++)
                     {
                         zips.AddRange(zoneZips[prefix + i.ToString().PadLeft(3, '0')]);
                     }
