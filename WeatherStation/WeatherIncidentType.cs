@@ -3,14 +3,16 @@
     public enum WeatherIncidentType
     {
         Flood,
-        HighWind,
+        Wind,
         WinterStorm,
         Hail,
         IceStorm,
         Tornado,
         ExtremeCold,
-        DenseFog,
         TropicalStorm,
-        Lightning
+        Lightning,
+        Hurricane,
+        Wildfire,
+        Unclassified
     }
 }
