@@ -34,6 +34,7 @@
                 $('#PolicyCity').val(item.PolicyHomeAddress.City);
                 $('#PolicyState').val(item.PolicyHomeAddress.State.Name);
                 $('#PolicyZipCode').val(item.PolicyHomeAddress.ZipCode);
+                $('#PolicyCounty').val(item.PolicyHomeAddress.County);
             });
         });
     </script>
@@ -201,6 +202,7 @@
                 <%= Html.Hidden("PolicyCity")%>
                 <%= Html.Hidden("PolicyState")%>
                 <%= Html.Hidden("PolicyZipCode")%>
+                <%= Html.Hidden("PolicyCounty")%>
             </span>
             <p>
                 <input type="submit" value="Search Policy" class="submit" name="policySearch" disabled="disabled" />

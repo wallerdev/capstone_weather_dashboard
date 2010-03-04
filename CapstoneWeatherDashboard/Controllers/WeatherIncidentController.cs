@@ -48,6 +48,8 @@ namespace CapstoneWeatherDashboard.Controllers
                     PolicyInfo info =  _insurancePolicyProvider.GetPolicyThatMatchesNameOrNumber(policyNumber, policyHolderName);
                     address = info.PolicyHomeAddress;
                 }
+
+                address.Geocode();
             }
 
             if (address == null)

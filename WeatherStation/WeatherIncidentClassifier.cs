@@ -12,8 +12,8 @@ namespace WeatherStation
         private static readonly IEnumerable<string> HailList = new[] { "hail" };
         private static readonly IEnumerable<string> TornadoList = new[] { "tornado", "tornado winds", "funnel cloud" };
         private static readonly IEnumerable<string> WinterStormList = new[] { "lake effect snow", "heavy lake snow", "heavy snow/freezing rain", "freezing rain", "winter storm",
-            "heavy snow", "snow", "blizzard"};
-        private static readonly IEnumerable<string> ColdList = new[] { "cold wave" };
+            "heavy snow", "snow", "blizzard", "lake-effect snow", "winter weather"};
+        private static readonly IEnumerable<string> ColdList = new[] { "cold wave", "extreme cold/wind chill", "cold/wind chill" };
         private static readonly IEnumerable<string> IceStormList = new[] { "ice storm" };
         private static readonly IEnumerable<string> FogList = new[] { "dense fog", "fog" };
         private static readonly IEnumerable<string> TropicalStormList = new[] { "tropical storm" };
