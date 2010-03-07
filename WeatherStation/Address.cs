@@ -153,7 +153,7 @@ namespace WeatherStation
         }
 
         /// <summary>
-        /// Weather Underground historical data is based on airports. This function is provided to get the closest airport
+    /// Weather Underground historical data is based on airports. This function is provided to get the closest airport
         /// to a location using Weather Underground's API.
         /// </summary>
         /// <returns>Airport code of closest airport.</returns>
