@@ -39,6 +39,7 @@
         var latitude = <%= ViewData["latitude"] %>;
         var longitude = <%= ViewData["longitude"] %>;     
         var homeAddress = '<%= ViewData["homeAddress"] %>';
+        var searchString = '<%= ViewData["searchStringAsEnglish"] %>';
     </script>
 
 </asp:Content>

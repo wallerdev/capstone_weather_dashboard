@@ -13,15 +13,43 @@ namespace CapstoneWeatherDashboard.Controllers
         public ActionResult Index()
         {
             Address address = null;
+            
+            string searchStringAsEnglish = string.Empty;
 
             if (!string.IsNullOrEmpty(Request.QueryString["addressSearch"]))
             {
+                searchStringAsEnglish += "Address: ";
+                if (!string.IsNullOrEmpty( Request.QueryString["address"]))
+                {
+                    searchStringAsEnglish += Request.QueryString["address"] + " ";
+                }
+                if (!string.IsNullOrEmpty(Request.QueryString["city"]))
+                {
+                    searchStringAsEnglish += Request.QueryString["city"] + ", ";
+                }
+                if (!string.IsNullOrEmpty(Request.QueryString["state"]))
+                {
+                    searchStringAsEnglish += Request.QueryString["state"] + " ";
+                }
+                if (!string.IsNullOrEmpty(Request.QueryString["zipCode"]))
+                {
+                    searchStringAsEnglish += Request.QueryString["zipCode"] + " ";
+                }
                 address = new Address(Request.QueryString["address"], Request.QueryString["city"],
                     Request.QueryString["state"], Request.QueryString["zipCode"]);
                 address.Geocode();
             }
             if (!string.IsNullOrEmpty(Request.QueryString["geocodeSearch"]))
             {
+                if (!string.IsNullOrEmpty(Request.QueryString["latitude"]))
+                {
+                    searchStringAsEnglish += "latitude: " + Request.QueryString["latitude"] + " ";
+                }
+                if (!string.IsNullOrEmpty(Request.QueryString["longitude"]))
+                {
+                    searchStringAsEnglish += "longitude: " + Request.QueryString["longitude"] + " ";
+                }
+
                 double latitude = double.Parse(Request.QueryString["latitude"]);
                 double longitude = double.Parse(Request.QueryString["longitude"]);
 
@@ -31,6 +59,15 @@ namespace CapstoneWeatherDashboard.Controllers
             }
             if (!string.IsNullOrEmpty(Request.QueryString["policySearch"]))
             {
+                if (!string.IsNullOrEmpty(Request.QueryString["policyNumber"]))
+                {
+                    searchStringAsEnglish += "Policy Number: " + Request.QueryString["policyNumber"] + " ";
+                }
+                if (!string.IsNullOrEmpty(Request.QueryString["policyHolderName"]))
+                {
+                    searchStringAsEnglish += "Policy Holder Name: " + Request.QueryString["policyHolderName"] + " ";
+                }
+
                 string policyNumber = Request.QueryString["policyNumber"];
                 string policyHolderName = Request.QueryString["policyHolderName"];
 
@@ -58,6 +95,14 @@ namespace CapstoneWeatherDashboard.Controllers
                 throw new ArgumentException("Invalid Search");
             }
 
+            searchStringAsEnglish += "Start Date: " + Request.QueryString["startDate"] + " ";
+            searchStringAsEnglish += "Start Date: " + Request.QueryString["endDate"];
+            if(!string.IsNullOrEmpty(Request.QueryString["incidentTypes"]))
+            {
+                searchStringAsEnglish += " Incident Type:" + Request.QueryString["incidentTypes"];
+            }
+
+
             DateTime startDate = DateTime.Parse(Request.QueryString["startDate"]);
             DateTime endDate = DateTime.Parse(Request.QueryString["endDate"]);
 
@@ -74,7 +119,7 @@ namespace CapstoneWeatherDashboard.Controllers
             ViewData["startDate"] = startDate;
             ViewData["endDate"] = endDate;
             ViewData["incidentFilter"] = Request.QueryString["incidentTypes"];
-
+            ViewData["searchStringAsEnglish"] = searchStringAsEnglish;
             return View();
         }
 
