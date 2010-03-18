@@ -96,7 +96,7 @@ namespace CapstoneWeatherDashboard.Controllers
             }
 
             searchStringAsEnglish += "Start Date: " + Request.QueryString["startDate"] + " ";
-            searchStringAsEnglish += "Start Date: " + Request.QueryString["endDate"];
+            searchStringAsEnglish += "End Date: " + Request.QueryString["endDate"];
             if(!string.IsNullOrEmpty(Request.QueryString["incidentTypes"]))
             {
                 searchStringAsEnglish += " Incident Type:" + Request.QueryString["incidentTypes"];
