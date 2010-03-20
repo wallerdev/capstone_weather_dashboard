@@ -33,5 +33,10 @@ namespace WeatherStation
             }
             return Airports.First();
         }
+
+        public IEnumerable<Airport> FindNearbyAirports(Geocode geocode, double rangeInMiles)
+        {
+            return Airports.Where(a => a.Geocode.DistanceTo(geocode) < rangeInMiles);
+        }
     }
 }

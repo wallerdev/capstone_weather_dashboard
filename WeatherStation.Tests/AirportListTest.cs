@@ -12,14 +12,24 @@ namespace WeatherStation.Tests
     [TestClass]
     public class AirportListTest
     {
-        private static AirportList _airportList = new AirportList();
+        private static readonly AirportList AirportList = new AirportList();
 
         [TestMethod]
         public void TestFindClosestAirport()
         {
             var address = new Address(null, "East Lansing", "MI", "48823");
             address.GeocodeAddress();
-            Assert.AreEqual("KLAN",_airportList.FindClosestAirport(address.Geocode).AirportCode);
+            Assert.AreEqual("KLAN", AirportList.FindClosestAirport(address.Geocode).AirportCode);
+        }
+
+        [TestMethod]
+        public void TestFindNearbyAirports()
+        {
+            var address = new Address(null, "East Lansing", "MI", "48823");
+            address.GeocodeAddress();
+            var airports = AirportList.FindNearbyAirports(address.Geocode, 50.0).Select(a => a.AirportCode).ToList();
+            airports.Sort();
+            Assert.IsTrue(airports.SequenceEqual(new [] { "KAMN", "KFNT", "KJXN", "KLAN"}));
         }
     }
 }
