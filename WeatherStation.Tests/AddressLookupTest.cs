@@ -39,8 +39,8 @@ namespace WeatherStation.Tests
         {
             double accuracy = 0.25;
             var address = _addressLookup.GetAddressFromZipCode("48823");
-            Assert.IsTrue(Math.Abs(42.7369792 - address.Latitude) < accuracy);
-            Assert.IsTrue(Math.Abs(-84.4838654 - address.Longitude) < accuracy);
+            Assert.IsTrue(Math.Abs(42.7369792 - address.Geocode.Latitude) < accuracy);
+            Assert.IsTrue(Math.Abs(-84.4838654 - address.Geocode.Longitude) < accuracy);
         }
 
         [TestMethod]
@@ -72,8 +72,8 @@ namespace WeatherStation.Tests
         {
             double accuracy = 0.25;
             var address = _addressLookup.GetAddressFromZipCode("48823");
-            Assert.IsTrue(Math.Abs(42.7369792 - address.Latitude) < accuracy);
-            Assert.IsTrue(Math.Abs(-84.4838654 - address.Longitude) < accuracy);
+            Assert.IsTrue(Math.Abs(42.7369792 - address.Geocode.Latitude) < accuracy);
+            Assert.IsTrue(Math.Abs(-84.4838654 - address.Geocode.Longitude) < accuracy);
         }
     }
 }

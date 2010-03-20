@@ -61,13 +61,74 @@ namespace WeatherStation.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;00501&quot;,&quot;+40.922326&quot;,&quot;-072.637078&quot;,&quot;HOLTSVILLE&quot;,&quot;NY&quot;,&quot;SUFFOLK&quot;,&quot;UNIQUE&quot;
-        ///&quot;00544&quot;,&quot;+40.922326&quot;,&quot;-072.637078&quot;,&quot;HOLTSVILLE&quot;,&quot;NY&quot;,&quot;SUFFOLK&quot;,&quot;UNIQUE&quot;
-        ///&quot;00601&quot;,&quot;+18.165273&quot;,&quot;-066.722583&quot;,&quot;ADJUNTAS&quot;,&quot;PR&quot;,&quot;ADJUNTAS&quot;,&quot;STANDARD&quot;
-        ///&quot;00602&quot;,&quot;+18.393103&quot;,&quot;-067.180953&quot;,&quot;AGUADA&quot;,&quot;PR&quot;,&quot;AGUADA&quot;,&quot;STANDARD&quot;
-        ///&quot;00603&quot;,&quot;+18.455913&quot;,&quot;-067.145780&quot;,&quot;AGUADILLA&quot;,&quot;PR&quot;,&quot;AGUADILLA&quot;,&quot;STANDARD&quot;
-        ///&quot;00604&quot;,&quot;+18.493520&quot;,&quot;-067.135883&quot;,&quot;AGUADILLA&quot;,&quot;PR&quot;,&quot;AGUADILLA&quot;,&quot;STANDARD&quot;
-        ///&quot;00605&quot;,&quot;+18.465162&quot;,&quot;-067.141486&quot;,&quot;AGUADILLA&quot;,&quot;PR&quot;,&quot;AGUADILLA&quot;,&quot;STAND [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to &quot;KAAF&quot;,&quot;Apalachicola&quot;,&quot;FL&quot;,&quot;29.72999954&quot;,&quot;-85.02999878&quot;
+        ///&quot;KABE&quot;,&quot;Allentown&quot;,&quot;PA&quot;,&quot;40.65000153&quot;,&quot;-75.44000244&quot;
+        ///&quot;KABQ&quot;,&quot;Albuquerque&quot;,&quot;NM&quot;,&quot;35.04000092&quot;,&quot;-106.61000061&quot;
+        ///&quot;KABR&quot;,&quot;Aberdeen&quot;,&quot;SD&quot;,&quot;45.45000076&quot;,&quot;-98.41999817&quot;
+        ///&quot;KABY&quot;,&quot;Albany&quot;,&quot;GA&quot;,&quot;31.54000092&quot;,&quot;-84.19000244&quot;
+        ///&quot;KACB&quot;,&quot;Bellaire&quot;,&quot;MI&quot;,&quot;44.99000168&quot;,&quot;-85.19999695&quot;
+        ///&quot;KACK&quot;,&quot;Nantucket&quot;,&quot;MA&quot;,&quot;41.25000000&quot;,&quot;-70.05999756&quot;
+        ///&quot;KACQ&quot;,&quot;Waseca&quot;,&quot;MN&quot;,&quot;44.06999969&quot;,&quot;-93.55000305&quot;
+        ///&quot;KACT&quot;,&quot;Waco&quot;,&quot;TX&quot;,&quot;31.61000061&quot;,&quot;-97.23000336&quot;
+        ///&quot;KACV&quot;,&quot;Arcata&quot;,&quot;CA&quot;,&quot;40.97999954&quot;,&quot;-124.1 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string AirportGeocodes {
+            get {
+                return ResourceManager.GetString("AirportGeocodes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;Seagoville&quot;,&quot;TX&quot;,&quot;-96.5383228&quot;,&quot;32.6395776&quot;
+        ///&quot;Mammoth Spring&quot;,&quot;AR&quot;,&quot;-91.5406968&quot;,&quot;36.4956181&quot;
+        ///&quot;Suffolk&quot;,&quot;VA&quot;,&quot;-76.5835621&quot;,&quot;36.7282054&quot;
+        ///&quot;Miles&quot;,&quot;TX&quot;,&quot;-100.1823084&quot;,&quot;31.5973798&quot;
+        ///&quot;Mount Holly&quot;,&quot;AR&quot;,&quot;-92.9548857&quot;,&quot;33.3026262&quot;
+        ///&quot;Panama&quot;,&quot;IL&quot;,&quot;-89.5242528&quot;,&quot;39.0294908&quot;
+        ///&quot;Cobbs Creek&quot;,&quot;VA&quot;,&quot;-76.3968899&quot;,&quot;37.5056916&quot;
+        ///&quot;Blue Mountain Lake&quot;,&quot;NY&quot;,&quot;-74.4434931&quot;,&quot;43.8553412&quot;
+        ///&quot;Hersey&quot;,&quot;MI&quot;,&quot;-85.4444913&quot;,&quot;43.8486301&quot;
+        ///&quot;Blooming Grove&quot;,&quot;TX&quot;,&quot;-96.7158250&quot;,&quot;32.0920967&quot;
+        ///&quot;Kake&quot;,&quot;AK&quot;,&quot;-133.9472222&quot;,&quot;56.9758333&quot;
+        ///&quot;New Park&quot;,&quot;PA&quot;,&quot;-7 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string CityGeocodes {
+            get {
+                return ResourceManager.GetString("CityGeocodes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aleutians East,AK,66.3593739,-128.892553
+        ///Aleutians West,AK,64.1932177,-141.3978202
+        ///Anchorage,AK,61.4754736,-148.3469763
+        ///Bethel,AK,66.1543696,-144.4724755
+        ///Bristol Bay,AK,59.1262597,-155.7547936
+        ///Denali,AK,65.0578366,-145.6338829
+        ///Dillingham,AK,61.2126821,-153.626358
+        ///Fairbanks North Star,AK,65.5504862,-144.4254653
+        ///Haines,AK,60.5733864,-130.9020995
+        ///Juneau,AK,59.2913983,-132.4280429
+        ///Kenai Peninsula,AK,61.4798843,-147.2843636
+        ///Ketchikan Gateway,AK,55.9126322,-130.3648109
+        ///Kodiak Island,AK,59.0381752,-149 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string CountyGeocodes {
+            get {
+                return ResourceManager.GetString("CountyGeocodes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;00501&quot;,&quot;40.922326&quot;,&quot;-072.637078&quot;,&quot;Holtsville&quot;,&quot;NY&quot;,&quot;Suffolk&quot;
+        ///&quot;00544&quot;,&quot;40.922326&quot;,&quot;-072.637078&quot;,&quot;Holtsville&quot;,&quot;NY&quot;,&quot;Suffolk&quot;
+        ///&quot;00601&quot;,&quot;18.165273&quot;,&quot;-066.722583&quot;,&quot;Adjuntas&quot;,&quot;PR&quot;,&quot;Adjuntas&quot;
+        ///&quot;00602&quot;,&quot;18.393103&quot;,&quot;-067.180953&quot;,&quot;Aguada&quot;,&quot;PR&quot;,&quot;Aguada&quot;
+        ///&quot;00603&quot;,&quot;18.455913&quot;,&quot;-067.145780&quot;,&quot;Aguadilla&quot;,&quot;PR&quot;,&quot;Aguadilla&quot;
+        ///&quot;00604&quot;,&quot;18.493520&quot;,&quot;-067.135883&quot;,&quot;Aguadilla&quot;,&quot;PR&quot;,&quot;Aguadilla&quot;
+        ///&quot;00605&quot;,&quot;18.465162&quot;,&quot;-067.141486&quot;,&quot;Aguadilla&quot;,&quot;PR&quot;,&quot;Aguadilla&quot;
+        ///&quot;00606&quot;,&quot;18.172947&quot;,&quot;-066.944111&quot;,&quot;Maricao&quot;,&quot;PR&quot;,&quot;Maricao&quot;
+        ///&quot;00610&quot;,&quot;18.28 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ZipCodeTable {
             get {

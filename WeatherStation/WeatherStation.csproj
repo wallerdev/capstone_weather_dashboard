@@ -56,8 +56,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Address.cs" />
-    <Compile Include="Geocode\GoogleGeocoder.cs" />
-    <Compile Include="Geocode\GoogleGeocodeResponse.cs" />
+    <Compile Include="Airport.cs" />
+    <Compile Include="AirportList.cs" />
+    <Compile Include="Geocode.cs" />
+    <Compile Include="GoogleGeocoder.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -110,6 +112,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ZipCodeTable.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AirportGeocodes.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CityGeocodes.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CountyGeocodes.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

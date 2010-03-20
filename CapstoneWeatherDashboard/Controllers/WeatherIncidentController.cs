@@ -2,7 +2,6 @@
 using System.Web.Mvc;
 using InsurancePolicyRepository;
 using WeatherStation;
-using WeatherStation.Geocode;
 
 namespace CapstoneWeatherDashboard.Controllers
 {
@@ -18,16 +17,14 @@ namespace CapstoneWeatherDashboard.Controllers
             {
                 address = new Address(Request.QueryString["address"], Request.QueryString["city"],
                     Request.QueryString["state"], Request.QueryString["zipCode"]);
-                address.Geocode();
+                address.GeocodeAddress();
             }
             if (!string.IsNullOrEmpty(Request.QueryString["geocodeSearch"]))
             {
                 double latitude = double.Parse(Request.QueryString["latitude"]);
                 double longitude = double.Parse(Request.QueryString["longitude"]);
 
-                GoogleGeocodeResponse response = new GoogleGeocoder().ReverseGeocode(latitude, longitude);
-
-                address = new Address(response.Address, response.City, response.State, response.ZipCode);
+                address = new GoogleGeocoder().ReverseGeocode(latitude, longitude);
             }
             if (!string.IsNullOrEmpty(Request.QueryString["policySearch"]))
             {
@@ -64,8 +61,8 @@ namespace CapstoneWeatherDashboard.Controllers
             string county = address.County;
 
             ViewData["homeAddress"] = address.FullAddress;
-            ViewData["latitude"] = address.Latitude;
-            ViewData["longitude"] = address.Longitude;
+            ViewData["latitude"] = address.Geocode.Latitude;
+            ViewData["longitude"] = address.Geocode.Longitude;
             ViewData["airportCode"] = closestAirportCode;
             ViewData["state"] = state;
             ViewData["county"] = county;
@@ -76,7 +73,7 @@ namespace CapstoneWeatherDashboard.Controllers
             return View();
         }
 
-        private bool CanCreateAddressFromData(string policyCity, string policyState, string policyZipCode)
+        private static bool CanCreateAddressFromData(string policyCity, string policyState, string policyZipCode)
         {
             return (!string.IsNullOrEmpty(policyCity) && !string.IsNullOrEmpty(policyState))
                         || !string.IsNullOrEmpty(policyZipCode);

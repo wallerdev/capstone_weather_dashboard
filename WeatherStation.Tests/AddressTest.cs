@@ -24,8 +24,8 @@ namespace WeatherStation.Tests
             Assert.AreEqual(new State("MI"), address.State);
 
             double accuracy = 0.25;
-            Assert.IsTrue(Math.Abs(42.7980673 - address.Latitude) < accuracy);
-            Assert.IsTrue(Math.Abs(-84.4274753 - address.Longitude) < accuracy);
+            Assert.IsTrue(Math.Abs(42.7980673 - address.Geocode.Latitude) < accuracy);
+            Assert.IsTrue(Math.Abs(-84.4274753 - address.Geocode.Longitude) < accuracy);
         }
     }
 }

@@ -3,7 +3,6 @@ using System.Linq;
 using System.Net;
 using System.Xml.Linq;
 using System.Xml.XPath;
-using WeatherStation.Geocode;
 using System;
 
 namespace WeatherStation
@@ -43,56 +42,55 @@ namespace WeatherStation
         public string StreetAddress
         {
             get;
-            private set;
+            set;
         }
 
         public string City
         {
             get;
-            private set;
+            set;
         }
 
         public State State
         {
             get;
-            private set;
+            set;
         }
 
         public string ZipCode
         {
             get;
-            private set;
+            set;
         }
 
         public string County
         {
             get;
-            private set;
+            set;
         }
 
-        public double Latitude
+        public Geocode Geocode
         {
             get;
-            private set;
+            set;
         }
 
-        public double Longitude
+        public Address()
         {
-            get;
-            private set;
+
         }
 
         public Address(string streetAddress, string city, string state, string zipCode)
-            : this(streetAddress, city, state, zipCode, null, 0.0, 0.0)
+            : this(streetAddress, city, state, zipCode, null, null)
         {
         }
 
         public Address(string streetAddress, string city, string state, string zipCode, string county)
-            : this(streetAddress, city, state, zipCode, county, 0.0, 0.0)
+            : this(streetAddress, city, state, zipCode, county, null)
         {
         }
 
-        public Address(string streetAddress, string city, string state, string zipCode, string county, double latitude, double longitude)
+        public Address(string streetAddress, string city, string state, string zipCode, string county, Geocode geocode)
         {
             StreetAddress = streetAddress;
             City = city;
@@ -102,8 +100,7 @@ namespace WeatherStation
             }
             ZipCode = zipCode;
             County = county;
-            Latitude = latitude;
-            Longitude = longitude;
+            Geocode = geocode;
         }
 
         public static IEnumerable<Address> Search(string searchAddress)
@@ -126,18 +123,14 @@ namespace WeatherStation
             {
                 addresses.Add(_addressLookup.GetAddressFromZipCode(searchAddress));
             }
-            else if(_addressLookup.IsCityAndState(searchAddress))
+            else if (_addressLookup.IsCityAndState(searchAddress))
             {
                 addresses.Add(_addressLookup.GetAddressFromCityAndState(searchAddress));
             }
             else if (geocode)
             {
                 var response = _geocoder.Search(searchAddress);
-                if (response != null)
-                {
-                    var address = new Address(response.Address, response.City, response.State, response.ZipCode, response.County, response.Latitude, response.Longitude);
-                    addresses.Add(address);
-                }
+                addresses.Add(response);
             }
             else
             {
@@ -153,13 +146,11 @@ namespace WeatherStation
         }
 
         /// <summary>
-        /// Weather Underground historical data is based on airports. This function is provided to get the closest airport
-        /// to a location using Weather Underground's API.
+        /// Uses list of geocoded airports to determine the closest airport.
         /// </summary>
         /// <returns>Airport code of closest airport.</returns>
         public string FetchClosestAirportCode()
         {
-
             string apiUrl = string.Format("http://api.wunderground.com/auto/wui/geo/GeoLookupXML/index.xml?query={0}",
                                           FullAddress);
             string xml = _webClient.DownloadString(apiUrl);
@@ -168,14 +159,14 @@ namespace WeatherStation
             return element.Value;
         }
 
-        public void Geocode()
+        public void GeocodeAddress()
         {
             var response = _geocoder.Geocode(this);
-            if(!string.IsNullOrEmpty(response.Address))
+            if (!string.IsNullOrEmpty(response.StreetAddress))
             {
-                StreetAddress = response.Address;
+                StreetAddress = response.StreetAddress;
             }
-            if(!string.IsNullOrEmpty(response.City))
+            if (!string.IsNullOrEmpty(response.City))
             {
                 City = response.City;
             }
@@ -183,16 +174,15 @@ namespace WeatherStation
             {
                 County = response.County;
             }
-            if (!string.IsNullOrEmpty(response.State))
+            if (response.State != null)
             {
-                State = new State(response.State);
+                State = response.State;
             }
             if (!string.IsNullOrEmpty(response.ZipCode))
             {
                 ZipCode = response.ZipCode;
             }
-            Latitude = response.Latitude;
-            Longitude = response.Longitude;
+            Geocode = response.Geocode;
         }
     }
 }

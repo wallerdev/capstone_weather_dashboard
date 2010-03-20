@@ -6,7 +6,7 @@ using System.Xml.Linq;
 using System.Xml.XPath;
 using System.Collections.Generic;
 
-namespace WeatherStation.Geocode
+namespace WeatherStation
 {
     /// <summary>
     /// Uses Google to go from an address (full address, zip code, etc.) to 
@@ -20,7 +20,7 @@ namespace WeatherStation.Geocode
         private const string NoLocationFound = "602";
         private WebClient _client = new WebClient();
 
-        public GoogleGeocodeResponse Geocode(Address address)
+        public Address Geocode(Address address)
         {
             string searchAddress = address.FullAddress;
             if (string.IsNullOrEmpty(address.StreetAddress) && !string.IsNullOrEmpty(address.ZipCode))
@@ -30,33 +30,31 @@ namespace WeatherStation.Geocode
             return Search(searchAddress);
         }
 
-        public GoogleGeocodeResponse Search(string address)
+        public Address Search(string address)
         {
             string escapedAddress = Uri.EscapeDataString(address);
             string response = _client.DownloadString(GetGeocodeRequestUrl(escapedAddress));
             return ParseGoogleGeocoderResponse(XDocument.Parse(response));
         }
 
-        public GoogleGeocodeResponse ReverseGeocode(double latitude, double longitude)
+        public Address ReverseGeocode(double latitude, double longitude)
         {
             string requestUrl = GetReverseGeocodeRequestUrl(latitude, longitude);
             string response = _client.DownloadString(requestUrl);
             return ParseGoogleGeocoderResponse(XDocument.Parse(response));
         }
 
-        private static GoogleGeocodeResponse ParseGoogleGeocoderResponse(XDocument doc)
+        private static Address ParseGoogleGeocoderResponse(XDocument doc)
         {
             XNamespace earthNamespace = "http://earth.google.com/kml/2.0";
             XNamespace addressNamespace = "urn:oasis:names:tc:ciq:xsdschema:xAL:2.0";
-            var response = new GoogleGeocodeResponse();
-            var geocodeSetter = new Dictionary<string, Action<string>>()
+            var response = new Address();
+            var geocodeSetter = new Dictionary<string, Action<string>>
             {
-                {"CountryNameCode", value => response.CountryNameCode = value},
-                {"CountryName", value => response.CountryName = value},
-                {"AdministrativeAreaName", value => response.State = value},
+                {"AdministrativeAreaName", value => response.State = new State(value)},
                 {"SubAdministrativeAreaName", value => response.County = value},
                 {"LocalityName", value => response.City = value},
-                {"ThoroughfareName", value => response.Address = value},
+                {"ThoroughfareName", value => response.StreetAddress = value},
                 {"PostalCodeNumber", value => response.ZipCode = value}
             };
 
@@ -82,8 +80,9 @@ namespace WeatherStation.Geocode
             }
 
             var latitudeAndLongitude = placemark.Descendants(earthNamespace + "LatLonBox").Single();
-            response.Latitude = double.Parse(latitudeAndLongitude.Attribute("north").Value);
-            response.Longitude = double.Parse(latitudeAndLongitude.Attribute("east").Value);
+            response.Geocode = new Geocode(
+                double.Parse(latitudeAndLongitude.Attribute("north").Value),
+                double.Parse(latitudeAndLongitude.Attribute("east").Value));
 
             return response;
         }

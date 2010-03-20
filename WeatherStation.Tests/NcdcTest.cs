@@ -30,8 +30,8 @@ namespace WeatherStation.Tests
             Assert.AreEqual("Ingham", location.County);
             Assert.AreEqual(new State("MI"), location.State);
             double accuracy = 0.25;
-            Assert.IsTrue(Math.Abs(42.7980673 - location.Latitude) < accuracy);
-            Assert.IsTrue(Math.Abs(-84.4274753 - location.Longitude) < accuracy);
+            Assert.IsTrue(Math.Abs(42.7980673 - location.Geocode.Latitude) < accuracy);
+            Assert.IsTrue(Math.Abs(-84.4274753 - location.Geocode.Longitude) < accuracy);
         }
 
         [TestMethod]

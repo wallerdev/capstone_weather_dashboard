@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace WeatherStation
 {
@@ -9,7 +8,7 @@ namespace WeatherStation
     {
         #region Zone To Zip Codes Dictionary
 
-        private Dictionary<string, IEnumerable<string>> zoneZips = new Dictionary<string, IEnumerable<string>>
+        private static readonly Dictionary<string, IEnumerable<string>> ZoneZips = new Dictionary<string, IEnumerable<string>>
         {
             {"NVZ011", new[] {"89301", "89311", "89314", "89315", "89317", "89318", "89319"}},
             {"UTZ007", new[] {"84028", "84038", "84064", "84086"}},
@@ -2973,12 +2972,12 @@ namespace WeatherStation
                     var zoneEnd = int.Parse(zoneRange[1]);
                     for(int i = zoneBegin; i <= zoneEnd; i++)
                     {
-                        zips.AddRange(zoneZips[prefix + i.ToString().PadLeft(3, '0')]);
+                        zips.AddRange(ZoneZips[prefix + i.ToString().PadLeft(3, '0')]);
                     }
                 }
                 else
                 {
-                    zips.AddRange(zoneZips[prefix + zone]);
+                    zips.AddRange(ZoneZips[prefix + zone]);
                 }
             }
             return zips;
@@ -2987,7 +2986,7 @@ namespace WeatherStation
         public bool IsZone(string zone)
         {
             var zoneList = zone.Split(new[] { " - " }, StringSplitOptions.None);
-            return zoneZips.ContainsKey(zoneList.FirstOrDefault());
+            return ZoneZips.ContainsKey(zoneList.FirstOrDefault());
         }
     }
 }
