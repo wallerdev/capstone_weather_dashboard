@@ -27,10 +27,6 @@ namespace WeatherStation
         public Airport FindClosestAirport(Geocode geocode)
         {
             Airports.Sort((a, b) => a.Geocode.DistanceTo(geocode).CompareTo(b.Geocode.DistanceTo(geocode)));
-            foreach(var airport in Airports)
-            {
-                Trace.WriteLine(airport.Geocode.DistanceTo(geocode));
-            }
             return Airports.First();
         }
 

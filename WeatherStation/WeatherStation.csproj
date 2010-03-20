@@ -58,6 +58,9 @@
     <Compile Include="Address.cs" />
     <Compile Include="Airport.cs" />
     <Compile Include="AirportList.cs" />
+    <Compile Include="CityList.cs" />
+    <Compile Include="County.cs" />
+    <Compile Include="CountyList.cs" />
     <Compile Include="Geocode.cs" />
     <Compile Include="GoogleGeocoder.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

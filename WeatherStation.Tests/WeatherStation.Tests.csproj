@@ -40,6 +40,8 @@
   <ItemGroup>
     <Compile Include="AddressTest.cs" />
     <Compile Include="AirportListTest.cs" />
+    <Compile Include="CityListTest.cs" />
+    <Compile Include="CountyListTest.cs" />
     <Compile Include="GoogleGeocoderTest.cs" />
     <Compile Include="NcdcTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
