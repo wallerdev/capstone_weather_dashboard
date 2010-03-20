@@ -19,6 +19,16 @@
 }
 
 $(document).ready(function() {
+    $('#startDate').datepicker({
+        changeMonth: true,
+        changeYear: true
+    });
+
+    $('#endDate').datepicker({
+        changeMonth: true,
+        changeYear: true
+    });
+
     $('input[placeholder]').placeholder();
 
     $('input').focus(updateButtons).keyup(updateButtons).blur(updateButtons).change(updateButtons)

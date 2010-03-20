@@ -31,15 +31,17 @@ namespace WeatherStation
             {
                 return new Dictionary<WeatherIncidentType, string>
                            {
-                               {WeatherIncidentType.DenseFog, "Dense Fog"},
-                               {WeatherIncidentType.ExtremeCold, "Extreme Cold"},
+                               {WeatherIncidentType.ExtremeCold, "Extreme Cold/Wind Chill"},
                                {WeatherIncidentType.Flood, "Flood"},
                                {WeatherIncidentType.Hail, "Hail"},
-                               {WeatherIncidentType.HighWind, "High Wind"},
-                               {WeatherIncidentType.IceStorm, "Ice Storm"},
+                               {WeatherIncidentType.Wind, "Wind"},
+                               {WeatherIncidentType.IceStorm, "Freezing Rain/Ice Storm"},
                                {WeatherIncidentType.Tornado, "Tornado"},
                                {WeatherIncidentType.WinterStorm, "Winter Storm"},
-                               {WeatherIncidentType.Lightning, "Lightning"}
+                               {WeatherIncidentType.Lightning, "Lightning"},
+                               {WeatherIncidentType.Hurricane, "Hurricane"},
+                               {WeatherIncidentType.Wildfire, "Wild fire"},
+                               {WeatherIncidentType.Unclassified, "Unclassified"}
                            }[EventType];
             }
         }

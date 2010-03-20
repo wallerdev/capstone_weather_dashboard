@@ -7,6 +7,8 @@
     <link href="/demo/Content/NewSearch.css" rel="stylesheet" type="text/javascript" />
     <link href="/demo/Content/jquery.autocomplete.css" rel="stylesheet" type="text/css" />
     <script src="/demo/Scripts/jquery.autocomplete.min.js" type="text/javascript"></script>
+    <script src="/demo/Scripts/jquery-ui-1.7.2.custom.min.js" type="text/javascript"></script>
+    <link href="/demo/Content/jquery-ui-1.7.2.custom.css" rel="stylesheet" type="text/css" />
     <script src="/demo/Scripts/NewSearch.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function() {
@@ -34,6 +36,7 @@
                 $('#PolicyCity').val(item.PolicyHomeAddress.City);
                 $('#PolicyState').val(item.PolicyHomeAddress.State.Name);
                 $('#PolicyZipCode').val(item.PolicyHomeAddress.ZipCode);
+                $('#PolicyCounty').val(item.PolicyHomeAddress.County);
             });
         });
     </script>
@@ -201,6 +204,7 @@
                 <%= Html.Hidden("PolicyCity")%>
                 <%= Html.Hidden("PolicyState")%>
                 <%= Html.Hidden("PolicyZipCode")%>
+                <%= Html.Hidden("PolicyCounty")%>
             </span>
             <p>
                 <input type="submit" value="Search Policy" class="submit" name="policySearch" disabled="disabled" />

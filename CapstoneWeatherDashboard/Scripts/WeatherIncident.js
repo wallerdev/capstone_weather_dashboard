@@ -6,6 +6,11 @@ var totalUrls = 0;
 var geocoder = new GClientGeocoder();
 
 function displayIncidents(incidents) {
+    if (incidents.length < 1 && urls.length < 1) {
+        $('#results').append("<p>No results found for search string '" + searchString + "'.</p>");
+        $("#progress").hide();
+        return;
+    }
     for (var i in incidents) {
         incidents[i].newRow = true;
         incidents[i].order = allIncidents.length;
