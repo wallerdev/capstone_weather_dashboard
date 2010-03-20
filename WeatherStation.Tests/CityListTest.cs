@@ -33,5 +33,17 @@ namespace WeatherStation.Tests
             cities.Sort();
             Assert.IsTrue(cities.SequenceEqual(new[] { "East Lansing", "Haslett", "Lansing", "Okemos" }));
         }
+
+        [TestMethod]
+        public void TestGetCity()
+        {
+            var city = CityList.GetCity("East Lansing", new State("MI"));
+            Assert.AreEqual("East Lansing", city.Name);
+            Assert.AreEqual(new State("MI"), city.State);
+
+            const double accuracy = 0.01;
+            Assert.IsTrue(Math.Abs(42.7369792 - city.Geocode.Latitude) < accuracy);
+            Assert.IsTrue(Math.Abs(-84.4838654 - city.Geocode.Longitude) < accuracy);
+        }
     }
 }

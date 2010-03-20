@@ -21,6 +21,11 @@ namespace WeatherStation
             }
         }
 
+        public City GetCity(string city, State state)
+        {
+            return Cities.Single(c => c.Name == city && c.State.Equals(state));
+        }
+
         public City FindClosestCity(Geocode geocode)
         {
             Cities.Sort((a, b) => a.Geocode.DistanceTo(geocode).CompareTo(b.Geocode.DistanceTo(geocode)));

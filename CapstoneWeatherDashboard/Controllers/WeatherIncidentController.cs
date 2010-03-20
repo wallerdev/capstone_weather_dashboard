@@ -7,6 +7,8 @@ namespace CapstoneWeatherDashboard.Controllers
 {
     public class WeatherIncidentController : Controller
     {
+        private static readonly AirportList AirportList = new AirportList();
+
         private readonly IPolicyProvider _insurancePolicyProvider = new MockPolicyProvider();
 
         public ActionResult Index()
@@ -103,7 +105,7 @@ namespace CapstoneWeatherDashboard.Controllers
             DateTime startDate = DateTime.Parse(Request.QueryString["startDate"]);
             DateTime endDate = DateTime.Parse(Request.QueryString["endDate"]);
 
-            string closestAirportCode = address.FetchClosestAirportCode();
+            string closestAirportCode = AirportList.FindClosestAirport(address.Geocode).AirportCode;
             string state = address.State.Abbreviation;
             string county = address.County;
 

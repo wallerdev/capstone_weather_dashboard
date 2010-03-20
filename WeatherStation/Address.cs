@@ -116,7 +116,7 @@ namespace WeatherStation
             {
                 foreach (var zip in _zoneLookup.GetZipCodes(searchAddress))
                 {
-                    addresses.Add(FromZipCode(zip));
+                    addresses.Add(_addressLookup.GetAddressFromZipCode(zip));
                 }
             }
             else if (_addressLookup.IsZipCode(searchAddress))
@@ -138,25 +138,6 @@ namespace WeatherStation
             }
 
             return addresses;
-        }
-
-        public static Address FromZipCode(string zipCode)
-        {
-            return _addressLookup.GetAddressFromZipCode(zipCode);
-        }
-
-        /// <summary>
-        /// Uses list of geocoded airports to determine the closest airport.
-        /// </summary>
-        /// <returns>Airport code of closest airport.</returns>
-        public string FetchClosestAirportCode()
-        {
-            string apiUrl = string.Format("http://api.wunderground.com/auto/wui/geo/GeoLookupXML/index.xml?query={0}",
-                                          FullAddress);
-            string xml = _webClient.DownloadString(apiUrl);
-            var document = XDocument.Parse(xml);
-            var element = document.XPathSelectElement("/location/nearby_weather_stations/airport/station/icao");
-            return element.Value;
         }
 
         public void GeocodeAddress()
