@@ -17,7 +17,7 @@ namespace WeatherStation.Tests
         [TestMethod]
         public void TestFindClosestCounty()
         {
-            var address = new Address(null, "East Lansing", "MI", "48823");
+            var address = Address.Search("East Lansing, MI").First();
             address.GeocodeAddress();
 
             // This might seem wrong but it is the closest county geocode
@@ -27,11 +27,11 @@ namespace WeatherStation.Tests
         [TestMethod]
         public void TestFindNearbyCounties()
         {
-            var address = new Address(null, "East Lansing", "MI", "48823");
+            var address = Address.Search("East Lansing, MI").First();
             address.GeocodeAddress();
             var counties = CountyList.FindNearbyCounties(address.Geocode, 25.0).Select(c => c.Name).ToList();
             counties.Sort();
-            Assert.IsTrue(counties.SequenceEqual(new[] { "Clinton", "Eaton", "Ingham" }));
+            Assert.IsTrue(counties.SequenceEqual(new[] { "Eaton", "Ingham" }));
         }
     }
 }

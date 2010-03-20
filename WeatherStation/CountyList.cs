@@ -14,10 +14,6 @@ namespace WeatherStation
             foreach (var entry in entries)
             {
                 var parts = entry.Split(',').Select(part => part.Trim('"')).ToList();
-                if(parts.Count < 5)
-                {
-                    
-                }
                 var county = new County(parts[0], new State(parts[1]), new Geocode(double.Parse(parts[2]), double.Parse(parts[3])));
                 Counties.Add(county);
             }

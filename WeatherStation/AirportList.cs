@@ -15,10 +15,6 @@ namespace WeatherStation
             foreach (var entry in entries)
             {
                 var parts = entry.Split(',').Select(part => part.Trim('"')).ToList();
-                if(parts.Count < 5)
-                {
-                    
-                }
                 var airport = new Airport(parts[0], parts[1], new State(parts[2]), new Geocode(double.Parse(parts[3]), double.Parse(parts[4])));
                 Airports.Add(airport);
             }
