@@ -2956,13 +2956,15 @@ namespace WeatherStation
 
         #endregion
 
-        public IEnumerable<string> GetZipCodes(string zones)
+        private static readonly ZipCodeList ZipCodeList = new ZipCodeList();
+
+        public IEnumerable<ZipCode> GetZipCodes(string zones)
         {
             var zoneList = zones.Split(new[] { " - " }, StringSplitOptions.None);
             var prefix = zoneList[0].Substring(0, 3);
             zoneList[0] = zoneList[0].Remove(0, 3);
 
-            List<string> zips = new List<string>();
+            var zips = new List<ZipCode>();
             foreach (var zone in zoneList)
             {
                 if (zone.Contains(">"))
@@ -2972,12 +2974,12 @@ namespace WeatherStation
                     var zoneEnd = int.Parse(zoneRange[1]);
                     for(int i = zoneBegin; i <= zoneEnd; i++)
                     {
-                        zips.AddRange(ZoneZips[prefix + i.ToString().PadLeft(3, '0')]);
+                        zips.AddRange(ZoneZips[prefix + i.ToString().PadLeft(3, '0')].Select(z => ZipCodeList.GetZipCode(z)));
                     }
                 }
                 else
                 {
-                    zips.AddRange(ZoneZips[prefix + zone]);
+                    zips.AddRange(ZoneZips[prefix + zone].Select(z => ZipCodeList.GetZipCode(z)));
                 }
             }
             return zips;

@@ -84,6 +84,8 @@
     <Compile Include="WeatherIncidentClassifier.cs" />
     <Compile Include="WeatherIncidentType.cs" />
     <Compile Include="AddressLookup.cs" />
+    <Compile Include="ZipCode.cs" />
+    <Compile Include="ZipCodeList.cs" />
     <Compile Include="ZoneLookup.cs" />
   </ItemGroup>
   <ItemGroup>

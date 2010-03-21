@@ -7,8 +7,9 @@ namespace WeatherStation
 {
     public class State
     {
+        static readonly TextInfo _info = new CultureInfo("en-US", false).TextInfo;
         readonly string _name;
-        readonly TextInfo _info = new CultureInfo("en-US", false).TextInfo;
+        
 
         public string Name
         {
@@ -24,7 +25,6 @@ namespace WeatherStation
         {
             {"alabama", "al"},
             {"alaska", "ak"},
-            {"american samoa", "as"},
             {"arizona", "az"},
             {"arkansas", "ar"},
             {"california", "ca"},
@@ -32,10 +32,8 @@ namespace WeatherStation
             {"connecticut", "ct"},
             {"delaware", "de"},
             {"district of columbia", "dc"},
-            {"federated states of micronesia", "fm"},
             {"florida", "fl"},
             {"georgia", "ga"},
-            {"guam", "gu"},
             {"hawaii", "hi"},
             {"idaho", "id"},
             {"illinois", "il"},
@@ -45,7 +43,6 @@ namespace WeatherStation
             {"kentucky", "ky"},
             {"louisiana", "la"},
             {"maine", "me"},
-            {"marshall islands", "mh"},
             {"maryland", "md"},
             {"massachusetts", "ma"},
             {"michigan", "mi"},
@@ -61,13 +58,10 @@ namespace WeatherStation
             {"new york", "ny"},
             {"north carolina", "nc"},
             {"north dakota", "nd"},
-            {"northern mariana islands", "mp"},
             {"ohio", "oh"},
             {"oklahoma", "ok"},
             {"oregon", "or"},
-            {"palau", "pw"},
             {"pennsylvania", "pa"},
-            {"puerto rico", "pr"},
             {"rhode island", "ri"},
             {"south carolina", "sc"},
             {"south dakota", "sd"},
@@ -75,15 +69,11 @@ namespace WeatherStation
             {"texas", "tx"},
             {"utah", "ut"},
             {"vermont", "vt"},
-            {"virgin islands", "vi"},
             {"virginia", "va"},
             {"washington", "wa"},
             {"west virginia", "wv"},
             {"wisconsin", "wi"},
             {"wyoming", "wy"},
-            {"armed forces americas", "aa"},
-            {"armed forces canada", "ae"},
-            {"armed forces pacific", "ap"}
         };
 
         public State(string state)
@@ -100,6 +90,18 @@ namespace WeatherStation
             {
                 throw new ArgumentOutOfRangeException(state, "Unknown State");
             }
+        }
+
+        public static bool operator ==(State a, State b)
+        {
+            if (object.ReferenceEquals(a, b)) return true;
+            if((object)a == null || ((object)b == null)) return false;
+            return a._name == b._name;
+        }
+
+        public static  bool operator!=(State a, State b)
+        {
+            return !(a == b);
         }
 
         public override bool Equals(object obj)

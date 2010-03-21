@@ -59,7 +59,7 @@ namespace WeatherStation.Tests
                                  };
 
             var allZips = miz051Zips.Concat(miz059Zips).Concat(miz067Zips).ToList();
-            var locatedZipCodes = e.Locations.Select(l => l.ZipCode).ToList();
+            var locatedZipCodes = e.Locations.Select(l => l.ZipCode.Code).ToList();
             allZips.Sort();
             locatedZipCodes.Sort();
             Assert.IsTrue(allZips.SequenceEqual(locatedZipCodes));

@@ -9,10 +9,12 @@ namespace WeatherStation
 {
     public class Address
     {
-        private static readonly WebClient _webClient = new WebClient();
-        private static readonly GoogleGeocoder _geocoder = new GoogleGeocoder();
-        private static ZoneLookup _zoneLookup = new ZoneLookup();
-        private static AddressLookup _addressLookup = new AddressLookup();
+        private static readonly GoogleGeocoder Geocoder = new GoogleGeocoder();
+        private static readonly ZoneLookup ZoneLookup = new ZoneLookup();
+        private static readonly AddressLookup AddressLookup = new AddressLookup();
+        private static readonly CityList CityList = new CityList();
+        private static readonly ZipCodeList ZipCodeList = new ZipCodeList();
+        private static readonly CountyList CountyList = new CountyList();
 
         public string FullAddress
         {
@@ -23,15 +25,15 @@ namespace WeatherStation
                 {
                     address += StreetAddress + " ";
                 }
-                if (!string.IsNullOrEmpty(City))
+                if (City != null)
                 {
-                    address += City + " ";
+                    address += City.Name + " ";
                 }
                 if (State != null)
                 {
                     address += State.Abbreviation + " ";
                 }
-                if (!string.IsNullOrEmpty(ZipCode))
+                if (ZipCode != null)
                 {
                     address += ZipCode;
                 }
@@ -45,7 +47,7 @@ namespace WeatherStation
             set;
         }
 
-        public string City
+        public City City
         {
             get;
             set;
@@ -57,13 +59,13 @@ namespace WeatherStation
             set;
         }
 
-        public string ZipCode
+        public ZipCode ZipCode
         {
             get;
             set;
         }
 
-        public string County
+        public County County
         {
             get;
             set;
@@ -93,13 +95,17 @@ namespace WeatherStation
         public Address(string streetAddress, string city, string state, string zipCode, string county, Geocode geocode)
         {
             StreetAddress = streetAddress;
-            City = city;
             if (!string.IsNullOrEmpty(state))
             {
                 State = new State(state);
             }
-            ZipCode = zipCode;
-            County = county;
+            if(!CityList.IsCity(city, State))
+            {
+                
+            }
+            City = CityList.GetCity(city, State);
+            ZipCode = ZipCodeList.GetZipCode(zipCode);
+            County = CountyList.GetCounty(county, State);
             Geocode = geocode;
         }
 
@@ -112,24 +118,26 @@ namespace WeatherStation
         {
             var addresses = new List<Address>();
 
-            if (_zoneLookup.IsZone(searchAddress))
+            if (ZoneLookup.IsZone(searchAddress))
             {
-                foreach (var zip in _zoneLookup.GetZipCodes(searchAddress))
+                foreach (var zip in ZoneLookup.GetZipCodes(searchAddress))
                 {
-                    addresses.Add(_addressLookup.GetAddressFromZipCode(zip));
+                    addresses.Add(AddressLookup.GetAddressFromZipCode(zip));
                 }
             }
-            else if (_addressLookup.IsZipCode(searchAddress))
+            else if (ZipCodeList.IsZipCode(searchAddress))
             {
-                addresses.Add(_addressLookup.GetAddressFromZipCode(searchAddress));
+                ZipCode zipCode = ZipCodeList.GetZipCode(searchAddress);
+                addresses.Add(AddressLookup.GetAddressFromZipCode(zipCode));
             }
-            else if (_addressLookup.IsCityAndState(searchAddress))
+            else if (CityList.IsCityAndState(searchAddress))
             {
-                addresses.Add(_addressLookup.GetAddressFromCityAndState(searchAddress));
+                var city = CityList.GetCity(searchAddress);
+                addresses.Add(AddressLookup.GetAddressFromCity(city));
             }
             else if (geocode)
             {
-                var response = _geocoder.Search(searchAddress);
+                var response = Geocoder.Search(searchAddress);
                 addresses.Add(response);
             }
             else
@@ -142,16 +150,16 @@ namespace WeatherStation
 
         public void GeocodeAddress()
         {
-            var response = _geocoder.Geocode(this);
+            var response = Geocoder.Geocode(this);
             if (!string.IsNullOrEmpty(response.StreetAddress))
             {
                 StreetAddress = response.StreetAddress;
             }
-            if (!string.IsNullOrEmpty(response.City))
+            if (response.City != null)
             {
                 City = response.City;
             }
-            if (!string.IsNullOrEmpty(response.County))
+            if (response.County != null)
             {
                 County = response.County;
             }
@@ -159,7 +167,7 @@ namespace WeatherStation
             {
                 State = response.State;
             }
-            if (!string.IsNullOrEmpty(response.ZipCode))
+            if (response.ZipCode != null)
             {
                 ZipCode = response.ZipCode;
             }

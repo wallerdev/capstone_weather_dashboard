@@ -107,14 +107,13 @@ namespace CapstoneWeatherDashboard.Controllers
 
             string closestAirportCode = AirportList.FindClosestAirport(address.Geocode).AirportCode;
             string state = address.State.Abbreviation;
-            string county = address.County;
 
             ViewData["homeAddress"] = address.FullAddress;
             ViewData["latitude"] = address.Geocode.Latitude;
             ViewData["longitude"] = address.Geocode.Longitude;
             ViewData["airportCode"] = closestAirportCode;
             ViewData["state"] = state;
-            ViewData["county"] = county;
+            ViewData["county"] = address.County.Name;
             ViewData["startDate"] = startDate;
             ViewData["endDate"] = endDate;
             ViewData["incidentFilter"] = Request.QueryString["incidentTypes"];

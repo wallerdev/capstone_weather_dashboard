@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -28,6 +29,16 @@ namespace WeatherStation
         public IEnumerable<County> FindNearbyCounties(Geocode geocode, double rangeInMiles)
         {
             return Counties.Where(c => c.Geocode.DistanceTo(geocode) < rangeInMiles);
+        }
+
+        public static County GetCounty(string county, State state)
+        {
+            var temp = Counties.Where(c => c.Name == county && c.State == state).ToList();
+            if(temp.Count != 1)
+            {
+                
+            }
+            return temp.Single(c => c.Name == county && c.State.Equals(state));
         }
     }
 }

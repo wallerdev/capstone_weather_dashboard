@@ -19,7 +19,7 @@ namespace WeatherStation.Tests
         {
             string zone = "MIZ001";
             Assert.IsTrue(_zoneLookup.IsZone(zone));
-            Assert.IsTrue(_zoneLookup.GetZipCodes(zone).SequenceEqual(new[] { "49805", "49901", "49918", "49950" }));
+            Assert.IsTrue(_zoneLookup.GetZipCodes(zone).Select(z => z.Code).SequenceEqual(new[] { "49805", "49901", "49918", "49950" }));
         }
 
         [TestMethod]
@@ -35,7 +35,7 @@ namespace WeatherStation.Tests
             var miz001 = new[] { "49805", "49901", "49918", "49950" };
             var miz004 = new[] { "49908", "49919", "49946", "49962", "49970" };
 
-            Assert.IsTrue(_zoneLookup.GetZipCodes("MIZ001 - 004").SequenceEqual(miz001.Concat(miz004)));
+            Assert.IsTrue(_zoneLookup.GetZipCodes("MIZ001 - 004").Select(z => z.Code).SequenceEqual(miz001.Concat(miz004)));
         }
 
         [TestMethod]
@@ -50,7 +50,7 @@ namespace WeatherStation.Tests
                              };
             var miz004 = new[] { "49908", "49919", "49946", "49962", "49970" };
 
-            Assert.IsTrue(_zoneLookup.GetZipCodes("MIZ001>004").SequenceEqual(miz001.Concat(miz002).Concat(miz003).Concat(miz004)));
+            Assert.IsTrue(_zoneLookup.GetZipCodes("MIZ001>004").Select(z => z.Code).SequenceEqual(miz001.Concat(miz002).Concat(miz003).Concat(miz004)));
         }
     }
 }

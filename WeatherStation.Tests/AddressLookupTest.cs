@@ -9,36 +9,32 @@ namespace WeatherStation.Tests
     [TestClass]
     public class AddressLookupTest
     {
-        readonly AddressLookup _addressLookup;
-
-        public AddressLookupTest()
-        {
-            _addressLookup = new AddressLookup();
-        }
+        private readonly AddressLookup _addressLookup = new AddressLookup();
+        private readonly Address _address = new Address(null, null, null, "48823");
 
         [TestMethod]
         public void TestCountyLookupFromZipCode()
         {
-            Assert.AreEqual("Ingham", _addressLookup.GetAddressFromZipCode("48823").County);
+            Assert.AreEqual("Ingham", _addressLookup.GetAddressFromZipCode(_address.ZipCode).County);
         }
 
         [TestMethod]
         public void TestStateLookupFromZipCode()
         {
-            Assert.AreEqual(new State("MI"), _addressLookup.GetAddressFromZipCode("48823").State);
+            Assert.AreEqual(new State("MI"), _addressLookup.GetAddressFromZipCode(_address.ZipCode).State);
         }
 
         [TestMethod]
         public void TestCityLookupFromZipCode()
         {
-            Assert.AreEqual("East Lansing", _addressLookup.GetAddressFromZipCode("48823").City);
+            Assert.AreEqual("East Lansing", _addressLookup.GetAddressFromZipCode(_address.ZipCode).City);
         }
 
         [TestMethod]
         public void TestGeocodeLookupFromZipCode()
         {
             double accuracy = 0.25;
-            var address = _addressLookup.GetAddressFromZipCode("48823");
+            var address = _addressLookup.GetAddressFromZipCode(_address.ZipCode);
             Assert.IsTrue(Math.Abs(42.7369792 - address.Geocode.Latitude) < accuracy);
             Assert.IsTrue(Math.Abs(-84.4838654 - address.Geocode.Longitude) < accuracy);
         }
@@ -46,32 +42,32 @@ namespace WeatherStation.Tests
         [TestMethod]
         public void TestZipCodeLookupFromZipCode()
         {
-            Assert.AreEqual("48823", _addressLookup.GetAddressFromZipCode("48823").ZipCode);
+            Assert.AreEqual("48823", _addressLookup.GetAddressFromZipCode(_address.ZipCode).ZipCode);
         }
 
         [TestMethod]
-        public void TestCountyLookupFromCityAndState()
+        public void TestCountyLookupFromCity()
         {
-            Assert.AreEqual("Ingham", _addressLookup.GetAddressFromCityAndState("East Lansing, MI").County);
+            Assert.AreEqual("Ingham", _addressLookup.GetAddressFromCity(_address.City).County);
         }
 
         [TestMethod]
-        public void TestStateLookupFromCityAndState()
+        public void TestStateLookupFromCity()
         {
-            Assert.AreEqual(new State("MI"), _addressLookup.GetAddressFromCityAndState("East Lansing, MI").State);
+            Assert.AreEqual(new State("MI"), _addressLookup.GetAddressFromCity(_address.City).State);
         }
 
         [TestMethod]
-        public void TestCityLookupFromCityAndState()
+        public void TestCityLookupFromCity()
         {
-            Assert.AreEqual("East Lansing", _addressLookup.GetAddressFromCityAndState("East Lansing, MI").City);
+            Assert.AreEqual("East Lansing", _addressLookup.GetAddressFromCity(_address.City).City);
         }
 
         [TestMethod]
-        public void TestGeocodeLookupFromCityAndState()
+        public void TestGeocodeLookupFromCity()
         {
             double accuracy = 0.25;
-            var address = _addressLookup.GetAddressFromZipCode("48823");
+            var address = _addressLookup.GetAddressFromCity(_address.City);
             Assert.IsTrue(Math.Abs(42.7369792 - address.Geocode.Latitude) < accuracy);
             Assert.IsTrue(Math.Abs(-84.4838654 - address.Geocode.Longitude) < accuracy);
         }
