@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Xml.Linq;
@@ -99,11 +100,15 @@ namespace WeatherStation
             {
                 State = new State(state);
             }
-            if(!CityList.IsCity(city, State))
+            if(CityList.IsCity(city, State))
             {
-                
+                City = CityList.GetCity(city, State);
             }
-            City = CityList.GetCity(city, State);
+            else
+            {
+                Trace.WriteLine(string.Format("{0}, {1}", city, State.Name));
+            }
+            
             ZipCode = ZipCodeList.GetZipCode(zipCode);
             County = CountyList.GetCounty(county, State);
             Geocode = geocode;

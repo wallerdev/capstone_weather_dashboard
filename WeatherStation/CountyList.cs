@@ -36,7 +36,8 @@ namespace WeatherStation
             var temp = Counties.Where(c => c.Name == county && c.State == state).ToList();
             if(temp.Count != 1)
             {
-                
+                Trace.WriteLine(string.Format("{0} County, {1}", county, state.Name));
+                return null;
             }
             return temp.Single(c => c.Name == county && c.State.Equals(state));
         }
