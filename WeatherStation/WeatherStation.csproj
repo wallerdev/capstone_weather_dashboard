@@ -69,7 +69,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SearchAddress.cs" />
+    <Compile Include="UnknownAddress.cs" />
     <Compile Include="State.cs" />
     <Compile Include="WeatherEventProviders\Ncdc.cs" />
     <Compile Include="Service References\NoaaService\Reference.cs">

@@ -31,7 +31,7 @@ namespace WeatherStation.Tests
             address.GeocodeAddress();
             var cities = CityList.FindNearbyCities(address.Geocode, 5.0).Select(c => c.Name).ToList();
             cities.Sort();
-            Assert.IsTrue(cities.SequenceEqual(new[] { "East Lansing", "Haslett", "Lansing", "Okemos" }));
+            Assert.IsTrue(cities.SequenceEqual(new[] { "Bath", "East Lansing", "Haslett", "Okemos" }));
         }
 
         [TestMethod]

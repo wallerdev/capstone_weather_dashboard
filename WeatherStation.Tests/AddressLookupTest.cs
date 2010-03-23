@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace WeatherStation.Tests
@@ -10,24 +11,24 @@ namespace WeatherStation.Tests
     public class AddressLookupTest
     {
         private readonly AddressLookup _addressLookup = new AddressLookup();
-        private readonly Address _address = new Address(null, null, null, "48823");
+        private readonly Address _address = Address.Search("48823").First();
 
         [TestMethod]
         public void TestCountyLookupFromZipCode()
         {
-            Assert.AreEqual("Ingham", _addressLookup.GetAddressFromZipCode(_address.ZipCode).County);
+            Assert.AreEqual("Ingham", _addressLookup.GetAddressFromZipCode(_address.ZipCode).County.Name);
         }
 
         [TestMethod]
         public void TestStateLookupFromZipCode()
         {
-            Assert.AreEqual(new State("MI"), _addressLookup.GetAddressFromZipCode(_address.ZipCode).State);
+            Assert.AreEqual("MI", _addressLookup.GetAddressFromZipCode(_address.ZipCode).State.Abbreviation);
         }
 
         [TestMethod]
         public void TestCityLookupFromZipCode()
         {
-            Assert.AreEqual("East Lansing", _addressLookup.GetAddressFromZipCode(_address.ZipCode).City);
+            Assert.AreEqual("East Lansing", _addressLookup.GetAddressFromZipCode(_address.ZipCode).City.Name);
         }
 
         [TestMethod]
@@ -42,25 +43,25 @@ namespace WeatherStation.Tests
         [TestMethod]
         public void TestZipCodeLookupFromZipCode()
         {
-            Assert.AreEqual("48823", _addressLookup.GetAddressFromZipCode(_address.ZipCode).ZipCode);
+            Assert.AreEqual("48823", _addressLookup.GetAddressFromZipCode(_address.ZipCode).ZipCode.Code);
         }
 
         [TestMethod]
         public void TestCountyLookupFromCity()
         {
-            Assert.AreEqual("Ingham", _addressLookup.GetAddressFromCity(_address.City).County);
+            Assert.AreEqual("Ingham", _addressLookup.GetAddressFromCity(_address.City).County.Name);
         }
 
         [TestMethod]
         public void TestStateLookupFromCity()
         {
-            Assert.AreEqual(new State("MI"), _addressLookup.GetAddressFromCity(_address.City).State);
+            Assert.AreEqual("MI", _addressLookup.GetAddressFromCity(_address.City).State.Abbreviation);
         }
 
         [TestMethod]
         public void TestCityLookupFromCity()
         {
-            Assert.AreEqual("East Lansing", _addressLookup.GetAddressFromCity(_address.City).City);
+            Assert.AreEqual("East Lansing", _addressLookup.GetAddressFromCity(_address.City).City.Name);
         }
 
         [TestMethod]

@@ -7,7 +7,7 @@ namespace WeatherStation
 {
     public class ZipCodeList
     {
-        private static readonly List<ZipCode> ZipCodes = new List<ZipCode>();
+        private static readonly Dictionary<string, ZipCode> ZipCodeLookup = new Dictionary<string, ZipCode>();
         private static readonly List<Address> Addresses = new List<Address>();
 
         static ZipCodeList()
@@ -20,24 +20,24 @@ namespace WeatherStation
                 // Make sure we create the zip code before the address because the address will try to look up
                 // the zip code
                 var zipCode = new ZipCode(parts[0], new Geocode(double.Parse(parts[1]), double.Parse(parts[2])));
-                ZipCodes.Add(zipCode);
+                ZipCodeLookup[zipCode.Code] = zipCode;
 
                 var address = new Address(null, parts[3], parts[4], parts[0], parts[5]);
                 Addresses.Add(address);
             }
         }
 
-        public ZipCode GetZipCode(string zipCode)
+        public static ZipCode GetZipCode(string zipCode)
         {
-            return ZipCodes.Single(z => z.Code == zipCode);
+            return ZipCodeLookup[zipCode];
         }
 
-        public bool IsZipCode(string zipCode)
+        public static bool IsZipCode(string zipCode)
         {
-            return ZipCodes.Exists(z => z.Code == zipCode);
+            return ZipCodeLookup.ContainsKey(zipCode);
         }
 
-        public IEnumerable<Address> GetZipCodeAddresses()
+        public static IEnumerable<Address> GetZipCodeAddresses()
         {
             return Addresses;
         }

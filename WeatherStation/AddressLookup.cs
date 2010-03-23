@@ -13,8 +13,6 @@ namespace WeatherStation
     {
         private static readonly Dictionary<ZipCode, Address> ZipCodeLookup = new Dictionary<ZipCode, Address>();
         private static readonly Dictionary<City, Address> CityStateLookup = new Dictionary<City, Address>();
-        private static readonly CityList CityList = new CityList();
-        private static readonly ZipCodeList ZipCodeList = new ZipCodeList();
 
         static AddressLookup()
         {
@@ -29,13 +27,15 @@ namespace WeatherStation
         public Address GetAddressFromZipCode(ZipCode zipCode)
         {
             var address = ZipCodeLookup[zipCode];
-            return ZipCodeLookup[zipCode];
+            return new Address(address.StreetAddress, address.City.Name, address.State.Name, 
+                address.ZipCode.Code, address.County.Name, address.ZipCode.Geocode);
         }
 
         public Address GetAddressFromCity(City city)
         {
             var address = CityStateLookup[city];
-            return address;
+            return new Address(address.StreetAddress, address.City.Name, address.State.Name,
+                address.ZipCode.Code, address.County.Name, address.City.Geocode);
         }
     }
 }

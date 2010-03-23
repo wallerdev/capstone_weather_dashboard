@@ -26,9 +26,9 @@ namespace WeatherStation.Tests
             Assert.AreEqual(WeatherIncidentType.Tornado, e.EventType);
             var location = e.Locations.Single();
             Assert.IsNull(location.StreetAddress);
-            Assert.AreEqual("Lansing", location.City);
-            Assert.AreEqual("Ingham", location.County);
-            Assert.AreEqual(new State("MI"), location.State);
+            Assert.AreEqual("Lansing", location.City.Name);
+            Assert.AreEqual("Ingham", location.County.Name);
+            Assert.AreEqual("MI", location.State.Abbreviation);
             double accuracy = 0.25;
             Assert.IsTrue(Math.Abs(42.7980673 - location.Geocode.Latitude) < accuracy);
             Assert.IsTrue(Math.Abs(-84.4274753 - location.Geocode.Longitude) < accuracy);

@@ -9,6 +9,9 @@ namespace WeatherStation
 {
     public class CityList
     {
+        private static readonly Dictionary<KeyValuePair<string, string>, City> CityLookup =
+            new Dictionary<KeyValuePair<string, string>, City>();
+
         private static readonly List<City> Cities = new List<City>();
         private static readonly Regex CityCommaState = new Regex("\\s*(.+),\\s*(.+)\\s*");
         private static readonly Regex CitySpaceState = new Regex("\\s*(.+)\\s+(\\w{2})\\s*"); // Only supports two letter state codes for now
@@ -21,16 +24,17 @@ namespace WeatherStation
                 var parts = entry.Split(',').Select(part => part.Trim('"')).ToList();
                 // This is in the form longitude, latitude
                 var city = new City(parts[0], new State(parts[1]), new Geocode(double.Parse(parts[3]), double.Parse(parts[2])));
+                CityLookup[new KeyValuePair<string, string>(city.Name, city.State.Abbreviation)] = city;
                 Cities.Add(city);
             }
         }
 
-        public City GetCity(string city, State state)
+        public static City GetCity(string city, State state)
         {
-            return Cities.Single(c => c.Name == city && c.State.Equals(state));
+            return CityLookup[new KeyValuePair<string, string>(city, state.Abbreviation)];
         }
 
-        public City GetCity(string cityAndState)
+        public static City GetCity(string cityAndState)
         {
             Match match;
             if ((match = CityCommaState.Match(cityAndState)).Success || (match = CitySpaceState.Match(cityAndState)).Success)
@@ -40,27 +44,27 @@ namespace WeatherStation
             throw new ArgumentException("Unknown city and state", "cityAndState");
         }
 
-        public City FindClosestCity(Geocode geocode)
+        public static City FindClosestCity(Geocode geocode)
         {
             Cities.Sort((a, b) => a.Geocode.DistanceTo(geocode).CompareTo(b.Geocode.DistanceTo(geocode)));
-            foreach(var city in Cities.Take(10))
+            foreach (var city in Cities.Take(10))
             {
                 Trace.WriteLine(string.Format("{0}, {1}", city.Name, city.Geocode.DistanceTo(geocode)));
             }
             return Cities.First();
         }
 
-        public IEnumerable<City> FindNearbyCities(Geocode geocode, double rangeInMiles)
+        public static IEnumerable<City> FindNearbyCities(Geocode geocode, double rangeInMiles)
         {
             return Cities.Where(c => c.Geocode.DistanceTo(geocode) < rangeInMiles);
         }
 
-        public bool IsCity(string city, State state)
+        public static bool IsCity(string city, State state)
         {
             return Cities.Exists(c => c.Name == city && c.State.Equals(state));
         }
 
-        public bool IsCityAndState(string cityAndState)
+        public static bool IsCityAndState(string cityAndState)
         {
             if (CityCommaState.IsMatch(cityAndState) || CitySpaceState.IsMatch(cityAndState))
             {
