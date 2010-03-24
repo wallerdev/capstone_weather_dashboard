@@ -13,8 +13,8 @@ namespace WeatherStation
             new Dictionary<KeyValuePair<string, string>, City>();
 
         private static readonly List<City> Cities = new List<City>();
-        private static readonly Regex CityCommaState = new Regex("\\s*(.+),\\s*(.+)\\s*");
-        private static readonly Regex CitySpaceState = new Regex("\\s*(.+)\\s+(\\[A-Z]{2})\\s*"); // Only supports two letter state codes for now
+        private static readonly Regex CityCommaState = new Regex(@"\s*(.+),\s*(.+)\s*");
+        private static readonly Regex CitySpaceState = new Regex(@"\s*(.+)\s+([A-Za-z]{2})\s*"); // Only supports two letter state codes for now
 
         static CityList()
         {
