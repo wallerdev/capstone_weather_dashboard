@@ -14,7 +14,7 @@ namespace WeatherStation
 
         private static readonly List<City> Cities = new List<City>();
         private static readonly Regex CityCommaState = new Regex("\\s*(.+),\\s*(.+)\\s*");
-        private static readonly Regex CitySpaceState = new Regex("\\s*(.+)\\s+(\\w{2})\\s*"); // Only supports two letter state codes for now
+        private static readonly Regex CitySpaceState = new Regex("\\s*(.+)\\s+(\\[A-Z]{2})\\s*"); // Only supports two letter state codes for now
 
         static CityList()
         {

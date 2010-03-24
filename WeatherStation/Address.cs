@@ -113,6 +113,40 @@ namespace WeatherStation
             return Search(searchAddress, false);
         }
 
+        public static IEnumerable<Address> Search(string streetAddress, string city, string state, string zipCode, bool geocode)
+        {
+            var addressLookup = new AddressLookup();
+            var addresses = new List<Address>();
+
+            if(string.IsNullOrEmpty(streetAddress))
+            {
+                if (!string.IsNullOrEmpty(city) && !string.IsNullOrEmpty(state))
+                {
+                    var citySearched = CityList.GetCity(city, new State(state));
+                    addresses.Add(addressLookup.GetAddressFromCity(citySearched));
+                }
+                else if(!string.IsNullOrEmpty(zipCode))
+                {
+                    ZipCode zipCodeSearched = ZipCodeList.GetZipCode(zipCode);
+                    addresses.Add(addressLookup.GetAddressFromZipCode(zipCodeSearched));
+                    
+                }
+                var response = Geocoder.Search(FormatAddress(streetAddress, city, state, zipCode));
+                addresses.Add(response);
+            }
+            
+            
+            if (ZipCodeList.IsZipCode(zipCode))
+            {
+               
+            }
+            else if (geocode)
+            {
+            }
+
+            return addresses;
+        }
+
         public static IEnumerable<Address> Search(string searchAddress, bool geocode)
         {
             var addressLookup = new AddressLookup();
