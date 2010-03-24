@@ -47,10 +47,6 @@ namespace WeatherStation
         public static City FindClosestCity(Geocode geocode)
         {
             Cities.Sort((a, b) => a.Geocode.DistanceTo(geocode).CompareTo(b.Geocode.DistanceTo(geocode)));
-            foreach (var city in Cities.Take(10))
-            {
-                Trace.WriteLine(string.Format("{0}, {1}", city.Name, city.Geocode.DistanceTo(geocode)));
-            }
             return Cities.First();
         }
 
@@ -61,7 +57,7 @@ namespace WeatherStation
 
         public static bool IsCity(string city, State state)
         {
-            return Cities.Exists(c => c.Name == city && c.State.Equals(state));
+            return CityLookup.ContainsKey(new KeyValuePair<string, string>(city, state.Abbreviation));
         }
 
         public static bool IsCityAndState(string cityAndState)

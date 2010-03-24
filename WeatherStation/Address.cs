@@ -120,7 +120,7 @@ namespace WeatherStation
 
             if(string.IsNullOrEmpty(streetAddress))
             {
-                if (!string.IsNullOrEmpty(city) && !string.IsNullOrEmpty(state))
+                if (!string.IsNullOrEmpty(city) && !string.IsNullOrEmpty(state) && CityList.IsCity(city, new State(state)))
                 {
                     var citySearched = CityList.GetCity(city, new State(state));
                     addresses.Add(addressLookup.GetAddressFromCity(citySearched));
@@ -133,15 +133,6 @@ namespace WeatherStation
                 }
                 var response = Geocoder.Search(FormatAddress(streetAddress, city, state, zipCode));
                 addresses.Add(response);
-            }
-            
-            
-            if (ZipCodeList.IsZipCode(zipCode))
-            {
-               
-            }
-            else if (geocode)
-            {
             }
 
             return addresses;
