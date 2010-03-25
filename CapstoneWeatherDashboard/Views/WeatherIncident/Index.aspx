@@ -36,6 +36,7 @@
             }
         });
         
+        var incidentFound = false;
         var latitude = <%= ViewData["latitude"] %>;
         var longitude = <%= ViewData["longitude"] %>;     
         var homeAddress = '<%= ViewData["homeAddress"] %>';
@@ -44,6 +45,7 @@
 
 </asp:Content>
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
+    <h2 id="searchString">Results for Search <%=ViewData["searchStringAsEnglish"] %></h2>
     <div id="progress">
         <p>
             <img src="/demo/Content/images/ajax-loader.gif" alt="Loading..." />

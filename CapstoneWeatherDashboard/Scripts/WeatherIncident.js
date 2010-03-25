@@ -6,12 +6,14 @@ var totalUrls = 0;
 var geocoder = new GClientGeocoder();
 
 function displayIncidents(incidents) {
-    if (incidents.length < 1 && urls.length < 1) {
-        $('#results').append("<p>No results found for search string '" + searchString + "'.</p>");
+    if (!incidentFound && incidents.length < 1 && urls.length < 1) {
+        $('#results').append("<h2>No results found for search '" + searchString + "'.</h2>");
         $("#progress").hide();
+        $("#searchString").hide();
         return;
     }
     for (var i in incidents) {
+        incidentFound = true;
         incidents[i].newRow = true;
         incidents[i].order = allIncidents.length;
         incidents[i].html = $('<div id="result' + i + '" class="result ' + incidents[i].EventTypeString + '" style="display: none">' +
@@ -71,8 +73,8 @@ function displayIncidents(incidents) {
                         map.addControl(new GLargeMapControl());
 
                         var marker = new GMarker(searchLocation);
-                        setupMarker(map, marker, homeAddress);
-                        marker.openInfoWindowHtml(homeAddress);
+                        setupMarker(map, marker, '<b>Location Searched For:</b><br/>' + homeAddress);
+                        marker.openInfoWindowHtml('<b>Location Searched For:</b><br/>' + homeAddress);
 
                         for (var j in incident.Locations) {
                             var location = incident.Locations[j];
@@ -83,12 +85,12 @@ function displayIncidents(incidents) {
                                         alert(location.FullAddress + " not found");
                                     } else {
                                         incidentMarker = new GMarker(point);
-                                        setupMarker(map, incidentMarker, location.FullAddress);
+                                        setupMarker(map, incidentMarker, '<b>Incident Observed At:</b><br/>' + location.FullAddress);
                                     }
                                 });
                             } else {
                                 incidentMarker = new GMarker(new GLatLng(location.Geocode.Latitude, location.Geocode.Longitude));
-                                setupMarker(map, incidentMarker, location.FullAddress);
+                                setupMarker(map, incidentMarker, '<b>Incident Observed At:</b><br/>' + location.FullAddress);
                             }
                         }
                     });
