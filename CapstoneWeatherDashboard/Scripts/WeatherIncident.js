@@ -32,6 +32,7 @@ function displayIncidents(incidents) {
                                     '<div>' +
                                         '<div class="map"></div>' +
                                     '</div>' +
+                                    '<a href="/demo/CreatePDF/"> Create PDF </a>' +
                                 '</div>' +
                                 '</div>');
         allIncidents.push(incidents[i]);

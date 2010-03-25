@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="itextsharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.ComponentModel.DataAnnotations">
@@ -61,6 +65,7 @@
     <Reference Include="System.Web.Mobile" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\CreatePDFController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NcdcWeatherIncidentController.cs" />
     <Compile Include="Controllers\PolicyController.cs" />
@@ -111,6 +116,7 @@
     <Content Include="Scripts\jquery.colorbox.js" />
     <Content Include="Scripts\NewSearch.js" />
     <Content Include="Scripts\WeatherIncident.js" />
+    <Content Include="Views\CreatePDF\CreatePDF.aspx" />
     <Content Include="Views\WeatherIncident\Index.aspx" />
     <Content Include="Web.config" />
     <Content Include="Content\Site.css" />
