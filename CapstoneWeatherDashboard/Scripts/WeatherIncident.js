@@ -28,7 +28,6 @@ function displayIncidents(incidents) {
                                         '</a>' +
                                     '</p>' +
                                     '<div>' +
-                                        '<label>Map:</label>' +
                                         '<div class="map"></div>' +
                                     '</div>' +
                                 '</div>' +
@@ -64,32 +63,32 @@ function displayIncidents(incidents) {
 
                     // setup google map
                     additionalInfo.find('.map').each(function() {
-                        var searchLocation = new GLatLng(latitude, longitude);
                         var mapDiv = $(this);
                         var map = new google.maps.Map2(mapDiv[0]);
+
+                        var searchLocation = new GLatLng(latitude, longitude);
                         map.setCenter(searchLocation, 9);
                         map.addControl(new GLargeMapControl());
 
                         var marker = new GMarker(searchLocation);
-                        map.addOverlay(marker);
+                        setupMarker(map, marker, homeAddress);
                         marker.openInfoWindowHtml(homeAddress);
 
                         for (var j in incident.Locations) {
                             var location = incident.Locations[j];
-                            var incidentMarker;
-                            if (location.Latitude == 0 && location.Longitude == 0) {
-
+                            var incidentMarker = null;
+                            if (location.Geocode == null) {
                                 geocoder.getLatLng(location.FullAddress, function(point) {
                                     if (!point) {
                                         alert(location.FullAddress + " not found");
                                     } else {
-                                        var incidentMarker = new GMarker(point);
-                                        map.addOverlay(incidentMarker);
+                                        incidentMarker = new GMarker(point);
+                                        setupMarker(map, incidentMarker, location.FullAddress);
                                     }
                                 });
                             } else {
-                                var incidentMarker = new GMarker(new GLatLng(location.Latitude, location.Longitude));
-                                map.addOverlay(incidentMarker);
+                                incidentMarker = new GMarker(new GLatLng(location.Geocode.Latitude, location.Geocode.Longitude));
+                                setupMarker(map, incidentMarker, location.FullAddress);
                             }
                         }
                     });
@@ -97,7 +96,6 @@ function displayIncidents(incidents) {
             }
         };
         closure(allIncidents[i]);
-
     }
 
     if (urls.length > 0) {
@@ -106,7 +104,13 @@ function displayIncidents(incidents) {
     } else {
         $("#progress").hide();
     }
+}
 
+function setupMarker(map, marker, html) {
+    map.addOverlay(marker);
+    GEvent.addListener(marker, "click", function(point) {
+        marker.openInfoWindowHtml(html);
+    });
 }
 
 $(document).ready(function() {

@@ -13,7 +13,7 @@ namespace WeatherStation
         private static readonly GoogleGeocoder Geocoder = new GoogleGeocoder();
         private static readonly ZoneLookup ZoneLookup = new ZoneLookup();
 
-        public string FullAddress
+        public virtual string FullAddress
         {
             get
             {
@@ -71,7 +71,7 @@ namespace WeatherStation
             }
             if (!string.IsNullOrEmpty(city))
             {
-                address += city + " ";
+                address += city + ", ";
             }
             if (!string.IsNullOrEmpty(state))
             {
@@ -113,28 +113,43 @@ namespace WeatherStation
             return Search(searchAddress, false);
         }
 
+
         public static IEnumerable<Address> Search(string streetAddress, string city, string state, string zipCode, bool geocode)
         {
             var addressLookup = new AddressLookup();
             var addresses = new List<Address>();
 
-            if(string.IsNullOrEmpty(streetAddress))
+            if (string.IsNullOrEmpty(streetAddress))
             {
                 if (!string.IsNullOrEmpty(city) && !string.IsNullOrEmpty(state) && CityList.IsCity(city, new State(state)))
                 {
                     var citySearched = CityList.GetCity(city, new State(state));
-                    addresses.Add(addressLookup.GetAddressFromCity(citySearched));
+                    var address = addressLookup.GetAddressFromCity(citySearched);
+
+                    if (!string.IsNullOrEmpty(zipCode))
+                    {
+                        address.ZipCode = ZipCodeList.GetZipCode(zipCode);
+                    }
+                    addresses.Add(address);
                 }
-                else if(!string.IsNullOrEmpty(zipCode))
+                else if (!string.IsNullOrEmpty(zipCode) && ZipCodeList.IsZipCode(zipCode))
                 {
                     ZipCode zipCodeSearched = ZipCodeList.GetZipCode(zipCode);
                     addresses.Add(addressLookup.GetAddressFromZipCode(zipCodeSearched));
-                    
                 }
-                var response = Geocoder.Search(FormatAddress(streetAddress, city, state, zipCode));
-                addresses.Add(response);
             }
-
+            if (addresses.Count == 0)
+            {
+                if (geocode)
+                {
+                    var response = Geocoder.Search(FormatAddress(streetAddress, city, state, zipCode));
+                    addresses.Add(response);
+                }
+                else
+                {
+                    addresses.AddRange(Address.Search(FormatAddress(streetAddress, city, state, zipCode), geocode));
+                }
+            }
             return addresses;
         }
 

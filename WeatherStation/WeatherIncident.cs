@@ -40,7 +40,7 @@ namespace WeatherStation
                                {WeatherIncidentType.WinterStorm, "Winter Storm"},
                                {WeatherIncidentType.Lightning, "Lightning"},
                                {WeatherIncidentType.Hurricane, "Hurricane"},
-                               {WeatherIncidentType.Wildfire, "Wild fire"},
+                               {WeatherIncidentType.Wildfire, "Wild Fire"},
                                {WeatherIncidentType.Unclassified, "Unclassified"}
                            }[EventType];
             }
