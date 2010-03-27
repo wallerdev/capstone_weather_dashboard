@@ -95,6 +95,7 @@ namespace CapstoneWeatherDashboard.Controllers
             ViewData["endDate"] = endDate;
             ViewData["incidentFilter"] = Request.QueryString["incidentTypes"];
             ViewData["searchStringAsEnglish"] = searchStringAsEnglish;
+            ViewData["radius"] = Request.QueryString["radius"];
             return View();
         }
     }
