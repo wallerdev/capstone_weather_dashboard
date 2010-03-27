@@ -26,7 +26,7 @@ label
     color: #999;
 }
 
-#state
+#state, #radius
 {
     width: 40px;
 }

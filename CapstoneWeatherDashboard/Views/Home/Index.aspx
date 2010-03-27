@@ -76,9 +76,29 @@
             </table>
         </fieldset>
     </div>
-    <div id="filter">
+    
+    <div id="searchRadius">
         <h2>
-            2. Filter Event Types (optional)
+            2. Pick Your Search Radius
+        </h2>
+        <fieldset>
+            <table>
+                <tr>
+                    <td>
+                        <label for="radius">
+                            Radius (miles)
+                        </label>
+                    </td>
+                    <td>
+                        <%= Html.TextBox("radius", "", new { @class = "text placeholder", placeholder = "15" }) %>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+    <div id="eventTypes">
+        <h2>
+            2. Filter Event Types
         </h2>
         <fieldset>
             <table>
