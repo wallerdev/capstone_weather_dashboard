@@ -20,12 +20,12 @@
     <script type="text/javascript">
         // NCDC Weather Incidents
 
-        urls.push('<%= Url.Action("Index", "NcdcWeatherIncident", new { state = ViewData["state"], county = ViewData["county"], incidentFilter = ViewData["incidentFilter"], startDate = ((DateTime)ViewData["startDate"]).ToShortDateString(), endDate = ((DateTime)ViewData["endDate"]).ToShortDateString() }) %>');
+        urls.push('<%= Url.Action("Index", "NcdcWeatherIncident", new { radius = ViewData["radius"], state = ViewData["state"], county = ViewData["county"], incidentFilter = ViewData["incidentFilter"], startDate = ((DateTime)ViewData["startDate"]).ToShortDateString(), endDate = ((DateTime)ViewData["endDate"]).ToShortDateString() }) %>');
 
         // Weather Underground Incidents
         <% for(DateTime d = (DateTime)ViewData["startDate"]; d <= (DateTime)ViewData["endDate"]; d = d.AddDays(1))
           {%>
-            urls.push('<%= Url.Action("Index", "WeatherUndergroundWeatherIncident", new { date = d.ToShortDateString(), airportCode = ViewData["airportCode"] }) %>');
+            urls.push('<%= Url.Action("Index", "WeatherUndergroundWeatherIncident", new { date = d.ToShortDateString(), radius = ViewData["radius"], airportCode = ViewData["airportCode"] }) %>');
         <%}%>
 
         totalUrls = urls.length;
