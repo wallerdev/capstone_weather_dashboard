@@ -20,13 +20,18 @@ namespace WeatherStation
             }
         }
 
-        public Airport FindClosestAirport(Geocode geocode)
+        public static Airport GetAirport(string airportCode)
+        {
+            return Airports.Single(a => a.AirportCode == airportCode);
+        }
+
+        public static Airport FindClosestAirport(Geocode geocode)
         {
             Airports.Sort((a, b) => a.Geocode.DistanceTo(geocode).CompareTo(b.Geocode.DistanceTo(geocode)));
             return Airports.First();
         }
 
-        public IEnumerable<Airport> FindNearbyAirports(Geocode geocode, double rangeInMiles)
+        public static IEnumerable<Airport> FindNearbyAirports(Geocode geocode, double rangeInMiles)
         {
             return Airports.Where(a => a.Geocode.DistanceTo(geocode) < rangeInMiles);
         }

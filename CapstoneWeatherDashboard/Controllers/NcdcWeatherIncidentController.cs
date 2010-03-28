@@ -16,9 +16,9 @@ namespace CapstoneWeatherDashboard.Controllers
             WeatherIncidentType? filter;
             try
             {
-                filter = (WeatherIncidentType) Enum.Parse(typeof(WeatherIncidentType), filterAsString);
+                filter = (WeatherIncidentType)Enum.Parse(typeof(WeatherIncidentType), filterAsString);
             }
-            catch(ArgumentException)
+            catch (ArgumentException)
             {
                 filter = null;
             }
@@ -31,8 +31,7 @@ namespace CapstoneWeatherDashboard.Controllers
 
             County mainCounty = CountyList.GetCounty(Request.QueryString["county"], new State(Request.QueryString["state"]));
 
-            List<County> counties = new List<County>();
-            counties.Add(mainCounty);
+            List<County> counties = new List<County> { mainCounty };
             counties.AddRange(CountyList.FindNearbyCounties(mainCounty.Geocode, radius));
             counties = counties.Distinct().ToList();
 
