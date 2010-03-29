@@ -1,5 +1,5 @@
-/*
- * HtmlToPdfBuilder.cs (for .NET 2.0)
+﻿/*
+ * HtmlToPdfBuilder.cs
  * ---------------------------------
  * Hugo Bonacci (webdev_hb@yahoo.com)
  * www.hugoware.net
@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using iTextSharp.text;
 using System.IO;
@@ -56,12 +57,12 @@ namespace PDFBuilder {
         /// <summary>
         /// Method to override to have additional control over the document
         /// </summary>
-        public event RenderEvent BeforeRender;
+        public event RenderEvent BeforeRender = (writer, document) => { };
 
         /// <summary>
         /// Method to override to have additional control over the document
         /// </summary>
-        public event RenderEvent AfterRender;
+        public event RenderEvent AfterRender = (writer, document) => { };
 
         #endregion
 
@@ -84,9 +85,9 @@ namespace PDFBuilder {
         /// <summary>
         /// Returns a list of the pages available
         /// </summary>
-        public HtmlPdfPage[] Pages {
+        public IEnumerable<HtmlPdfPage> Pages {
             get {
-                return this._Pages.ToArray();
+                return this._Pages.AsEnumerable();
             }
         }
 
@@ -206,7 +207,7 @@ namespace PDFBuilder {
                 //read the created stream
                 MemoryStream generate = new MemoryStream(output.ToArray());
                 StreamReader reader = new StreamReader(generate);
-                foreach (object item in HTMLWorker.ParseToList(reader, this._Styles)) {
+                foreach (var item in (IEnumerable)HTMLWorker.ParseToList(reader, this._Styles)) {
                     document.Add((IElement)item);
                 }
 
@@ -234,6 +235,7 @@ namespace PDFBuilder {
     }
 
     #endregion
+
 
     #region HtmlPdfPage Class
 
@@ -274,6 +276,7 @@ namespace PDFBuilder {
     }
 
     #endregion
+
 
     #region Rendering Delegate
 
