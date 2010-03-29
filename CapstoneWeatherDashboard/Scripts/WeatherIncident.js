@@ -32,7 +32,8 @@ function displayIncidents(incidents) {
                                     '<div>' +
                                         '<div class="map"></div>' +
                                     '</div>' +
-                                    '<a href="/demo/IncidentPdf/IncidentAsPdf"> Create PDF </a>' +
+                                    '<a href="/demo/IncidentPdf/IncidentAsPdf/index.aspx?d=' + encodeURIComponent(incidents[i].DateString)
+                                            + '&et=' + encodeURIComponent(incidents[i].EventTypeInWords) + '&mi=' + encodeURIComponent(incidents[i].MoreInformationUrl) + '"> Create PDF </a>' +
                                 '</div>' +
                                 '</div>');
         allIncidents.push(incidents[i]);
