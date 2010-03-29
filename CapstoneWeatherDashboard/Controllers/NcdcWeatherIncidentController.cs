@@ -16,21 +16,37 @@ namespace CapstoneWeatherDashboard.Controllers
             WeatherIncidentType? filter;
             try
             {
-                filter = (WeatherIncidentType) Enum.Parse(typeof(WeatherIncidentType), filterAsString);
+                filter = (WeatherIncidentType)Enum.Parse(typeof(WeatherIncidentType), filterAsString);
             }
-            catch(ArgumentException)
+            catch (ArgumentException)
             {
                 filter = null;
             }
 
-            var ncdc = new Ncdc();
-            var ncdcIncidents = ncdc.GetEvents(
-                new State(Request.QueryString["state"]),
-                Request.QueryString["county"],
-                DateTime.Parse(Request.QueryString["startDate"]),
-                DateTime.Parse(Request.QueryString["endDate"]), filter);
+            double radius;
+            if (!double.TryParse(Request.QueryString["radius"], out radius))
+            {
+                radius = 15;
+            }
 
-            return Json(ncdcIncidents, JsonRequestBehavior.AllowGet);
+            County mainCounty = CountyList.GetCounty(Request.QueryString["county"], new State(Request.QueryString["state"]));
+
+            List<County> counties = new List<County> { mainCounty };
+            counties.AddRange(CountyList.FindNearbyCounties(mainCounty.Geocode, radius));
+            counties = counties.Distinct().ToList();
+
+            var ncdc = new Ncdc();
+            List<WeatherIncident> ncdcIncidents = new List<WeatherIncident>();
+            foreach (var county in counties)
+            {
+                ncdcIncidents.AddRange(ncdc.GetEvents(
+                    county.State,
+                    county.Name,
+                    DateTime.Parse(Request.QueryString["startDate"]),
+                    DateTime.Parse(Request.QueryString["endDate"]), filter));
+            }
+
+            return Json(ncdcIncidents.Distinct(), JsonRequestBehavior.AllowGet);
         }
     }
 }
