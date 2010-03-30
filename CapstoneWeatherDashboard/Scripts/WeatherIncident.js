@@ -119,7 +119,7 @@ function setupMarker(map, marker, html) {
 }
 
 function GetIncidentStaticMapImage(incident) {
-    var returnText = "http://maps.google.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=10&size=512x512&maptype=roadmap" +
+    var returnText = latitude + "," + longitude +
         "&markers=color:blue|label:H|" + latitude + "," + longitude;
     for (var j in incident.Locations) {
         var location = incident.Locations[j];
@@ -129,14 +129,12 @@ function GetIncidentStaticMapImage(incident) {
                 if (!point) {
                     alert(location.FullAddress + " not found");
                 } else {
-                    incidentMarker = new GMarker(point);
-                    setupMarker(map, incidentMarker, '<b>Incident Observed At:</b><br/>' + location.FullAddress);
                     returnText = returnText + "&markers=color:blue|label:O|" + point + "&sensor=false";
                 }
             });
         }
         else {
-            returnText = returnText + "&markers=color:blue|label:O|" + location.Geocode.Latitude + "," + location.Geocode.Longitude + "&sensor=false";
+            returnText = returnText + "&markers=color:blue|label:O|" + location.Geocode.Latitude + "," + location.Geocode.Longitude;
         }
         break;
     }

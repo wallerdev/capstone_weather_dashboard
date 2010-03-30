@@ -6,7 +6,7 @@
 <p><b>Source Url: </b><%=ViewData["url"] %></p>
 <p><b>Map: </b></p>
 <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-<p><img src="<%=ViewData["mapurl"] %>" /></p>
+<p><img src="http://maps.google.com/maps/api/staticmap?zoom=10&size=512x512&maptype=roadmap&sensor=false&center=<%=ViewData["restOfMapUrl"] %>" /></p>
 <p><b>Key:</b></p>
 <p><b>H</b> - Location Searched For</p>
 <p><b>O</b> - Location Observed At</p>
