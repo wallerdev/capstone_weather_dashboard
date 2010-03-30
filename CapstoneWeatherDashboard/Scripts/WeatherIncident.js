@@ -33,7 +33,8 @@ function displayIncidents(incidents) {
                                         '<div class="map"></div>' +
                                     '</div>' +
                                     '<a href="/demo/IncidentPdf/IncidentAsPdf/index.aspx?d=' + encodeURIComponent(incidents[i].DateString)
-                                            + '&et=' + encodeURIComponent(incidents[i].EventTypeInWords) + '&mi=' + encodeURIComponent(incidents[i].MoreInformationUrl) + '"> Create PDF </a>' +
+                                            + '&et=' + encodeURIComponent(incidents[i].EventTypeInWords) + '&mi=' + encodeURIComponent(incidents[i].MoreInformationUrl)
+                                            + '&i=' + encodeURIComponent(GetIncidentStaticMapImage(incidents[i])) + '"> Create PDF </a>' +
                                 '</div>' +
                                 '</div>');
         allIncidents.push(incidents[i]);
@@ -115,6 +116,31 @@ function setupMarker(map, marker, html) {
     GEvent.addListener(marker, "click", function(point) {
         marker.openInfoWindowHtml(html);
     });
+}
+
+function GetIncidentStaticMapImage(incident) {
+    var returnText = "http://maps.google.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=10&size=512x512&maptype=roadmap" +
+        "&markers=color:blue|label:H|" + latitude + "," + longitude;
+    for (var j in incident.Locations) {
+        var location = incident.Locations[j];
+        var incidentMarker = null;
+        if (location.Geocode == null) {
+            geocoder.getLatLng(location.FullAddress, function(point) {
+                if (!point) {
+                    alert(location.FullAddress + " not found");
+                } else {
+                    incidentMarker = new GMarker(point);
+                    setupMarker(map, incidentMarker, '<b>Incident Observed At:</b><br/>' + location.FullAddress);
+                    returnText = returnText + "&markers=color:blue|label:O|" + point + "&sensor=false";
+                }
+            });
+        }
+        else {
+            returnText = returnText + "&markers=color:blue|label:O|" + location.Geocode.Latitude + "," + location.Geocode.Longitude + "&sensor=false";
+        }
+        break;
+    }
+    return returnText;
 }
 
 $(document).ready(function() {

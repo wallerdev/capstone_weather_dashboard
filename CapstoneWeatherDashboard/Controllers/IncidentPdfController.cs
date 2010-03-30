@@ -13,10 +13,12 @@ namespace CapstoneWeatherDashboard.Controllers
             string date = HttpUtility.UrlDecode(Request.QueryString["d"]);
             string moreInfoUrl = HttpUtility.UrlDecode(Request.QueryString["mi"]);
             string eventType = HttpUtility.UrlDecode(Request.QueryString["et"]);
+            string mapUrl = HttpUtility.UrlDecode(Request.QueryString["i"]);
 
             ViewData["date"] = date;
             ViewData["url"] = moreInfoUrl;
             ViewData["event"] = eventType;
+            ViewData["mapurl"] = mapUrl;
 
             return ViewPdf(null);
         }
