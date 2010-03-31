@@ -32,9 +32,13 @@ function displayIncidents(incidents) {
                                     '<div>' +
                                         '<div class="map"></div>' +
                                     '</div>' +
-                                    '<a href="/demo/IncidentPdf/IncidentAsPdf/index.aspx?d=' + encodeURIComponent(incidents[i].DateString)
-                                            + '&et=' + encodeURIComponent(incidents[i].EventTypeInWords) + '&mi=' + encodeURIComponent(incidents[i].MoreInformationUrl)
-                                            + '&i=' + encodeURIComponent(GetIncidentStaticMapImage(incidents[i])) + '"> Create PDF </a>' +
+                                    '<form action="/demo/IncidentPdf/IncidentAsPdf" method="post">' +
+                                        '<input type="hidden" name="d" value="' + encodeURIComponent(incidents[i].DateString) + '" />' +
+                                        '<input type="hidden" name="et" value="' + encodeURIComponent(incidents[i].EventTypeInWords) + '" />' +
+                                        '<input type="hidden" name="mi" value="' + encodeURIComponent(incidents[i].MoreInformationUrl) + '" />' +
+                                        '<input type="hidden" name="i" value="' + encodeURIComponent(GetIncidentStaticMapImage(incidents[i])) + '" />' +
+                                        '<input type="submit" value="Create Pdf" />' +
+                                    '</form>' +
                                 '</div>' +
                                 '</div>');
         allIncidents.push(incidents[i]);

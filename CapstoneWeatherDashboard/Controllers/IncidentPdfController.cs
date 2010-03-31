@@ -10,10 +10,10 @@ namespace CapstoneWeatherDashboard.Controllers
     {
         public ActionResult IncidentAsPdf()
         {
-            string date = HttpUtility.UrlDecode(Request.QueryString["d"]);
-            string moreInfoUrl = HttpUtility.UrlDecode(Request.QueryString["mi"]);
-            string eventType = HttpUtility.UrlDecode(Request.QueryString["et"]);
-            string restOfMapUrl = HttpUtility.UrlDecode(Request.QueryString["i"]);
+            string date = HttpUtility.UrlDecode(Request.Form["d"]);
+            string moreInfoUrl = HttpUtility.UrlDecode(Request.Form["mi"]);
+            string eventType = HttpUtility.UrlDecode(Request.Form["et"]);
+            string restOfMapUrl = HttpUtility.UrlDecode(Request.Form["i"]);
 
             ViewData["date"] = date;
             ViewData["url"] = moreInfoUrl;
