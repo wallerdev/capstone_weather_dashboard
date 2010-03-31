@@ -88,3 +88,47 @@ strong
 {
     font-weight: bold;
 }
+
+#searchForm
+{
+	background-color: #CCC;
+	width: 400px;
+	border: solid 2px grey;
+	padding: 5px;
+}
+
+#searchForm div
+{
+	border-bottom: solid 1px black;
+	margin-bottom: 5px;
+	padding-bottom: 5px;
+}
+
+#searchForm div#search
+{
+	border-bottom: none;
+}
+
+#searchForm td.label
+{
+	width:140px;
+}
+
+input.submit
+{
+	float:right;
+	clear: left;
+	margin-top:5px;
+}
+
+#searchForm div#search fieldset
+{
+	padding-left:15px;
+}
+
+#searchForm div#search fieldset legend
+{
+	margin-left: -15px;
+	font-size: .8em;
+	font-style: italic;
+}

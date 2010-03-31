@@ -45,7 +45,7 @@
     <h1>
         Weather Incident Verification
     </h1>
-    <% using (Html.BeginForm("Index", "WeatherIncident", FormMethod.Get))
+    <% using (Html.BeginForm("Index", "WeatherIncident", FormMethod.Get, new {id = "searchForm" }))
        { %>
     <div id="dateRange">
         <h2>
@@ -54,7 +54,7 @@
         <fieldset>
             <table>
                 <tr>
-                    <td>
+                    <td class="label">
                         <label for="startDate">
                             Start date
                         </label>
@@ -64,7 +64,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td class="label">
                         <label for="endDate">
                             End date
                         </label>
@@ -84,7 +84,7 @@
         <fieldset>
             <table>
                 <tr>
-                    <td>
+                    <td class="label">
                         <label for="radius">
                             Radius (miles)
                         </label>
@@ -98,14 +98,14 @@
     </div>
     <div id="eventTypes">
         <h2>
-            2. Filter Event Types
+            3. Filter Event Types
         </h2>
         <fieldset>
             <table>
                 <tr>
-                    <td>
+                    <td class="label">
                         <label for="eventType">
-                            Event Type to Search For
+                            Only Show
                         </label>
                     </td>
                     <td>
@@ -117,13 +117,13 @@
     </div>
     <div id="search">
         <h2>
-            3. Search
+            4. Search
         </h2>
         <fieldset id="addressSearch">
-            <legend>by address</legend>
+            <legend>By Address</legend>
             <table>
                 <tr>
-                    <td>
+                    <td class="label">
                         <label for="address">
                             Address
                         </label>
@@ -133,7 +133,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td class="label">
                         <label for="city">
                             City
                         </label>
@@ -143,7 +143,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td class="label">
                         <label for="state">
                             State
                         </label>
@@ -153,7 +153,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td class="label">
                         <label for="zipCode">
                             Zip code
                         </label>
@@ -168,10 +168,10 @@
             </p>
         </fieldset>
         <fieldset id="geocodeSearch">
-            <legend>by geocode</legend>
+            <legend>By Geocode</legend>
             <table>
                 <tr>
-                    <td>
+                    <td class="label">
                         <label for="latitude">
                             Latitude
                         </label>
@@ -181,7 +181,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td class="label">
                         <label for="longitude">
                             Longitude
                         </label>
@@ -196,10 +196,10 @@
             </p>
         </fieldset>
         <fieldset id="policySearch">
-            <legend>by policy number</legend>
+            <legend>By Policy Number</legend>
             <table>
                 <tr>
-                    <td>
+                    <td class="label">
                         <label for="policyNumber">
                             Policy Number
                         </label>
@@ -209,7 +209,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td class="label">
                         <label for="policyHolderName">
                             Policy Holder Name
                         </label>
