@@ -51,8 +51,9 @@ namespace WeatherStation
 
         public bool IsZone(string zone)
         {
-            var zoneList = zone.Split(new[] { " - " }, StringSplitOptions.None);
-            return ZoneToZipCodesLookup.ContainsKey(zoneList.FirstOrDefault());
+            var firstZone = zone.Split(new[] { " - " }, StringSplitOptions.None)
+                .First().Split('>').First();
+            return ZoneToZipCodesLookup.ContainsKey(firstZone);
         }
     }
 }
