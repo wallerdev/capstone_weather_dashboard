@@ -59,5 +59,11 @@ namespace WeatherStation.Tests
 
             Assert.IsTrue(_zoneLookup.GetZipCodes("MIZ001>004").Select(z => z.Code).SequenceEqual(miz001.Concat(miz002).Concat(miz003).Concat(miz004)));
         }
+
+        [TestMethod]
+        public void TestZoneRangeStart()
+        {
+            Assert.IsTrue(_zoneLookup.IsZone("MIZ068>070 - 075>076 - 082"));
+        }
     }
 }
