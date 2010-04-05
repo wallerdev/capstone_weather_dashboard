@@ -66,5 +66,14 @@ namespace CapstoneWeatherDashboard.Controllers
             // Send the binary data to the browser.
             return new BinaryResult(file, "application/pdf");
         }
+
+        protected byte[] GetPdf(object model)
+        {
+            HtmlToPdfBuilder builder = new HtmlToPdfBuilder(PageSize.LETTER);
+            HtmlPdfPage page = builder.AddPage();
+            string htmlText = RenderActionResultToString(View(model));
+            page.AppendHtml(htmlText);
+            return builder.RenderPdf();
+        }
     }
 }

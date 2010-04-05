@@ -7,6 +7,9 @@
 <asp:Content ContentPlaceHolderID="HeadContent" runat="server">
     <link href="/demo/Content/colorbox.css" rel="stylesheet" type="text/css" />
     <link href="/demo/Content/WeatherIncident.css" rel="stylesheet" type="text/css" />
+    
+    <script src="/demo/Scripts/jquery-ui-1.7.2.custom.min.js" type="text/javascript"></script>
+    <link href="/demo/Content/jquery-ui-1.7.2.custom.css" rel="stylesheet" type="text/css" />
 
     <script src="/demo/Scripts/jquery.colorbox-min.js" type="text/javascript"></script>
 

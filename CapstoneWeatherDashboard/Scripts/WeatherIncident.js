@@ -32,13 +32,23 @@ function displayIncidents(incidents) {
                                     '<div>' +
                                         '<div class="map"></div>' +
                                     '</div>' +
-                                    '<form action="/demo/IncidentPdf/IncidentAsPdf" method="post">' +
+                                    '<form action="/demo/IncidentPdf/IncidentAsPdf" method="post" style="float:left; padding: 10px;">' +
                                         '<input type="hidden" name="d" value="' + encodeURIComponent(incidents[i].DateString) + '" />' +
                                         '<input type="hidden" name="et" value="' + encodeURIComponent(incidents[i].EventTypeInWords) + '" />' +
                                         '<input type="hidden" name="mi" value="' + encodeURIComponent(incidents[i].MoreInformationUrl) + '" />' +
                                         '<input type="hidden" name="i" value="' + encodeURIComponent(GetIncidentStaticMapImage(incidents[i])) + '" />' +
                                         '<input type="submit" value="Create Pdf" />' +
                                     '</form>' +
+                                    '<form style="float:right; padding: 10px;">' +
+                                        '<label for="e">Email Addresses (Separated by commas): </label>' +
+                                        '<input type="text" name="e" style="width:300px;" />' +
+                                        '<input type="hidden" name="d" value="' + encodeURIComponent(incidents[i].DateString) + '" />' +
+                                        '<input type="hidden" name="et" value="' + encodeURIComponent(incidents[i].EventTypeInWords) + '" />' +
+                                        '<input type="hidden" name="mi" value="' + encodeURIComponent(incidents[i].MoreInformationUrl) + '" />' +
+                                        '<input type="hidden" name="i" value="' + encodeURIComponent(GetIncidentStaticMapImage(incidents[i])) + '" />' +
+                                        '<input type="submit" value="Send Pdf" class="emailSend" />' +
+                                    '</form>' +
+                                    '<div style="clear:both;" />' +
                                 '</div>' +
                                 '</div>');
         allIncidents.push(incidents[i]);
@@ -66,6 +76,16 @@ function displayIncidents(incidents) {
             if (incident.newRow) {
                 incident.html.fadeIn(1000);
                 incident.newRow = false;
+                incident.html.find('.emailSend').click(function() {
+                    var parentForm = $(this).parent('form');
+                    var serializedForm = parentForm.serialize();
+                    $.post('/demo/IncidentPdf/IncidentAsEmail',
+                        serializedForm,
+                        function() {
+                            alert('Email Sent Successfully');
+                        });
+                    return false;
+                });
                 incident.html.find('.topInfo').click(function() {
                     var additionalInfo = $(this).next(".additionalInfo");
                     additionalInfo.slideToggle();

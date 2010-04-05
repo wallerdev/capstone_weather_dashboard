@@ -1,4 +1,4 @@
-<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -74,6 +74,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\EmailJobCreator.cs" />
     <Compile Include="Models\IPolicyRepository.cs" />
     <Compile Include="Models\Policy.cs" />
     <Compile Include="Models\PolicyRepository.cs" />
@@ -117,6 +118,7 @@
     <Content Include="Scripts\jquery.colorbox.js" />
     <Content Include="Scripts\NewSearch.js" />
     <Content Include="Scripts\WeatherIncident.js" />
+    <Content Include="Views\IncidentPdf\IncidentAsEmail.aspx" />
     <Content Include="Views\IncidentPdf\IncidentAsPdf.aspx" />
     <Content Include="Views\WeatherIncident\Index.aspx" />
     <Content Include="Web.config" />
