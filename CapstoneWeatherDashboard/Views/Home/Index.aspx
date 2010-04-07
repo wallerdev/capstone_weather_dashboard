@@ -38,6 +38,27 @@
                 $('#PolicyZipCode').val(item.PolicyHomeAddress.ZipCode);
                 $('#PolicyCounty').val(item.PolicyHomeAddress.County);
             });
+
+            $('#search').children('fieldset').each(function() {
+                if ($(this).attr('id') == 'addressSearch') {
+                    $(this).show();
+                }
+                else {
+                    $(this).hide();
+                }
+            });
+
+            $('#searchby').change(function() {
+                var selected = $(this).val()
+                $(this).siblings('fieldset').each(function() {
+                    if ($(this).attr('id') == selected) {
+                        $(this).show();
+                    }
+                    else {
+                        $(this).hide();
+                    }
+                });
+            });
         });
     </script>
 </asp:Content>
@@ -90,7 +111,14 @@
                         </label>
                     </td>
                     <td>
-                        <%= Html.TextBox("radius", "", new { @class = "text placeholder", placeholder = "15" }) %>
+                        <select id="radius" name="radius">
+                            <option value="">0</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
                     </td>
                 </tr>
             </table>
@@ -119,8 +147,13 @@
         <h2>
             4. Search
         </h2>
+        <label for="searcyby">Search By: </label>
+        <select id="searchby" style="margin-bottom: 10px;">
+            <option value="addressSearch">Address</option>
+            <option value="geocodeSearch">Geocode</option>
+            <option value="policySearch">Policy Number</option>
+        </select>
         <fieldset id="addressSearch">
-            <legend>By Address</legend>
             <table>
                 <tr>
                     <td class="label">
@@ -168,7 +201,6 @@
             </p>
         </fieldset>
         <fieldset id="geocodeSearch">
-            <legend>By Geocode</legend>
             <table>
                 <tr>
                     <td class="label">
@@ -196,7 +228,6 @@
             </p>
         </fieldset>
         <fieldset id="policySearch">
-            <legend>By Policy Number</legend>
             <table>
                 <tr>
                     <td class="label">
