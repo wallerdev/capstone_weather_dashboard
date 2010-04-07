@@ -23,7 +23,7 @@ $(document).ready(function() {
         changeMonth: true,
         changeYear: true,
         showOn: 'button',
-        buttonImage: 'Content/images/calendar.gif',
+        buttonImage: '/demo/Content/images/calendar.gif',
         buttonImageOnly: true
     });
 
@@ -31,7 +31,7 @@ $(document).ready(function() {
         changeMonth: true,
         changeYear: true,
         showOn: 'button',
-        buttonImage: 'Content/images/calendar.gif',
+        buttonImage: '/demo/Content/images/calendar.gif',
         buttonImageOnly: true
     });
 
