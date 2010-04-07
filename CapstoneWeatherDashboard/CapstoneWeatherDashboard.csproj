@@ -85,6 +85,7 @@
   <ItemGroup>
     <Content Include="Content\colorbox.css" />
     <Content Include="Content\images\ajax-loader.gif" />
+    <Content Include="Content\images\calendar.gif" />
     <Content Include="Content\images\internet_explorer\borderBottomCenter.png" />
     <Content Include="Content\images\internet_explorer\borderBottomLeft.png" />
     <Content Include="Content\images\internet_explorer\borderBottomRight.png" />

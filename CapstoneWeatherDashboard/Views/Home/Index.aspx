@@ -50,7 +50,7 @@
 
             $('#searchby').change(function() {
                 var selected = $(this).val()
-                $(this).siblings('fieldset').each(function() {
+                $('#search').children('fieldset').each(function() {
                     if ($(this).attr('id') == selected) {
                         $(this).show();
                     }
@@ -81,7 +81,7 @@
                         </label>
                     </td>
                     <td>
-                        <%= Html.TextBox("startDate", "", new { @class = "text placeholder", placeholder = DateTime.Today.AddDays(-7).ToShortDateString() }) %>
+                        <%= Html.TextBox("startDate", "", new { @class = "text placeholder", placeholder = DateTime.Today.AddDays(-7).ToShortDateString() }) %><span class="required">*</span>
                     </td>
                 </tr>
                 <tr>
@@ -91,7 +91,7 @@
                         </label>
                     </td>
                     <td>
-                        <%= Html.TextBox("endDate", "", new { @class = "text placeholder", placeholder = DateTime.Today.ToShortDateString() })%>
+                        <%= Html.TextBox("endDate", "", new { @class = "text placeholder", placeholder = DateTime.Today.ToShortDateString() })%><span class="required">*</span>
                     </td>
                 </tr>
             </table>
@@ -147,14 +147,26 @@
         <h2>
             4. Search
         </h2>
-        <label for="searcyby">Search By: </label>
-        <select id="searchby" style="margin-bottom: 10px;">
-            <option value="addressSearch">Address</option>
-            <option value="geocodeSearch">Geocode</option>
-            <option value="policySearch">Policy Number</option>
-        </select>
+        <table>
+            <tr>
+                <td class="label">
+                    <label for="searchby">Search By: </label>                
+                </td>
+                <td>
+                <select id="searchby" style="margin-bottom: 10px;">
+                    <option value="addressSearch">Address</option>
+                    <option value="geocodeSearch">Geocode</option>
+                    <option value="policySearch">Policy Number</option>
+                </select>
+                </td>
+            </tr>
+        </table>
         <fieldset id="addressSearch">
             <table>
+                <tr>
+                    <td></td>
+                    <td><span id="addrError" class="error"></span></td>
+                </tr>
                 <tr>
                     <td class="label">
                         <label for="address">
@@ -192,16 +204,20 @@
                         </label>
                     </td>
                     <td>
-                        <%= Html.TextBox("zipCode", "", new {@class = "text"}) %>
+                        <%= Html.TextBox("zipCode", "", new {@class = "text"}) %><span class="required">*</span>
                     </td>
                 </tr>
             </table>
             <p>
-                <input type="submit" value="Search Address" class="submit" name="addressSearch" disabled="disabled" />
+                <input id="addressSearchSubmit" type="submit" value="Search Address" class="submit" name="addressSearch" disabled="disabled" />
             </p>
         </fieldset>
         <fieldset id="geocodeSearch">
             <table>
+                <tr>
+                    <td></td>
+                    <td><span id="geoError" class="error"></span></td>
+                </tr>
                 <tr>
                     <td class="label">
                         <label for="latitude">
@@ -209,7 +225,7 @@
                         </label>
                     </td>
                     <td>
-                        <%= Html.TextBox("latitude", "", new {@class = "text"}) %>
+                        <%= Html.TextBox("latitude", "", new {@class = "text"}) %><span class="required">*</span>
                     </td>
                 </tr>
                 <tr>
@@ -219,16 +235,20 @@
                         </label>
                     </td>
                     <td>
-                        <%= Html.TextBox("longitude", "", new {@class = "text"}) %>
+                        <%= Html.TextBox("longitude", "", new {@class = "text"}) %><span class="required">*</span>
                     </td>
                 </tr>
             </table>
             <p>
-                <input type="submit" value="Search Geocode" class="submit" name="geocodeSearch" disabled="disabled" />
+                <input id="geocodeSearchSubmit" type="submit" value="Search Geocode" class="submit" name="geocodeSearch" disabled="disabled" />
             </p>
         </fieldset>
         <fieldset id="policySearch">
             <table>
+                <tr>
+                    <td></td>
+                    <td><span id="policyError" class="error"></span></td>
+                </tr>
                 <tr>
                     <td class="label">
                         <label for="policyNumber">
@@ -236,7 +256,7 @@
                         </label>
                     </td>
                     <td>
-                        <%= Html.TextBox("policyNumber", "", new {@class = "text"}) %>
+                        <%= Html.TextBox("policyNumber", "", new {@class = "text"}) %><span class="required">*</span>
                     </td>
                 </tr>
                 <tr>
@@ -258,9 +278,11 @@
                 <%= Html.Hidden("PolicyCounty")%>
             </span>
             <p>
-                <input type="submit" value="Search Policy" class="submit" name="policySearch" disabled="disabled" />
+                <input id="policySearchSubmit" type="submit" value="Search Policy" class="submit" name="policySearch" disabled="disabled" />
             </p>
         </fieldset>
+        <span style="color:red; float:right; padding-top:10px;">* - Required Fields</span>
+        <br style="clear:both;" />
     </div>
     <% } %>
 </asp:Content>

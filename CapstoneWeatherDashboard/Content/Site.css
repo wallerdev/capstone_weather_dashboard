@@ -2,97 +2,97 @@
 
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td
 {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    outline: 0;
-    font-weight: inherit;
-    font-style: inherit;
-    font-size: 100%;
-    font-family: inherit;
-    vertical-align: baseline;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
 }
 
 :focus
 {
-    outline: 0;
+	outline: 0;
 }
 body
 {
-    line-height: 1;
-    color: black;
-    background: white;
+	line-height: 1;
+	color: black;
+	background: white;
 }
 ol, ul
 {
-    list-style: none;
+	list-style: none;
 }
 table
 {
-    border-collapse: separate;
-    border-spacing: 0;
+	border-collapse: separate;
+	border-spacing: 0;
 }
 caption, th, td
 {
-    text-align: left;
-    font-weight: normal;
+	text-align: left;
+	font-weight: normal;
 }
 blockquote:before, blockquote:after, q:before, q:after
 {
-    content: "";
+	content: "";
 }
 blockquote, q
 {
-    quotes: "" "";
+	quotes: "" "";
 }
 
 /* RESET END */
 
 body
 {
-    font-family: Helvetica, Verdana, sans-serif;
-    margin: 20px;
-    color: #444;
-    background-color: #EAF2F5;
+	font-family: Helvetica, Verdana, sans-serif;
+	margin: 20px;
+	color: #444;
+	background-color: #EAF2F5;
 }
 
 input.text
 {
-    font-size: 14pt;
-    padding: 3px;
-    margin-left: 5px;
+	font-size: 14pt;
+	padding: 3px;
+	margin-left: 5px;
 }
 
 .clear
 {
-    clear: both;
+	clear: both;
 }
 
 h1, h2
 {
-    font-weight: bold;
-    margin-bottom: 15px;
+	font-weight: bold;
+	margin-bottom: 15px;
 }
 
 h1
 {
-    font-size: 150%;
+	font-size: 150%;
 }
 
 h2
 {
-    font-size: 120%;
+	font-size: 120%;
 }
 
 strong
 {
-    font-weight: bold;
+	font-weight: bold;
 }
 
 #searchForm
 {
 	background-color: #CCC;
-	width: 400px;
+	width: 425px;
 	border: solid 2px grey;
 	padding: 5px;
 }
@@ -111,19 +111,19 @@ strong
 
 #searchForm td.label
 {
-	width:140px;
+	width: 140px;
 }
 
 input.submit
 {
-	float:right;
+	float: right;
 	clear: left;
-	margin-top:5px;
+	margin-top: 5px;
 }
 
 #searchForm div#search fieldset
 {
-	padding-left:15px;
+	padding-left: 15px;
 }
 
 #searchForm div#search fieldset legend
@@ -131,4 +131,22 @@ input.submit
 	margin-left: -15px;
 	font-size: .8em;
 	font-style: italic;
+}
+
+span.error
+{
+	margin-left: 10px;
+	color: Red;
+	display: block;
+}
+
+span.required
+{
+	color:Red;
+	font-size:200%;
+}
+
+select
+{
+	margin-left: 5px;
 }
