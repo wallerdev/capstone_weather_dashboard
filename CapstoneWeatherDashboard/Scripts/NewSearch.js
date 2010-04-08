@@ -41,15 +41,13 @@ $(document).ready(function() {
     setInterval('updateButtons()', 1000);
 
     $('#addressSearchSubmit').click(function() {
-        var city = $('#city').val();
-        var state = $('#state').val();
         var zipCode = $('#zipCode').val();
 
-        if ((city != "" && state != "") || zipCode != "") {
+        if (zipCode != "") {
             return true;
         }
         else {
-            $('#addrError').text("You must select at least a zip code or a city and state");
+            $('#addrError').text("You must select at least a zip code");
             return false;
         }
     });
