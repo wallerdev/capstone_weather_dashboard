@@ -76,8 +76,12 @@ namespace WeatherStation
             {
                 return WeatherIncidentType.Wind;
             }
-            
-            throw new ArgumentException("Unknown WeatherIncidentType");
+            if( entry.Conditions.Contains("hail") )
+            {
+                return WeatherIncidentType.Hail;
+            }
+
+            return WeatherIncidentType.Unclassified;
         }
     }
 }

@@ -133,8 +133,8 @@ namespace WeatherStation.WeatherEventProviders
             {
                 Precipitation = double.Parse(csvElements[9]);
             }
-            Events = csvElements[10];
-            Conditions = csvElements[11];
+            Events = csvElements[10].ToLower();
+            Conditions = csvElements[11].ToLower();
         }
     }
 }

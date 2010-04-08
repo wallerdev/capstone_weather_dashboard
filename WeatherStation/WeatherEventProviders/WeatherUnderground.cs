@@ -42,6 +42,8 @@ namespace WeatherStation.WeatherEventProviders
                                                                               DateTime date)
         {
             var moreInfoUrl = new Uri(string.Format(WeatherHistoryUrl, airportCode, date.Year, date.Month, date.Day));
+            Airport currentAirpot = AirportList.GetAirport(airportCode);
+            var locationOfAirport = Address.Search(string.Empty, currentAirpot.City, currentAirpot.State.Abbreviation, string.Empty, false);
 
             // Remove HTML comments and line breaks
             responseString =
@@ -55,14 +57,11 @@ namespace WeatherStation.WeatherEventProviders
             foreach (string row in rows)
             {
                 var entry = new WeatherUndergroundEntry(date, row);
-                try
+                WeatherIncidentType incidentType = WeatherIncidentClassifier.Classify(entry);
+                if (incidentType != WeatherIncidentType.Unclassified)
                 {
-                    //incidents.Add(new WeatherIncident(airportCode, WeatherIncidentClassifier.Classify(entry), date,
-                    //                                  date, moreInfoUrl));
-                }
-                catch (ArgumentException)
-                {
-                    // TODO: Handle this exception, should be able to classify all weather incidents
+                    incidents.Add(new WeatherIncident(locationOfAirport, incidentType,
+                                                      date, moreInfoUrl));
                 }
             }
             return incidents;
