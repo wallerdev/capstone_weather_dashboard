@@ -72,7 +72,7 @@ namespace WeatherStation
                 }
                 return WeatherIncidentType.WinterStorm;
             }
-            if (entry.WindSpeed > 25)
+            if (entry.WindSpeed > 57) // approximately equal to 50 knots
             {
                 return WeatherIncidentType.Wind;
             }
