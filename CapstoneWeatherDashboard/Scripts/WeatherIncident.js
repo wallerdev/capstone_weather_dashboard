@@ -61,8 +61,22 @@ function displayIncidents(incidents) {
                                 '</div>');
         allIncidents.push(incidents[i]);
     }
-    
-    $("#allIncidents").html(allIncidentInputs + '<input type="submit" value="Save All Pdfs" />');
+
+    $("#allIncidentsPdf").html(allIncidentInputs + '<input type="submit" value="Save All Incidents to PDF" />');
+    $("#allIncidentsEmail").html(allIncidentInputs + 
+        '<label for="e">Email Addresses (Separated by commas): </label>' +
+            '<input type="text" id="e" name="e" style="width:300px;" />' +
+            '<input type="submit" value="Email All Incidents" />');
+    $("#allIncidentsEmail input[type=submit]").click(function() {
+        var parentForm = $(this).parent('form');
+        var serializedForm = parentForm.serialize();
+        $.post('/demo/IncidentPdf/AllIncidentsAsEmail',
+                        serializedForm,
+                        function() {
+                            alert('Email Sent Successfully');
+                        });
+        return false;
+    });
 
     allIncidents = allIncidents.sort(function(a, b) {
         if (a.StartDateString < b.StartDateString) {

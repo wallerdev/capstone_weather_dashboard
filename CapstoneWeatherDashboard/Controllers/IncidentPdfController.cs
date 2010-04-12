@@ -68,5 +68,34 @@ namespace CapstoneWeatherDashboard.Controllers
             var email = new EmailJobCreator(pdf, emails);
             email.Send();
         }
+
+        public void AllIncidentsAsEmail()
+        {
+            string emails = HttpUtility.UrlDecode(Request.Form["e"]);
+            string[] dates = Request.Form.GetValues("d[]");
+            string[] urls = Request.Form.GetValues("mi[]");
+            string[] events = Request.Form.GetValues("et[]");
+            string[] restOfMapUrls = Request.Form.GetValues("i[]");
+            int size = Request.Form.GetValues("d[]").Length;
+            ViewData["size"] = size;
+            ViewData["restOfMapUrls"] = restOfMapUrls;
+            ViewData["events"] = events;
+            ViewData["urls"] = urls;
+            ViewData["dates"] = dates;
+
+
+            for (int i = 0; i < size; i++)
+            {
+                dates[i] = HttpUtility.UrlDecode(dates[i]);
+                urls[i] = HttpUtility.UrlDecode(urls[i]);
+                events[i] = HttpUtility.UrlDecode(events[i]);
+                restOfMapUrls[i] = HttpUtility.UrlDecode(restOfMapUrls[i]);
+            }
+
+            byte[] pdf = GetPdf(null);
+
+            var email = new EmailJobCreator(pdf, emails);
+            email.Send();
+        }
     }
 }

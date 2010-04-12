@@ -50,7 +50,9 @@
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
     <div id="search">
         <h2 id="searchString">Results for Search <%=ViewData["searchStringAsEnglish"] %></h2>
-        <form id="allIncidents" action="/demo/IncidentPdf/AllIncidentsAsPdf" method="post">
+        <form id="allIncidentsPdf" action="/demo/IncidentPdf/AllIncidentsAsPdf" method="post">
+        </form>
+        <form id="allIncidentsEmail" method="post">
         </form>
     </div>
     <div id="progress">
