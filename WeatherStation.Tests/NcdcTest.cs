@@ -70,7 +70,7 @@ namespace WeatherStation.Tests
         {
             var date = new DateTime(2009, 1, 1);
             var events = _ncdc.GetEvents(new State("MI"), "Ingham", date, date.AddYears(1), null);
-            Assert.AreEqual(10, events.Count());
+            Assert.AreEqual(11, events.Count());
             var e = events.First();
             Assert.AreEqual(new DateTime(2009, 1, 9), e.Date);
             Assert.AreEqual(WeatherIncidentType.WinterStorm, e.EventType);
