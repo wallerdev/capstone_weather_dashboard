@@ -119,6 +119,7 @@
     <Content Include="Scripts\jquery.colorbox.js" />
     <Content Include="Scripts\NewSearch.js" />
     <Content Include="Scripts\WeatherIncident.js" />
+    <Content Include="Views\IncidentPdf\AllIncidentsAsPdf.aspx" />
     <Content Include="Views\IncidentPdf\IncidentAsEmail.aspx" />
     <Content Include="Views\IncidentPdf\IncidentAsPdf.aspx" />
     <Content Include="Views\WeatherIncident\Index.aspx" />

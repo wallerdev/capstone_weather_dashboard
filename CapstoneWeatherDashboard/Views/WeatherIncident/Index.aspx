@@ -48,7 +48,11 @@
 
 </asp:Content>
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h2 id="searchString">Results for Search <%=ViewData["searchStringAsEnglish"] %></h2>
+    <div id="search">
+        <h2 id="searchString">Results for Search <%=ViewData["searchStringAsEnglish"] %></h2>
+        <form id="allIncidents" action="/demo/IncidentPdf/AllIncidentsAsPdf" method="post">
+        </form>
+    </div>
     <div id="progress">
         <p>
             <img src="/demo/Content/images/ajax-loader.gif" alt="Loading..." />

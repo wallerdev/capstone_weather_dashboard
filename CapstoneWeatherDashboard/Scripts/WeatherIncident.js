@@ -4,6 +4,7 @@ var urls = [];
 var allIncidents = [];
 var totalUrls = 0;
 var geocoder = new GClientGeocoder();
+var allIncidentInputs = "";
 
 function displayIncidents(incidents) {
     if (!incidentFound && incidents.length < 1 && urls.length < 1) {
@@ -12,10 +13,17 @@ function displayIncidents(incidents) {
         $("#searchString").hide();
         return;
     }
+    
     for (var i in incidents) {
         incidentFound = true;
         incidents[i].newRow = true;
         incidents[i].order = allIncidents.length;
+
+        allIncidentInputs += '<input type="hidden" name="d[]" value="' + encodeURIComponent(incidents[i].DateString) + '" />' +
+            '<input type="hidden" name="et[]" value="' + encodeURIComponent(incidents[i].EventTypeInWords) + '" />' +
+            '<input type="hidden" name="mi[]" value="' + encodeURIComponent(incidents[i].MoreInformationUrl) + '" />' +
+            '<input type="hidden" name="i[]" value="' + encodeURIComponent(GetIncidentStaticMapImage(incidents[i])) + '" />';
+        
         incidents[i].html = $('<div id="result' + i + '" class="result ' + incidents[i].EventTypeString + '" style="display: none">' +
                                 '<div class="topInfo">' +
                                     '<p class="distance">' + i + ' miles away</p>' +
@@ -53,6 +61,8 @@ function displayIncidents(incidents) {
                                 '</div>');
         allIncidents.push(incidents[i]);
     }
+    
+    $("#allIncidents").html(allIncidentInputs + '<input type="submit" value="Save All Pdfs" />');
 
     allIncidents = allIncidents.sort(function(a, b) {
         if (a.StartDateString < b.StartDateString) {
