@@ -51,16 +51,15 @@ blockquote, q
 body
 {
 	font-family: Helvetica, Verdana, sans-serif;
-	margin: 20px;
-	color: #444;
-	background-color: #EAF2F5;
+
 }
 
 input.text
 {
-	font-size: 14pt;
+  	font-size: 14pt;
 	padding: 3px;
 	margin-left: 5px;
+
 }
 
 .clear
@@ -70,8 +69,8 @@ input.text
 
 h1, h2
 {
+    margin-bottom: 15px;
 	font-weight: bold;
-	margin-bottom: 15px;
 }
 
 h1
@@ -91,22 +90,19 @@ strong
 
 #searchForm
 {
-	background-color: #CCC;
 	width: 425px;
-	border: solid 2px grey;
-	padding: 5px;
+	
 }
 
 #searchForm div
 {
-	border-bottom: solid 1px black;
-	margin-bottom: 5px;
-	padding-bottom: 5px;
+ 	border-bottom: solid 1px black;
+	
 }
 
 #searchForm div#search
 {
-	border-bottom: none;
+    border-bottom: none;
 }
 
 #searchForm td.label
@@ -123,12 +119,12 @@ input.submit
 
 #searchForm div#search fieldset
 {
-	padding-left: 15px;
+   	padding-left: 15px;
 }
 
 #searchForm div#search fieldset legend
 {
-	margin-left: -15px;
+   	margin-left: -15px;
 	font-size: .8em;
 	font-style: italic;
 }

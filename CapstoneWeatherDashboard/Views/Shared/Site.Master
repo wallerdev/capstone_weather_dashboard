@@ -12,14 +12,30 @@
     <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
 </head>
 
-<body>
-    <div class="page">
-        <div id="main">
-            <asp:ContentPlaceHolder ID="MainContent" runat="server" />
 
-            <div id="footer">
+
+<body style="margin: 0; padding: 0; width: 100%; height: 100%; background-color: #999999;">
+
+<table style="width: 100%;height: 100%;">
+<tr>
+    <td style="width: 10%; background-color: #999999"></td>
+    <td style="width: 80%; height: 100%; color: #FFF; background-color: #222277; padding-left: 1%;padding-top: 1%;padding-bottom: 1%; padding-right: 1%;">
+        <img src="/demo/Content/images/aapic.jpg" />
+        <div class="page">
+            <div id="main">
+                <asp:ContentPlaceHolder ID="MainContent" runat="server" >
+
+                <p>
+                </p>
+                </asp:ContentPlaceHolder>
+                <div id="Div2">
+                </div>
             </div>
         </div>
-    </div>
+    </td>
+    <td style="width: 10%; background-color: #999999"></td>
+</tr>
+</table>
 </body>
 </html>
+
