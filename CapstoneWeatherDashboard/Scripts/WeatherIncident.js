@@ -26,7 +26,8 @@ function displayIncidents(incidents) {
         
         incidents[i].html = $('<div id="result' + i + '" class="result ' + incidents[i].EventTypeString + '" style="display: none">' +
                                 '<div class="topInfo">' +
-                                    '<p class="distance">' + i + ' miles away</p>' +
+                                 // '<p class="distance">' + i + ' miles away</p>' +
+                                    '<p class="distance">Click for more</p>' +
                                     '<p class="date">' + incidents[i].DateString + '</p>' +
                                     '<p class="eventType">' + incidents[i].EventTypeInWords + '</p>' +
                                 '</div>' +
