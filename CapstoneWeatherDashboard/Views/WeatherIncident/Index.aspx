@@ -29,7 +29,7 @@
         // Weather Underground Incidents
         <% for(DateTime d = (DateTime)ViewData["startDate"]; d <= (DateTime)ViewData["endDate"]; d = d.AddDays(1))
           {%>
-            urls.push('<%= Url.Action("Index", "WeatherUndergroundWeatherIncident", new { date = d.ToShortDateString(), radius = ViewData["radius"], airportCode = ViewData["airportCode"] }) %>');
+            urls.push('<%= Url.Action("Index", "WeatherUndergroundWeatherIncident", new { date = d.ToShortDateString(), radius = ViewData["radius"], airportCode = ViewData["airportCode"], filter = ViewData["incidentFilter"] }) %>');
         <%}%>
 
         totalUrls = urls.length;

@@ -27,19 +27,18 @@ namespace WeatherStation.WeatherEventProviders
         /// Right now this function just returns all data for a given day.
         /// </summary>
         /// <returns>Weather Incidents for the location</returns>
-        public IEnumerable<WeatherIncident> GetEvents(string airportCode, DateTime date)
+        public IEnumerable<WeatherIncident> GetEvents(string airportCode, DateTime date, WeatherIncidentType? typeToFilter)
         {
             string requestUrl = string.Format(WeatherHistoryCsvUrl, airportCode, date.Year, date.Month,
                                               date.Day);
             string response = WebClient.DownloadString(requestUrl);
 
-            return ParseWundergroundResponse(airportCode, response, date);
+            return ParseWundergroundResponse(airportCode, response, date, typeToFilter);
         }
 
         #endregion
 
-        private static IEnumerable<WeatherIncident> ParseWundergroundResponse(string airportCode, string responseString,
-                                                                              DateTime date)
+        private static IEnumerable<WeatherIncident> ParseWundergroundResponse(string airportCode, string responseString, DateTime date, WeatherIncidentType? typeToFilter)
         {
             var moreInfoUrl = new Uri(string.Format(WeatherHistoryUrl, airportCode, date.Year, date.Month, date.Day));
             Airport currentAirpot = AirportList.GetAirport(airportCode);
@@ -58,11 +57,23 @@ namespace WeatherStation.WeatherEventProviders
             {
                 var entry = new WeatherUndergroundEntry(date, row);
                 WeatherIncidentType incidentType = WeatherIncidentClassifier.Classify(entry);
-                if (incidentType != WeatherIncidentType.Unclassified)
+                if (typeToFilter != null)
                 {
-                    incidents.Add(new WeatherIncident(locationOfAirport, incidentType,
-                                                      date, moreInfoUrl));
+                    if (incidentType == typeToFilter)
+                    {
+                        incidents.Add(new WeatherIncident(locationOfAirport, incidentType,
+                                                          date, moreInfoUrl));
+                    }
                 }
+                else
+                {
+                    if (incidentType != WeatherIncidentType.Unclassified)
+                    {
+                        incidents.Add(new WeatherIncident(locationOfAirport, incidentType,
+                                                          date, moreInfoUrl));
+                    }
+                }
+
             }
             return incidents;
         }
