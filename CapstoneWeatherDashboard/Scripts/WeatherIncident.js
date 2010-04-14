@@ -26,8 +26,7 @@ function displayIncidents(incidents) {
         
         incidents[i].html = $('<div id="result' + i + '" class="result ' + incidents[i].EventTypeString + '" style="display: none">' +
                                 '<div class="topInfo">' +
-                                 // '<p class="distance">' + i + ' miles away</p>' +
-                                    '<p class="distance">Click for more</p>' +
+                                    '<p class="distance">' + incidents[i].Locations[0].FullAddress + '</p>' +
                                     '<p class="date">' + incidents[i].DateString + '</p>' +
                                     '<p class="eventType">' + incidents[i].EventTypeInWords + '</p>' +
                                 '</div>' +
@@ -134,7 +133,7 @@ function displayIncidents(incidents) {
                             if (location.Geocode == null) {
                                 geocoder.getLatLng(location.FullAddress, function(point) {
                                     if (!point) {
-                                        alert(location.FullAddress + " not found");
+                                        alert(location.FullAddress + " not found!");
                                     } else {
                                         incidentMarker = new GMarker(point);
                                         setupMarker(map, incidentMarker, '<b>Incident Observed At:</b><br/>' + location.FullAddress);
@@ -176,7 +175,8 @@ function GetIncidentStaticMapImage(incident) {
         if (location.Geocode == null) {
             geocoder.getLatLng(location.FullAddress, function(point) {
                 if (!point) {
-                    alert(location.FullAddress + " not found");
+                    // alert(location.FullAddress + " not found");
+                    returnText = returnText + "&markers=color:blue|label:O|&sensor=false";
                 } else {
                     returnText = returnText + "&markers=color:blue|label:O|" + point + "&sensor=false";
                 }
