@@ -175,3 +175,13 @@ select
 	min-width:480px;
 	margin: 0 auto;
 }
+
+#head a
+{
+	text-decoration:none;
+}
+
+#head a:hover
+{
+	text-decoration:none;
+}
