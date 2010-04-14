@@ -102,3 +102,21 @@ tr
     background-color: rgb(196, 224, 253);
     border-color: rgb(154, 203, 253);
 }
+
+#search
+{
+    background-color: #fff;
+    padding: 5px;
+}
+
+label
+{
+    font-weight: bold;
+    padding-right: 10px;
+    padding: 10px;
+}
+
+#search p
+{
+    margin: 10px;
+}

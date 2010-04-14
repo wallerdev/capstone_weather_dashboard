@@ -7,8 +7,9 @@
 <asp:Content ContentPlaceHolderID="HeadContent" runat="server">
     <link href="/demo/Content/colorbox.css" rel="stylesheet" type="text/css" />
     <link href="/demo/Content/WeatherIncident.css" rel="stylesheet" type="text/css" />
-    
+
     <script src="/demo/Scripts/jquery-ui-1.7.2.custom.min.js" type="text/javascript"></script>
+
     <link href="/demo/Content/jquery-ui-1.7.2.custom.css" rel="stylesheet" type="text/css" />
 
     <script src="/demo/Scripts/jquery.colorbox-min.js" type="text/javascript"></script>
@@ -49,15 +50,49 @@
 </asp:Content>
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
     <div id="search">
-        <h2 id="searchString">Results for Search <%=ViewData["searchStringAsEnglish"] %></h2>
-        <form id="allIncidentsPdf" action="/demo/IncidentPdf/AllIncidentsAsPdf" method="post">
-        </form>
-        <form id="allIncidentsEmail" method="post">
-        </form>
+        <h2 id="searchString">
+            Search Results</h2>
+        <table>
+            <tr>
+                <td>
+                    <label>
+                        Start Date</label>
+                </td>
+                <td>
+                    <%= ((DateTime)ViewData["startDate"]).ToShortDateString() %>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>
+                        End Date</label>
+                </td>
+                <td>
+                    <%= ((DateTime)ViewData["endDate"]).ToShortDateString() %>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>
+                        Address</label>
+                </td>
+                <td>
+                    <%= ViewData["homeAddress"] %>
+                </td>
+            </tr>
+        </table>
+        <div style="float: right;">
+            <form id="allIncidentsPdf" action="/demo/IncidentPdf/AllIncidentsAsPdf" method="post">
+            </form>
+            <div style="clear: right;"></div>
+            <form id="allIncidentsEmail" method="post" style="margin-top: 10px;">
+            </form>
+        </div>
+        <div style="clear: right;"></div>
     </div>
     <div id="progress">
         <p>
-            <img src="/demo/Content/images/ajax-loader.gif" alt="Loading..." />
+            <img src="/demo/Content/images/ajax-loader.gif" alt="Loading..." style="margin-top: 10px;" />
         </p>
         <p id="percent">
         </p>

@@ -62,7 +62,7 @@ function displayIncidents(incidents) {
         allIncidents.push(incidents[i]);
     }
 
-    $("#allIncidentsPdf").html(allIncidentInputs + '<input type="submit" value="Save All Incidents to PDF" />');
+    $("#allIncidentsPdf").html(allIncidentInputs + '<input type="submit" value="Save All Incidents to PDF" style="float: right;" />');
     $("#allIncidentsEmail").html(allIncidentInputs + 
         '<label for="e">Email Addresses (Separated by commas): </label>' +
             '<input type="text" id="e" name="e" style="width:300px;" />' +

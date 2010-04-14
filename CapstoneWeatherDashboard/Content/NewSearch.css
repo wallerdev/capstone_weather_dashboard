@@ -48,11 +48,7 @@ label
 
 form
 {
-    padding: 10px 0 0 15px;
-    margin: 0 0 20px 0;
-    width: 500px;
-    background-color: #FFF;
-    border: 1px solid #CCC;
+    padding: 20px;
 }
 
 fieldset

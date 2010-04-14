@@ -53,6 +53,21 @@ body
     font-family: Helvetica, Verdana, sans-serif;
 }
 
+
+#head {
+	height: 80px;
+	background: url(/demo/Content/images/header_bg.gif) repeat-x;
+	border-bottom: 1px solid #6f87b5;
+	max-width: 974px; 
+	min-width: 474px; 
+	margin:0 auto;
+}
+
+#head img 
+{
+    padding-top: 25px;
+}
+
 input.text
 {
     font-size: 14pt;
@@ -90,7 +105,6 @@ strong
 {
     width: 460px;
     margin: 0 auto;
-    background-color: #CCCCCC;
 }
 
 #searchForm div#search
@@ -142,26 +156,16 @@ select
 .shadow-content
 {
     background: #fff;
-    border: 2px solid #AAA;
+    border: 1px solid #C9C9C9;
     padding: 10px;
     margin: 10px 0;
 }
-
-.search-wrapper
-{
-    background-color: #222277;
-    max-width: 980px;
-    min-width: 480px;
-    margin: 0 auto;
-    padding: 5px 0;
-}
-
 .search-wrapper-inner
 {
-    max-width: 960px;
+    max-width: 964px;
     min-width: 460px;
     margin: 0 auto;
-    background-color: #CCC;
+    background-color: #E6E6E6;
     padding: 5px 5px 10px 5px;
 }
 
