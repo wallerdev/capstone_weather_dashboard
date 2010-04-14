@@ -180,3 +180,13 @@ select
 {
     margin-right: 5px;
 }
+
+#head a
+{
+	text-decoration:none;
+}
+
+#head a:hover
+{
+	text-decoration:none;
+}
