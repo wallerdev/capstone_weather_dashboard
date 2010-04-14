@@ -2,97 +2,95 @@
 
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td
 {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	outline: 0;
-	font-weight: inherit;
-	font-style: inherit;
-	font-size: 100%;
-	font-family: inherit;
-	vertical-align: baseline;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: 100%;
+    font-family: inherit;
+    vertical-align: baseline;
 }
 
 :focus
 {
-	outline: 0;
+    outline: 0;
 }
 body
 {
-	line-height: 1;
-	color: black;
-	background: #9D9D9D;
+    line-height: 1;
+    color: black;
+    background: #9D9D9D;
 }
 ol, ul
 {
-	list-style: none;
+    list-style: none;
 }
 table
 {
-	border-collapse: separate;
-	border-spacing: 0;
+    border-collapse: separate;
+    border-spacing: 0;
 }
 caption, th, td
 {
-	text-align: left;
-	font-weight: normal;
+    text-align: left;
+    font-weight: normal;
 }
 blockquote:before, blockquote:after, q:before, q:after
 {
-	content: "";
+    content: "";
 }
 blockquote, q
 {
-	quotes: "" "";
+    quotes: "" "";
 }
 
 /* RESET END */
 
 body
 {
-	font-family: Helvetica, Verdana, sans-serif;
-
+    font-family: Helvetica, Verdana, sans-serif;
 }
 
 input.text
 {
-  	font-size: 14pt;
-	padding: 3px;
-	margin-left: 5px;
-
+    font-size: 14pt;
+    padding: 3px;
+    margin-left: 5px;
 }
 
 .clear
 {
-	clear: both;
+    clear: both;
 }
 
 h1, h2
 {
     margin-bottom: 15px;
-	font-weight: bold;
+    font-weight: bold;
 }
 
 h1
 {
-	font-size: 150%;
+    font-size: 150%;
 }
 
 h2
 {
-	font-size: 120%;
+    font-size: 120%;
 }
 
 strong
 {
-	font-weight: bold;
+    font-weight: bold;
 }
 
 #searchForm
 {
-	width: 460px;
-	margin: 0 auto;
-	background-color:#CCCCCC;
+    width: 460px;
+    margin: 0 auto;
+    background-color: #CCCCCC;
 }
 
 #searchForm div#search
@@ -102,76 +100,79 @@ strong
 
 #searchForm td.label
 {
-	width: 140px;
+    width: 140px;
 }
 
 input.submit
 {
-	float: right;
-	clear: left;
-	margin-top: 5px;
+    float: right;
+    clear: left;
+    margin-top: 5px;
 }
 
 #searchForm div#search fieldset
 {
-   	padding-left: 15px;
+    padding-left: 15px;
 }
 
 #searchForm div#search fieldset legend
 {
-   	margin-left: -15px;
-	font-size: .8em;
-	font-style: italic;
+    margin-left: -15px;
+    font-size: .8em;
+    font-style: italic;
 }
 
 span.error
 {
-	margin-left: 10px;
-	color: Red;
-	display: block;
+    margin-left: 10px;
+    color: Red;
+    display: block;
 }
 
 span.required
 {
-	color:Red;
-	font-size:200%;
+    color: #ff0000;
 }
 
 select
 {
-	margin-left: 5px;
+    margin-left: 5px;
 }
 
-.shadow-content{
-	
-	background:#fff;
-	border:2px solid #AAA;
-	padding:10px;
-	margin:10px 0;
-	
+.shadow-content
+{
+    background: #fff;
+    border: 2px solid #AAA;
+    padding: 10px;
+    margin: 10px 0;
 }
 
 .search-wrapper
 {
-	background-color:#222277;
-	max-width: 980px;
-	min-width: 480px;
-	margin: 0 auto;
-	padding: 5px 0;
+    background-color: #222277;
+    max-width: 980px;
+    min-width: 480px;
+    margin: 0 auto;
+    padding: 5px 0;
 }
 
 .search-wrapper-inner
 {
-	max-width: 960px;
-	min-width: 460px;
-	margin:0 auto;
-	background-color: #CCC;
-	padding: 5px 5px 10px 5px;
+    max-width: 960px;
+    min-width: 460px;
+    margin: 0 auto;
+    background-color: #CCC;
+    padding: 5px 5px 10px 5px;
 }
 
 #main
 {
-	max-width:980px;
-	min-width:480px;
-	margin: 0 auto;
+    max-width: 980px;
+    min-width: 480px;
+    margin: 0 auto;
+}
+
+#dateRange input
+{
+    margin-right: 5px;
 }

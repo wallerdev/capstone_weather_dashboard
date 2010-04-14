@@ -66,6 +66,8 @@
     
         <% using (Html.BeginForm("Index", "WeatherIncident", FormMethod.Get, new {id = "searchForm" }))
            { %>
+        <p style="color:red; float:right;">* - Required Fields</p>
+        <div style="clear: right;"></div>
         <div id="dateRange" class="shadow-content">
             <h2>
                 1. Select your date range
@@ -75,21 +77,21 @@
                     <tr>
                         <td class="label">
                             <label for="startDate">
-                                Start date
+                                Start date<span class="required">*</span>
                             </label>
                         </td>
                         <td>
-                            <%= Html.TextBox("startDate", "", new { @class = "text placeholder", placeholder = DateTime.Today.AddDays(-7).ToShortDateString() }) %><span class="required">*</span>
+                            <%= Html.TextBox("startDate", "", new { @class = "text placeholder", placeholder = DateTime.Today.AddDays(-7).ToShortDateString() }) %>
                         </td>
                     </tr>
                     <tr>
                         <td class="label">
                             <label for="endDate">
-                                End date
+                                End date<span class="required">*</span>
                             </label>
                         </td>
                         <td>
-                            <%= Html.TextBox("endDate", "", new { @class = "text placeholder", placeholder = DateTime.Today.ToShortDateString() })%><span class="required">*</span>
+                            <%= Html.TextBox("endDate", "", new { @class = "text placeholder", placeholder = DateTime.Today.ToShortDateString() })%>
                         </td>
                     </tr>
                 </table>
@@ -198,11 +200,11 @@
                     <tr>
                         <td class="label">
                             <label for="zipCode">
-                                Zip code
+                                Zip code<span class="required">*</span>
                             </label>
                         </td>
                         <td>
-                            <%= Html.TextBox("zipCode", "", new {@class = "text"}) %><span class="required">*</span>
+                            <%= Html.TextBox("zipCode", "", new {@class = "text"}) %>
                         </td>
                     </tr>
                 </table>
@@ -219,21 +221,21 @@
                     <tr>
                         <td class="label">
                             <label for="latitude">
-                                Latitude
+                                Latitude<span class="required">*</span>
                             </label>
                         </td>
                         <td>
-                            <%= Html.TextBox("latitude", "", new {@class = "text"}) %><span class="required">*</span>
+                            <%= Html.TextBox("latitude", "", new {@class = "text"}) %>
                         </td>
                     </tr>
                     <tr>
                         <td class="label">
                             <label for="longitude">
-                                Longitude
+                                Longitude<span class="required">*</span>
                             </label>
                         </td>
                         <td>
-                            <%= Html.TextBox("longitude", "", new {@class = "text"}) %><span class="required">*</span>
+                            <%= Html.TextBox("longitude", "", new {@class = "text"}) %>
                         </td>
                     </tr>
                 </table>
@@ -250,11 +252,11 @@
                     <tr>
                         <td class="label">
                             <label for="policyNumber">
-                                Policy Number
+                                Policy Number<span class="required">*</span>
                             </label>
                         </td>
                         <td>
-                            <%= Html.TextBox("policyNumber", "", new {@class = "text"}) %><span class="required">*</span>
+                            <%= Html.TextBox("policyNumber", "", new {@class = "text"}) %>
                         </td>
                     </tr>
                     <tr>
@@ -279,8 +281,7 @@
                     <input id="policySearchSubmit" type="submit" value="Search Policy" class="submit" name="policySearch" disabled="disabled" />
                 </p>
             </fieldset>
-            <span style="color:red; float:right; padding-top:10px;">* - Required Fields</span>
-            <br style="clear:both;" />
+            <div style="clear: both;" />
         </div>
         <% } %>
 </asp:Content>
