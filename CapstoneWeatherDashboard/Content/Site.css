@@ -21,7 +21,7 @@ body
 {
 	line-height: 1;
 	color: black;
-	background: white;
+	background: #9D9D9D;
 }
 ol, ul
 {
@@ -90,14 +90,9 @@ strong
 
 #searchForm
 {
-	width: 425px;
-	
-}
-
-#searchForm div
-{
- 	border-bottom: solid 1px black;
-	
+	width: 460px;
+	margin: 0 auto;
+	background-color:#CCCCCC;
 }
 
 #searchForm div#search
@@ -145,4 +140,38 @@ span.required
 select
 {
 	margin-left: 5px;
+}
+
+.shadow-content{
+	
+	background:#fff;
+	border:2px solid #AAA;
+	padding:10px;
+	margin:10px 0;
+	
+}
+
+.search-wrapper
+{
+	background-color:#222277;
+	max-width: 980px;
+	min-width: 480px;
+	margin: 0 auto;
+	padding: 5px 0;
+}
+
+.search-wrapper-inner
+{
+	max-width: 960px;
+	min-width: 460px;
+	margin:0 auto;
+	background-color: #CCC;
+	padding: 5px 5px 10px 5px;
+}
+
+#main
+{
+	max-width:980px;
+	min-width:480px;
+	margin: 0 auto;
 }

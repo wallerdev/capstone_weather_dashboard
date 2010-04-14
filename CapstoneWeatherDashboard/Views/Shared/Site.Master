@@ -12,30 +12,24 @@
     <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
 </head>
 
-
-
-<body style="margin: 0; padding: 0; width: 100%; height: 100%; background-color: #999999;">
-
-<table style="width: 100%;height: 100%;">
-<tr>
-    <td style="width: 10%; background-color: #999999"></td>
-    <td style="width: 80%; height: 100%; color: #FFF; background-color: #222277; padding-left: 1%;padding-top: 1%;padding-bottom: 1%; padding-right: 1%;">
-        <img src="/demo/Content/images/aapic.jpg" />
-        <div class="page">
-            <div id="main">
-                <asp:ContentPlaceHolder ID="MainContent" runat="server" >
-
-                <p>
-                </p>
-                </asp:ContentPlaceHolder>
-                <div id="Div2">
-                </div>
+<body>
+    <div class="page">
+        <div id="head" style="max-width:974px; min-width:474px; margin:0 auto; background-color:#222277; padding:3px;">
+            <a href="/demo/" style="width:489px; margin:0 auto;">
+                <img src="/demo/Content/images/logo.gif" />
+                <h1 style="margin:0; color:#CCC;">
+                    Weather Incident Verification
+                </h1>
+            </a>
+        </div>
+        <div id="main">
+            <div class="search-wrapper">
+        <div class="search-wrapper-inner">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+            </div></div>
+            <div id="footer">
             </div>
         </div>
-    </td>
-    <td style="width: 10%; background-color: #999999"></td>
-</tr>
-</table>
+    </div>
 </body>
 </html>
-
