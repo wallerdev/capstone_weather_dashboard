@@ -29,7 +29,7 @@ namespace WeatherStation.Tests
             address.GeocodeAddress();
             var airports = AirportList.FindNearbyAirports(address.Geocode, 50.0).Select(a => a.AirportCode).ToList();
             airports.Sort();
-            Assert.IsTrue(airports.SequenceEqual(new [] { "KAMN", "KFNT", "KJXN", "KLAN"}));
+            Assert.IsTrue(airports.SequenceEqual(new [] { "KAMN", "KBTL", "KFNT", "KJXN", "KLAN"}));
         }
     }
 }

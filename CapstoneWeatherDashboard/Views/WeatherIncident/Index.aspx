@@ -83,9 +83,13 @@
         </table>
         <div style="float: right;">
             <form id="allIncidentsPdf" action="/demo/IncidentPdf/AllIncidentsAsPdf" method="post">
+                <input type="submit" value="Save All Incidents to PDF" style="float: right;" />
             </form>
             <div style="clear: right;"></div>
             <form id="allIncidentsEmail" method="post" style="margin-top: 10px;">
+                <label for="e">Email Addresses (Separated by commas): </label>
+                <input type="text" id="e" name="e" style="width:300px;" />
+                <input type="submit" value="Email All Incidents" />
             </form>
         </div>
         <div style="clear: right;"></div>

@@ -13,17 +13,12 @@ function displayIncidents(incidents) {
         $("#searchString").hide();
         return;
     }
-    
+
     for (var i in incidents) {
         incidentFound = true;
         incidents[i].newRow = true;
         incidents[i].order = allIncidents.length;
 
-        allIncidentInputs += '<input type="hidden" name="d[]" value="' + encodeURIComponent(incidents[i].DateString) + '" />' +
-            '<input type="hidden" name="et[]" value="' + encodeURIComponent(incidents[i].EventTypeInWords) + '" />' +
-            '<input type="hidden" name="mi[]" value="' + encodeURIComponent(incidents[i].MoreInformationUrl) + '" />' +
-            '<input type="hidden" name="i[]" value="' + encodeURIComponent(GetIncidentStaticMapImage(incidents[i])) + '" />';
-        
         incidents[i].html = $('<div id="result' + i + '" class="result ' + incidents[i].EventTypeString + '" style="display: none">' +
                                 '<div class="topInfo">' +
                                     '<p class="distance">' + incidents[i].Locations[0].FullAddress + '</p>' +
@@ -41,20 +36,20 @@ function displayIncidents(incidents) {
                                     '<div>' +
                                         '<div class="map"></div>' +
                                     '</div>' +
-                                    '<form action="/demo/IncidentPdf/IncidentAsPdf" method="post" style="float:left; padding: 10px;">' +
+                                    '<form action="/demo/IncidentPdf/IncidentAsPdf" method="post" style="float:left; padding: 10px;" class="pdfForm">' +
                                         '<input type="hidden" name="d" value="' + encodeURIComponent(incidents[i].DateString) + '" />' +
                                         '<input type="hidden" name="et" value="' + encodeURIComponent(incidents[i].EventTypeInWords) + '" />' +
                                         '<input type="hidden" name="mi" value="' + encodeURIComponent(incidents[i].MoreInformationUrl) + '" />' +
-                                        '<input type="hidden" name="i" value="' + encodeURIComponent(GetIncidentStaticMapImage(incidents[i])) + '" />' +
+                                        '<input type="hidden" name="i" value="' + incidents[i].order + '" />' +
                                         '<input type="submit" value="Create Pdf" />' +
                                     '</form>' +
-                                    '<form style="float:right; padding: 10px;">' +
+                                    '<form style="float:right; padding: 10px;" class="emailSendForm">' +
                                         '<label for="e">Email Addresses (Separated by commas): </label>' +
                                         '<input type="text" name="e" style="width:300px;" />' +
                                         '<input type="hidden" name="d" value="' + encodeURIComponent(incidents[i].DateString) + '" />' +
                                         '<input type="hidden" name="et" value="' + encodeURIComponent(incidents[i].EventTypeInWords) + '" />' +
                                         '<input type="hidden" name="mi" value="' + encodeURIComponent(incidents[i].MoreInformationUrl) + '" />' +
-                                        '<input type="hidden" name="i" value="' + encodeURIComponent(GetIncidentStaticMapImage(incidents[i])) + '" />' +
+                                        '<input type="hidden" name="i" value="' + incidents[i].order + '" />' +
                                         '<input type="submit" value="Send Pdf" class="emailSend" />' +
                                     '</form>' +
                                     '<div style="clear:both;" />' +
@@ -62,22 +57,6 @@ function displayIncidents(incidents) {
                                 '</div>');
         allIncidents.push(incidents[i]);
     }
-
-    $("#allIncidentsPdf").html(allIncidentInputs + '<input type="submit" value="Save All Incidents to PDF" style="float: right;" />');
-    $("#allIncidentsEmail").html(allIncidentInputs + 
-        '<label for="e">Email Addresses (Separated by commas): </label>' +
-            '<input type="text" id="e" name="e" style="width:300px;" />' +
-            '<input type="submit" value="Email All Incidents" />');
-    $("#allIncidentsEmail input[type=submit]").click(function() {
-        var parentForm = $(this).parent('form');
-        var serializedForm = parentForm.serialize();
-        $.post('/demo/IncidentPdf/AllIncidentsAsEmail',
-                        serializedForm,
-                        function() {
-                            alert('Email Sent Successfully');
-                        });
-        return false;
-    });
 
     allIncidents = allIncidents.sort(function(a, b) {
         if (a.StartDateString < b.StartDateString) {
@@ -101,16 +80,21 @@ function displayIncidents(incidents) {
             if (incident.newRow) {
                 incident.html.fadeIn(1000);
                 incident.newRow = false;
-                incident.html.find('.emailSend').click(function() {
-                    var parentForm = $(this).parent('form');
-                    var serializedForm = parentForm.serialize();
+                incident.html.find('.pdfForm').submit(function() {
+                    $(this).find('input[name=i]').val(GetIncidentStaticMapImage(incident));
+                });
+                incident.html.find('emailSendForm').submit(function() {
+                    $(this).find('input[name=i]').val(GetIncidentStaticMapImage(incident));
+                    var serializedForm = $(this).serialize();
                     $.post('/demo/IncidentPdf/IncidentAsEmail',
                         serializedForm,
                         function() {
                             alert('Email Sent Successfully');
-                        });
+                        }
+                    );
                     return false;
                 });
+
                 incident.html.find('.topInfo').click(function() {
                     var additionalInfo = $(this).next(".additionalInfo");
                     additionalInfo.slideToggle();
@@ -176,7 +160,7 @@ function GetIncidentStaticMapImage(incident) {
         if (location.Geocode == null) {
             geocoder.getLatLng(location.FullAddress, function(point) {
                 if (!point) {
-                    // alert(location.FullAddress + " not found");
+                    alert(location.FullAddress + " not found");
                     returnText = returnText + "&markers=color:blue|label:O|&sensor=false";
                 } else {
                     returnText = returnText + "&markers=color:blue|label:O|" + point + "&sensor=false";
@@ -205,5 +189,40 @@ $(document).ready(function() {
             place.Point.coordinates[0]);
 
         homeMarker = new GMarker(homePoint);
+    });
+
+    $("#allIncidentsPdf").submit(function() {
+        var data = "";
+        for (var i in allIncidents) {
+            data += "<input type='hidden' name='d[]' value='" + encodeURI(allIncidents[i].DateString) + "'/>" +
+                "<input type='hidden' name='et[]' value='" + encodeURI(allIncidents[i].EventTypeInWords) + "'/>" +
+                "<input type='hidden' name='mi[]' value='" + encodeURI(allIncidents[i].MoreInformationUrl) + "'/>" +
+                "<input type='hidden' name='i[]' value='" + encodeURI(GetIncidentStaticMapImage(allIncidents[i])) + "'/>";
+        }
+        $("#allIncidentsPdf").prepend(data);
+        return true;
+    });
+
+    $("#allIncidentsEmail").submit(function() {
+        var data = "";
+        for (var i in allIncidents) {
+            data += "<input type='hidden' name='d[]' value='" + encodeURI(allIncidents[i].DateString) + "'/>" +
+                "<input type='hidden' name='et[]' value='" + encodeURI(allIncidents[i].EventTypeInWords) + "'/>" +
+                "<input type='hidden' name='mi[]' value='" + encodeURI(allIncidents[i].MoreInformationUrl) + "'/>" +
+                "<input type='hidden' name='i[]' value='" + encodeURI(GetIncidentStaticMapImage(allIncidents[i])) + "'/>";
+        }
+        $("#allIncidentsPdf").prepend(data);
+        return true;
+    });
+
+    $("#allIncidentsEmail input[type=submit]").click(function() {
+        var parentForm = $(this).parent('form');
+        var serializedForm = parentForm.serialize();
+        $.post('/demo/IncidentPdf/AllIncidentsAsEmail',
+                        serializedForm,
+                        function() {
+                            alert('Email Sent Successfully');
+                        });
+        return false;
     });
 });

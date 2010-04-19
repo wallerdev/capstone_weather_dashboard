@@ -47,7 +47,7 @@ namespace WeatherStation.Tests
             var result = _geocoder.Search("48823");
             Assert.AreEqual("48823", result.ZipCode.Code);
             Assert.AreEqual("East Lansing", result.City.Name);
-            Assert.AreEqual("Ingham", result.County.Name);
+            Assert.AreEqual("Clinton", result.County.Name);
             Assert.AreEqual("MI", result.State.Abbreviation);
         }
 
