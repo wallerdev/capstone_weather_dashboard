@@ -24,6 +24,7 @@ function displayIncidents(incidents) {
                                     '<p class="distance">' + incidents[i].Locations[0].FullAddress + '</p>' +
                                     '<p class="date">' + incidents[i].DateString + '</p>' +
                                     '<p class="eventType">' + incidents[i].EventTypeInWords + '</p>' +
+                                    '<div style="clear:both;" />' +
                                 '</div>' +
                                 '<div class="additionalInfo">' +
                                     '<p>' +
