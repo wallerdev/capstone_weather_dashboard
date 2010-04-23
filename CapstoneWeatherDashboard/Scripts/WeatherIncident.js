@@ -59,15 +59,16 @@ function displayIncidents(incidents) {
     }
 
     allIncidents = allIncidents.sort(function(a, b) {
-        if (a.StartDateString < b.StartDateString) {
+    if (a.DateString < b.DateString) {
             return -1;
-        } else if (a.StartDateString > b.StartDateString) {
+        } else if (a.DateString > b.DateString) {
             return 1;
         } else {
             // prevent fields with the same date from getting rearranged
             return a.order - b.order;
         }
     });
+   
 
     $('#results').html();
 
