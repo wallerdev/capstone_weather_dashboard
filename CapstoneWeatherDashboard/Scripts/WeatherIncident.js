@@ -82,7 +82,12 @@ function displayIncidents(incidents) {
                 incident.html.fadeIn(1000);
                 incident.newRow = false;
                 incident.html.find('.pdfForm').submit(function() {
-                    $(this).find('input[name=i]').val(GetIncidentStaticMapImage(incident));
+                    GetIncidentStaticMapImageThenCall(incident, function(incident, data) {
+                        incident.html.find('.pdfForm input[name=i]').val(data);
+                        incident.html.find('.pdfForm').unbind('submit');
+                        incident.html.find('.pdfForm').submit();
+                    });
+                    return false;
                 });
                 incident.html.find('emailSendForm').submit(function() {
                     $(this).find('input[name=i]').val(GetIncidentStaticMapImage(incident));
@@ -152,6 +157,32 @@ function setupMarker(map, marker, html) {
     });
 }
 
+function GetIncidentStaticMapImageThenCall(incident, fcn) {
+        var returnText = latitude + "," + longitude +
+        "&markers=color:blue|label:H|" + latitude + "," + longitude;
+    for (var j in incident.Locations) {
+        var location = incident.Locations[j];
+        var incidentMarker = null;
+        if (location.Geocode == null) {
+            geocoder.getLatLng(location.FullAddress, function(point) {
+                if (!point) {
+                    alert(location.FullAddress + " not found");
+                    returnText = returnText + "&markers=color:blue|label:O|&sensor=false";
+                    fcn(incident, returnText);
+                } else {
+                    returnText = returnText + "&markers=color:blue|label:O|" + point.y + "," + point.x;
+                    fcn(incident, returnText);
+                }
+            });
+        }
+        else {
+            returnText = returnText + "&markers=color:blue|label:O|" + location.Geocode.Latitude + "," + location.Geocode.Longitude;
+            fcn(incident, returnText);
+        }
+        break;
+    }
+}
+
 function GetIncidentStaticMapImage(incident) {
     var returnText = latitude + "," + longitude +
         "&markers=color:blue|label:H|" + latitude + "," + longitude;
@@ -164,7 +195,7 @@ function GetIncidentStaticMapImage(incident) {
                     alert(location.FullAddress + " not found");
                     returnText = returnText + "&markers=color:blue|label:O|&sensor=false";
                 } else {
-                    returnText = returnText + "&markers=color:blue|label:O|" + point + "&sensor=false";
+                    returnText = returnText + "&markers=color:blue|label:O|" + point.y + "," + point.x;
                 }
             });
         }
@@ -173,6 +204,7 @@ function GetIncidentStaticMapImage(incident) {
         }
         break;
     }
+    alert(returnText);
     return returnText;
 }
 
