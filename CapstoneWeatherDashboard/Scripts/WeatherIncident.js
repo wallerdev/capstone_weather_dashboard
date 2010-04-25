@@ -136,7 +136,6 @@ function displayIncidents(incidents) {
 
                         var marker = new GMarker(searchLocation);
                         setupMarker(map, marker, '<b>Location Searched For:</b><br/>' + homeAddress);
-                        marker.openInfoWindowHtml('<b>Location Searched For:</b><br/>' + homeAddress);
 
                         for (var j in incident.Locations) {
                             var location = incident.Locations[j];
@@ -173,8 +172,11 @@ function displayIncidents(incidents) {
 
 function setupMarker(map, marker, html) {
     map.addOverlay(marker);
-    GEvent.addListener(marker, "click", function(point) {
+    GEvent.addListener(marker, "mouseover", function(point) {
         marker.openInfoWindowHtml(html);
+    });
+    GEvent.addListener(marker, "mouseout", function(point) {
+        marker.closeInfoWindow();
     });
 }
 
