@@ -45,33 +45,7 @@
         <h2 id="searchString">
             Search Results</h2>
         <table>
-            <tr>
-                <td>
-                    <label>
-                        Start Date</label>
-                </td>
-                <td>
-                    <%= ((DateTime)ViewData["startDate"]).ToShortDateString() %>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label>
-                        End Date</label>
-                </td>
-                <td>
-                    <%= ((DateTime)ViewData["endDate"]).ToShortDateString() %>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label>
-                        Address</label>
-                </td>
-                <td>
-                    <%= ViewData["homeAddress"] %>
-                </td>
-            </tr>
+            <%= ViewData["searchDataHtml"] %>
         </table>
         <div style="float: right;">
             <form id="allIncidentsPdf" action="/demo/IncidentPdf/AllIncidentsAsPdf" method="post">
