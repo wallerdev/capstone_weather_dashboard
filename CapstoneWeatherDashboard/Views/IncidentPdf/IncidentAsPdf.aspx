@@ -15,7 +15,7 @@
         <td><b>Map:</b></td>
     </tr>
     <tr>
-        <td><img src="http://maps.google.com/maps/api/staticmap?zoom=8&size=512x512&maptype=roadmap&sensor=false&center=<%=ViewData["restOfMapUrl"] %>" /></td>
+        <td><img src="http://maps.google.com/maps/api/staticmap?size=512x512&maptype=roadmap&sensor=false<%=ViewData["restOfMapUrl"] %>" /></td>
     </tr>
     <tr><td><b>Key:</b></td></tr>
     <tr>

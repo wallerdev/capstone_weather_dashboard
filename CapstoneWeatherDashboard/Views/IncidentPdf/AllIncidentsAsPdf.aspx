@@ -29,8 +29,7 @@
         </td>
     </tr>
     <tr>
-        <td>
-            <img src="http://maps.google.com/maps/api/staticmap?zoom=8&size=512x512&maptype=roadmap&sensor=false&center=<%= ((string[])ViewData["restOfMapUrls"])[i] %>" />
+        <td><td><img src="http://maps.google.com/maps/api/staticmap?size=512x512&maptype=roadmap&sensor=false<%= ((string[])ViewData["restOfMapUrls"])[i] %>" /></td>
         </td>
     </tr>
     <tr>

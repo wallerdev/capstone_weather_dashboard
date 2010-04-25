@@ -181,8 +181,7 @@ function setupMarker(map, marker, html) {
 }
 
 function GetIncidentStaticMapImageThenCall(incident, fcn) {
-        var returnText = latitude + "," + longitude +
-        "&markers=color:blue|label:H|" + latitude + "," + longitude;
+    var returnText = "&markers=color:blue|label:H|" + latitude + "," + longitude;
     for (var j in incident.Locations) {
         var location = incident.Locations[j];
         var incidentMarker = null;
@@ -190,10 +189,10 @@ function GetIncidentStaticMapImageThenCall(incident, fcn) {
             geocoder.getLatLng(location.FullAddress, function(point) {
                 if (!point) {
                     alert(location.FullAddress + " not found");
-                    returnText = returnText + "&markers=color:blue|label:O|&sensor=false";
+                    returnText = returnText + "&markers=color:red|label:O|&sensor=false";
                     fcn(incident, returnText);
                 } else {
-                    returnText = returnText + "&markers=color:blue|label:O|" + point.y + "," + point.x;
+                    returnText = returnText + "&markers=color:red|label:O|" + point.y + "," + point.x;
                     fcn(incident, returnText);
                 }
             });
@@ -207,11 +206,10 @@ function GetIncidentStaticMapImageThenCall(incident, fcn) {
 }
 
 function GetIncidentStaticMapImage(incident) {
-    var returnText = latitude + "," + longitude +
-        "&markers=color:blue|label:H|" + latitude + "," + longitude;
+    var returnText = "&markers=color:blue|label:H|" + latitude + "," + longitude;
     for (var j in incident.Locations) {
         var location = incident.Locations[j];
-        returnText = returnText + "&markers=color:blue|label:O|" + location.Geocode.Latitude + "," + location.Geocode.Longitude;        
+        returnText = returnText + "&markers=color:red|label:O|" + location.Geocode.Latitude + "," + location.Geocode.Longitude;        
     }
     return returnText;
 }
