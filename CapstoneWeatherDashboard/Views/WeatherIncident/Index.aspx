@@ -48,11 +48,11 @@
             <%= ViewData["searchDataHtml"] %>
         </table>
         <div style="float: right;">
-            <form id="allIncidentsPdf" action="/demo/IncidentPdf/AllIncidentsAsPdf" method="post">
+            <form id="allIncidentsPdf" action="/demo/IncidentPdf/AllIncidentsAsPdf" method="post" enctype="multipart/form-data">
                 <input type="submit" value="Save All Incidents to PDF" style="float: right;" />
             </form>
             <div style="clear: right;"></div>
-            <form id="allIncidentsEmail" method="post" style="margin-top: 10px;">
+            <form id="allIncidentsEmail" method="post" style="margin-top: 10px;" enctype="multipart/form-data">
                 <label for="e">Email Addresses (Separated by commas): </label>
                 <input type="text" id="e" name="e" style="width:300px;" />
                 <input type="submit" value="Email All Incidents" />
