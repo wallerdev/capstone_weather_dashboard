@@ -18,6 +18,17 @@ function displayIncidents(incidents) {
         incidentFound = true;
         incidents[i].newRow = true;
         incidents[i].order = allIncidents.length;
+        var allGeocoded = true;
+        for(var j in incidents[i].Locations) {
+            if(incidents[i].Locations[j].Geocode == null) {
+                allGeocoded = false;
+            }
+        }
+        if (allGeocoded) {
+            incidents[i].staticMap = GetIncidentStaticMapImage(incidents[i]);
+        } else {
+            incidents[i].staticMap = "";
+        }
 
         incidents[i].html = $('<div id="result' + i + '" class="result ' + incidents[i].EventTypeString + '" style="display: none">' +
                                 '<div class="topInfo">' +
@@ -40,7 +51,7 @@ function displayIncidents(incidents) {
                                         '<input type="hidden" name="d" value="' + encodeURIComponent(incidents[i].DateString) + '" />' +
                                         '<input type="hidden" name="et" value="' + encodeURIComponent(incidents[i].EventTypeInWords) + '" />' +
                                         '<input type="hidden" name="mi" value="' + encodeURIComponent(incidents[i].MoreInformationUrl) + '" />' +
-                                        '<input type="hidden" name="i" value="' + incidents[i].order + '" />' +
+                                        '<input type="hidden" name="i" value="' + encodeURIComponent(incidents[i].staticMap) + '" />' +
                                         '<input type="submit" value="Create Pdf" />' +
                                     '</form>' +
                                     '<form style="float:right; padding: 10px;" class="emailSendForm">' +
@@ -49,7 +60,7 @@ function displayIncidents(incidents) {
                                         '<input type="hidden" name="d" value="' + encodeURIComponent(incidents[i].DateString) + '" />' +
                                         '<input type="hidden" name="et" value="' + encodeURIComponent(incidents[i].EventTypeInWords) + '" />' +
                                         '<input type="hidden" name="mi" value="' + encodeURIComponent(incidents[i].MoreInformationUrl) + '" />' +
-                                        '<input type="hidden" name="i" value="' + incidents[i].order + '" />' +
+                                        '<input type="hidden" name="i" value="' + encodeURIComponent(incidents[i].staticMap) + '" />' +
                                         '<input type="submit" value="Send Pdf" class="emailSend" />' +
                                     '</form>' +
                                     '<div style="clear:both;" />' +
@@ -82,12 +93,16 @@ function displayIncidents(incidents) {
                 incident.html.fadeIn(1000);
                 incident.newRow = false;
                 incident.html.find('.pdfForm').submit(function() {
-                    GetIncidentStaticMapImageThenCall(incident, function(incident, data) {
-                        var form = incident.html.find('.pdfForm');
-                        form.find('input[name=i]').val(data);
-                        form.unbind('submit');
-                        form.submit();
-                    });
+                    if ($(this).find('input[name=i]').val() != '') {
+                        return true;
+                    } else {
+                        GetIncidentStaticMapImageThenCall(incident, function(incident, data) {
+                            var form = incident.html.find('.pdfForm');
+                            form.find('input[name=i]').val(data);
+                            form.unbind('submit');
+                            form.submit();
+                        });
+                    }
                     return false;
                 });
                 incident.html.find('.emailSendForm').submit(function() {
@@ -149,7 +164,8 @@ function displayIncidents(incidents) {
 
     if (urls.length > 0) {
         $.getJSON(urls.shift(), displayIncidents);
-        $("#percent").html(Math.round((100.0 * (totalUrls - urls.length - 1) / totalUrls)) + '%');
+        var percent = Math.round((100.0 * (totalUrls - urls.length - 1) / totalUrls)) + '%';
+        $("#percent").html("Loading Incidents: " + percent);
     } else {
         $("#progress").hide();
     }
@@ -179,12 +195,12 @@ function GetIncidentStaticMapImageThenCall(incident, fcn) {
                     fcn(incident, returnText);
                 }
             });
+            break;
         }
         else {
             returnText = returnText + "&markers=color:blue|label:O|" + location.Geocode.Latitude + "," + location.Geocode.Longitude;
             fcn(incident, returnText);
         }
-        break;
     }
 }
 
@@ -193,24 +209,39 @@ function GetIncidentStaticMapImage(incident) {
         "&markers=color:blue|label:H|" + latitude + "," + longitude;
     for (var j in incident.Locations) {
         var location = incident.Locations[j];
-        var incidentMarker = null;
-        if (location.Geocode == null) {
-            geocoder.getLatLng(location.FullAddress, function(point) {
-                if (!point) {
-                    alert(location.FullAddress + " not found");
-                    returnText = returnText + "&markers=color:blue|label:O|&sensor=false";
-                } else {
-                    returnText = returnText + "&markers=color:blue|label:O|" + point.y + "," + point.x;
-                }
-            });
-        }
-        else {
-            returnText = returnText + "&markers=color:blue|label:O|" + location.Geocode.Latitude + "," + location.Geocode.Longitude;
-        }
-        break;
+        returnText = returnText + "&markers=color:blue|label:O|" + location.Geocode.Latitude + "," + location.Geocode.Longitude;        
     }
-    alert(returnText);
     return returnText;
+}
+
+function generateAllStaticMapsThenCall(fcn) {
+    var geocoding = false;
+    var geocoded = 0;
+    var toGeocode = 0;
+    for (var i in allIncidents) {
+        var incident = allIncidents[i];
+        if (incident.staticMap === "") {
+            if (!geocoding) {
+                GetIncidentStaticMapImageThenCall(incident, function(inc, data) {
+                    inc.staticMap = data;
+                });
+                setTimeout(function() { generateAllStaticMapsThenCall(fcn) }, 1700);
+                geocoding = true;
+            }
+            toGeocode++;
+        } else {
+            geocoded++;
+        }
+    }
+    
+    if (toGeocode > 0) {
+        var percent = Math.round(100.0 * geocoded / (geocoded + toGeocode)) + '%';
+        $("#percent").html("Generating Maps: " + percent);
+        $("#progress").show();
+    } else {
+        $("#progress").hide();
+        fcn();
+    }
 }
 
 $(document).ready(function() {
@@ -230,27 +261,35 @@ $(document).ready(function() {
     });
 
     $("#allIncidentsPdf").submit(function() {
-        var data = "";
-        for (var i in allIncidents) {
-            data += "<input type='hidden' name='d[]' value='" + encodeURI(allIncidents[i].DateString) + "'/>" +
-                "<input type='hidden' name='et[]' value='" + encodeURI(allIncidents[i].EventTypeInWords) + "'/>" +
-                "<input type='hidden' name='mi[]' value='" + encodeURI(allIncidents[i].MoreInformationUrl) + "'/>" +
-                "<input type='hidden' name='i[]' value='" + encodeURI(GetIncidentStaticMapImage(allIncidents[i])) + "'/>";
-        }
-        $("#allIncidentsPdf").prepend(data);
-        return true;
+        generateAllStaticMapsThenCall(function() {
+            var data = "";
+            for (var i in allIncidents) {
+                data += "<input type='hidden' name='d[]' value='" + encodeURI(allIncidents[i].DateString) + "'/>" +
+                    "<input type='hidden' name='et[]' value='" + encodeURI(allIncidents[i].EventTypeInWords) + "'/>" +
+                    "<input type='hidden' name='mi[]' value='" + encodeURI(allIncidents[i].MoreInformationUrl) + "'/>" +
+                    "<input type='hidden' name='i[]' value='" + encodeURI(allIncidents[i].staticMap) + "'/>";
+            }
+            var form = $("#allIncidentsPdf");
+            form.prepend(data);
+            form.unbind('submit');
+            form.submit();
+        });
+        return false;
     });
 
     $("#allIncidentsEmail").submit(function() {
         var data = "";
         for (var i in allIncidents) {
             data += "<input type='hidden' name='d[]' value='" + encodeURI(allIncidents[i].DateString) + "'/>" +
-                "<input type='hidden' name='et[]' value='" + encodeURI(allIncidents[i].EventTypeInWords) + "'/>" +
-                "<input type='hidden' name='mi[]' value='" + encodeURI(allIncidents[i].MoreInformationUrl) + "'/>" +
-                "<input type='hidden' name='i[]' value='" + encodeURI(GetIncidentStaticMapImage(allIncidents[i])) + "'/>";
+                        "<input type='hidden' name='et[]' value='" + encodeURI(allIncidents[i].EventTypeInWords) + "'/>" +
+                        "<input type='hidden' name='mi[]' value='" + encodeURI(allIncidents[i].MoreInformationUrl) + "'/>" +
+                        "<input type='hidden' name='i[]' value='" + encodeURI(allIncidents[i].staticMap) + "'/>";
         }
-        $("#allIncidentsPdf").prepend(data);
-        return true;
+        var form = $("#allIncidentsEmail");
+        form.prepend(data);
+        form.unbind('submit');
+        form.submit();
+        return false;
     });
 
     $("#allIncidentsEmail input[type=submit]").click(function() {
@@ -263,4 +302,11 @@ $(document).ready(function() {
                         });
         return false;
     });
+
+
+
+    totalUrls = urls.length;
+    if (urls.length > 0) {
+        $.getJSON(urls.shift(), displayIncidents);
+    }
 });

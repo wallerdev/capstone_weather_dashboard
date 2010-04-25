@@ -31,14 +31,6 @@
           {%>
             urls.push('<%= Url.Action("Index", "WeatherUndergroundWeatherIncident", new { date = d.ToShortDateString(), radius = ViewData["radius"], airportCode = ViewData["airportCode"], filter = ViewData["incidentFilter"] }) %>');
         <%}%>
-
-        totalUrls = urls.length;
-
-        $(function() {
-            if(urls.length > 0) {
-                $.getJSON(urls.shift(), displayIncidents);
-            }
-        });
         
         var incidentFound = false;
         var latitude = <%= ViewData["latitude"] %>;
