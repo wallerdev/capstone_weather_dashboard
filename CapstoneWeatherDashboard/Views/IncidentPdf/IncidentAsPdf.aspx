@@ -3,8 +3,10 @@
 <h1>
     Weather Incident Report</h1>
 <table>
-    <% for (int i = 0; i < (int)ViewData["size"]; i++)
-       { %>
+    <%= ViewData["query"] %></table>
+<% for (int i = 0; i < (int)ViewData["size"]; i++)
+   { %>
+<table>
     <tr>
         <td>
             <b>Date: </b>
@@ -29,7 +31,10 @@
         </td>
     </tr>
     <tr>
-        <td><td><img src="http://maps.google.com/maps/api/staticmap?size=512x512&maptype=roadmap&sensor=false<%= ((string[])ViewData["restOfMapUrls"])[i] %>" /></td>
+        <td>
+            <td>
+                <img src="http://maps.google.com/maps/api/staticmap?size=512x512&maptype=roadmap&sensor=false<%= ((string[])ViewData["restOfMapUrls"])[i] %>" />
+            </td>
         </td>
     </tr>
     <tr>
@@ -45,5 +50,6 @@
             <b>O</b> - Location Observed At
         </td>
     </tr>
-    <% } %>
 </table>
+<hr width="100%" />
+<% } %>

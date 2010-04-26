@@ -8,7 +8,7 @@ var allIncidentInputs = "";
 
 function displayIncidents(incidents) {
     if (!incidentFound && incidents.length < 1 && urls.length < 1) {
-        $('#results').append("<h2>No results found for search '" + searchString + "'.</h2>");
+        $('#search').append("<h2 style='padding:20px; padding-top: 30px;'><center>No results found for search.</center></h2>");
         $("#progress").hide();
         $("#searchString").hide();
         return;
@@ -19,8 +19,8 @@ function displayIncidents(incidents) {
         incidents[i].newRow = true;
         incidents[i].order = allIncidents.length;
         var allGeocoded = true;
-        for(var j in incidents[i].Locations) {
-            if(incidents[i].Locations[j].Geocode == null) {
+        for (var j in incidents[i].Locations) {
+            if (incidents[i].Locations[j].Geocode == null) {
                 allGeocoded = false;
             }
         }
@@ -57,6 +57,7 @@ function displayIncidents(incidents) {
                                         '<input type="hidden" name="et" value="' + encodeURIComponent(incidents[i].EventTypeInWords) + '" />' +
                                         '<input type="hidden" name="mi" value="' + encodeURIComponent(incidents[i].MoreInformationUrl) + '" />' +
                                         '<input type="hidden" name="i" value="' + encodeURIComponent(incidents[i].staticMap) + '" />' +
+                                        "<input type='hidden' name='query' value='" + encodeURI(html) + "'/>" +
                                         '<input type="submit" value="Create Pdf" />' +
                                     '</form>' +
                                     '<form style="float:right; padding: 10px;" class="emailSendForm">' +
@@ -66,6 +67,7 @@ function displayIncidents(incidents) {
                                         '<input type="hidden" name="et" value="' + encodeURIComponent(incidents[i].EventTypeInWords) + '" />' +
                                         '<input type="hidden" name="mi" value="' + encodeURIComponent(incidents[i].MoreInformationUrl) + '" />' +
                                         '<input type="hidden" name="i" value="' + encodeURIComponent(incidents[i].staticMap) + '" />' +
+                                        "<input type='hidden' name='query' value='" + encodeURI(html) + "'/>" +
                                         '<input type="submit" value="Send Pdf" class="emailSend" />' +
                                     '</form>' +
                                     '<div style="clear:both;" />' +
@@ -75,7 +77,7 @@ function displayIncidents(incidents) {
     }
 
     allIncidents = allIncidents.sort(function(a, b) {
-    if (a.DateString < b.DateString) {
+        if (a.DateString < b.DateString) {
             return -1;
         } else if (a.DateString > b.DateString) {
             return 1;
@@ -84,7 +86,7 @@ function displayIncidents(incidents) {
             return a.order - b.order;
         }
     });
-   
+
 
     $('#results').html();
 
@@ -214,7 +216,7 @@ function GetIncidentStaticMapImage(incident) {
     var returnText = "&markers=color:blue|label:H|" + latitude + "," + longitude;
     for (var j in incident.Locations) {
         var location = incident.Locations[j];
-        returnText = returnText + "&markers=color:red|label:O|" + location.Geocode.Latitude + "," + location.Geocode.Longitude;        
+        returnText = returnText + "&markers=color:red|label:O|" + location.Geocode.Latitude + "," + location.Geocode.Longitude;
     }
     return returnText;
 }
@@ -238,7 +240,7 @@ function generateAllStaticMapsThenCall(fcn) {
             geocoded++;
         }
     }
-    
+
     if (toGeocode > 0) {
         var percent = Math.round(100.0 * geocoded / (geocoded + toGeocode)) + '%';
         $("#percent").html("Generating Maps: " + percent);
@@ -267,7 +269,7 @@ $(document).ready(function() {
 
     $("#allIncidentsPdf").submit(function() {
         generateAllStaticMapsThenCall(function() {
-            var data = "";
+            var data = "<input type='hidden' name='query' value='" + encodeURI(html) + "'/>";
             for (var i in allIncidents) {
                 data += "<input type='hidden' name='d[]' value='" + encodeURI(allIncidents[i].DateString) + "'/>" +
                     "<input type='hidden' name='et[]' value='" + encodeURI(allIncidents[i].EventTypeInWords) + "'/>" +
@@ -283,12 +285,13 @@ $(document).ready(function() {
     });
 
     $("#allIncidentsEmail").submit(function() {
-        var data = "";
+        var data = "<input type='hidden' name='query' value='" + encodeURI(html) + "'/>";
         for (var i in allIncidents) {
             data += "<input type='hidden' name='d[]' value='" + encodeURI(allIncidents[i].DateString) + "'/>" +
                         "<input type='hidden' name='et[]' value='" + encodeURI(allIncidents[i].EventTypeInWords) + "'/>" +
                         "<input type='hidden' name='mi[]' value='" + encodeURI(allIncidents[i].MoreInformationUrl) + "'/>" +
-                        "<input type='hidden' name='i[]' value='" + encodeURI(allIncidents[i].staticMap) + "'/>";
+                        "<input type='hidden' name='i[]' value='" + encodeURI(allIncidents[i].staticMap) + "'/>" +
+                        "<input type='hidden' name='query' value='" + encodeURI(html) + "'/>";
         }
         var form = $("#allIncidentsEmail");
         form.prepend(data);
